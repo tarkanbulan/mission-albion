@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2SAIM / Mission Albion — Forensic Intelligence Portal</title>
+    <meta name="description" content="Consolidated forensic public reports on climate narrative structuring, commodity volatility, and institutional drift under the T2SAIM protocol.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #070d19;
+            --bg-card: rgba(15, 26, 46, 0.45);
+            --border-glow: rgba(201, 168, 76, 0.2);
+            --gold: #c9a84c;
+            --gold-hover: #dfbe63;
+            --accent: #8b1a1a;
+            --ink: #f7f4ec;
+            --muted: #8e9bb0;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(201, 168, 76, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 26, 26, 0.08) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(15, 26, 46, 0.5) 0px, transparent 100%);
+            background-attachment: fixed;
+            color: var(--ink);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        .wrap {
+            max-width: 900px;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .eyebrow {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 3.2rem;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff 30%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* Glassmorphic Card */
+        .portal-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
+                        inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out;
+            transition: border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .portal-card:hover {
+            border-color: rgba(201, 168, 76, 0.4);
+            box-shadow: 0 25px 60px rgba(201, 168, 76, 0.05), 
+                        0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--gold), var(--accent));
+        }
+
+        .quote-container {
+            margin-bottom: 40px;
+            border-left: 3px solid var(--gold);
+            padding: 10px 20px;
+            text-align: left;
+            background: rgba(201, 168, 76, 0.03);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .quote-text {
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: #faf8f2;
+            margin-bottom: 5px;
+        }
+
+        .quote-author {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .option-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 35px 25px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .option-button::after {
+            content: '→';
+            position: absolute;
+            right: 25px;
+            bottom: 25px;
+            font-size: 20px;
+            color: var(--gold);
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .option-button:hover {
+            background: rgba(201, 168, 76, 0.04);
+            border-color: var(--gold);
+            transform: translateY(-4px);
+        }
+
+        .option-button:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .lang-badge {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .option-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            color: #fff;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .option-desc {
+            font-size: 0.9rem;
+            color: var(--muted);
+            line-height: 1.5;
+            max-width: 280px;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        .veritas {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.3rem; }
+            .options-grid { grid-template-columns: 1fr; gap: 20px; }
+            .portal-card { padding: 30px 20px; }
+            .option-button { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="eyebrow">T2SAIM Consolidated Intelligence</div>
+            <h1>MISSION ALBION</h1>
+            <p class="subtitle">Forensic Structural Analysis of Institutional Narratives, Geopolitical Logistics Shocks, and Synthetic Commodity Volatility.</p>
+        </header>
+
+        <div class="portal-card">
+            <div class="quote-container">
+                <p class="quote-text">"Inclusive institutions deliver information with its uncertainty intact... Extractive ones launder uncertainty out of their public communications."</p>
+                <p class="quote-author">Applying Acemoglu's Theory of Institutional Drift</p>
+            </div>
+
+            <div class="options-grid">
+                <a href="report_en.html" class="option-button" id="btn-report-en">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">The "Super El Niño" Story</div>
+                        <p class="option-desc">A forensic public report on BBC weather framing, urea shocks, and the Strait of Hormuz context.</p>
+                    </div>
+                </a>
+
+                <a href="report_tr.html" class="option-button" id="btn-report-tr">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">"Süper El Niño" Anlatısı</div>
+                        <p class="option-desc">BBC meteoroloji çerçevelemesi, üre fiyat dalgalanması ve Hürmüz Boğazı lojistik krizinin adli incelemesi.</p>
+                    </div>
+                </a>
+                            <a href="t2saim_forensics_rivet_joint_v1_uk.html" class="option-button" id="btn-report-uk">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">Rivet Joint Incident – UK Report</div>
+                        <p class="option-desc">Forensic analysis of the Black Sea Rivet Joint episode, English version.</p>
+                    </div>
+                </a>
+
+                <a href="t2saim_forensics_rivet_joint_v1_turkce.html" class="option-button" id="btn-report-tr2">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">Rivet Joint Olayı – Türkçe Rapor</div>
+                        <p class="option-desc">Karadeniz Rivet Joint olayı üzerine Türkçe adli inceleme.</p>
+                    </div>
+                </a>
+
+                <a href="UK_AIHM_Stalling_Strategy_Analysis.md" class="option-button" id="btn-aihm-en">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">UK ECHR Stalling Strategy</div>
+                        <p class="option-desc">Analysis of the Chișinău Declaration, family reunification ban, and the gradual erosion of ECtHR authority.</p>
+                    </div>
+                </a>
+
+                <a href="UK_AIHM_Oyalama_Stratejisi_Analizi.md" class="option-button" id="btn-aihm-tr">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">BK AİHM Oyalama Stratejisi</div>
+                        <p class="option-desc">Chișinău Bildirisi, aile birleşimi yasağı ve AİHM yetkisinin aşamalı erozyonu analizi.</p>
+                    </div>
+                </a>
+
+                <a href="OPERATION_INTEGRITY_SHIELD_CONSOLIDATED_UK_v2.html" class="option-button" id="btn-shield-en">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">Operation Integrity Shield</div>
+                        <p class="option-desc">T2SAIM Consolidated Intelligence protocol applied to institutional integrity.</p>
+                    </div>
+                </a>
+
+                <a href="OPERATION_INTEGRITY_SHIELD_BIRLESIK_TR_v2.html" class="option-button" id="btn-shield-tr">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">Doğruluk Kalkanı Operasyonu</div>
+                        <p class="option-desc">Kurumsal dürüstlük ve istihbarat manipülasyonu üzerine T2SAIM birleşik protokolü.</p>
+                    </div>
+                </a>
+
+                <a href="TR_Digital_Twin_Scenario_Matrix.html" class="option-button" id="btn-digital-twin">
+                    <div class="lang-badge">Dual Language</div>
+                    <div>
+                        <div class="option-title">TR Digital Twin Matrix</div>
+                        <p class="option-desc">Predictive Forensics: 24-Month Macroeconomic Scenario Matrix (Locked).</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Tarco Forensic Intelligence &middot; 2026 &middot; <span class="veritas">Veritas Per Se</span></p>
+        </footer>
+    </div>
+</body>
+</html>
