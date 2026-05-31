@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BBC Putin PsyOp Analizi — TarCo Forensic Intelligence Raporu</title>
+<style>
+:root {
+  --ink:#0f1a2e; --paper:#f7f4ec; --rule:#1a2a4a; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280;
+  --soft:#e8e4dc; --soft2:#ece8e0; --green:#15803d; --amber:#b45309; --red:#b91c1c;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);max-width:1080px;margin:36px auto;padding:24px;line-height:1.68;font-size:16px;}
+header{display:grid;grid-template-columns:1fr auto;gap:22px;margin-bottom:30px;align-items:start;border-bottom:3px solid var(--gold);padding-bottom:18px;}
+.eyebrow{font-family:Helvetica,Arial,sans-serif;font-size:11px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;}
+h1{font-family:Helvetica,Arial,sans-serif;color:var(--ink);font-size:2.05em;line-height:1.15;margin-bottom:6px;}
+.subtitle{font-style:italic;color:var(--muted);margin-top:4px;}
+.tarco-badge{background:#141413;color:var(--gold);font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:900;letter-spacing:4px;padding:10px 18px;text-transform:uppercase;border:1.5px solid var(--gold);text-align:center;white-space:nowrap;border-radius:4px;box-shadow:0 3px 0 rgba(0,0,0,.15);}
+.tarco-badge small{display:block;font-size:6px;letter-spacing:2px;color:#c9a84c88;margin-top:2px;}
+.stamp{display:inline-block;padding:4px 11px;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;border:2px solid;margin:10px 5px 0 0;border-radius:2px;}
+.stamp-red{border-color:var(--red);color:var(--red);} .stamp-gold{border-color:#8a5a00;color:#8a5a00;}
+nav{background:var(--soft);border-left:4px solid var(--gold);padding:14px 18px;margin:20px 0 28px;border-radius:0 8px 8px 0;font-family:Helvetica,Arial,sans-serif;font-size:.9em;}
+nav a{color:var(--rule);text-decoration:none;margin-right:16px;font-weight:700;display:inline-block;margin-bottom:4px;}
+nav a:hover{color:var(--accent);}
+h2{font-family:Helvetica,Arial,sans-serif;color:var(--ink);border-bottom:2px solid var(--gold);padding-bottom:7px;margin:34px 0 16px;font-size:1.34em;}
+h3{font-family:Helvetica,Arial,sans-serif;color:var(--rule);margin:22px 0 10px;font-size:1.05em;}
+h4{font-family:Helvetica,Arial,sans-serif;color:var(--rule);margin:18px 0 8px;font-size:.98em;}
+p{margin-bottom:13px;text-align:justify;}
+ul,ol{margin:8px 0 14px 26px;} li{margin-bottom:7px;}
+table{width:100%;border-collapse:collapse;margin:17px 0;font-size:.9em;} th{background:var(--rule);color:var(--gold);font-family:Helvetica,Arial,sans-serif;font-size:11px;text-transform:uppercase;letter-spacing:1px;padding:10px 12px;text-align:left;}td{padding:9px 12px;border-bottom:1px solid #d2cec3;vertical-align:top;}tr:nth-child(even) td{background:var(--soft2);}code{background:var(--soft);padding:1px 5px;border-radius:3px;font-family:'Courier New',monospace;font-size:.85em;}
+pre{background:var(--soft);padding:14px;border-radius:6px;overflow-x:auto;border-left:4px solid var(--gold);font-family:'Courier New',monospace;font-size:.85em;margin:14px 0;}
+.callout{background:var(--soft);border-left:4px solid var(--accent);padding:14px 18px;margin:18px 0;border-radius:0 8px 8px 0;}
+.callout-gold{border-left-color:var(--gold);} .callout-rule{border-left-color:var(--rule);}
+.verdict-box{background:var(--rule);color:var(--paper);padding:22px 26px;border-radius:10px;margin:24px 0;border:2px solid var(--gold);box-shadow:0 8px 18px rgba(15,26,46,.12);} .verdict-box h2{color:var(--gold);border:none;margin:0 0 12px;} .verdict-box .big{font-size:2.25em;line-height:1.05;color:var(--gold);font-weight:800;display:block;margin:5px 0 8px;}
+.confidence{display:inline-block;background:var(--rule);color:var(--paper);padding:24px 46px;border-radius:12px;border:3px solid var(--gold);text-align:center;margin:18px auto;} .confidence .label{font-family:Helvetica,Arial,sans-serif;font-size:11px;color:var(--gold);text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;} .confidence .number{font-size:4em;font-weight:bold;color:var(--gold);line-height:1;}
+.good{color:var(--green);font-weight:bold;} .watch{color:var(--amber);font-weight:bold;} .bad{color:var(--red);font-weight:bold;} .muted{color:var(--muted);} .mono{font-family:'Courier New',monospace;}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:16px 0;} .card{background:var(--soft);border-top:4px solid var(--gold);padding:14px 16px;border-radius:8px;} .card h3{margin-top:0;}
+.section-divider{margin:44px 0 26px;border:0;border-top:2px solid var(--gold);} .appendix-label{background:var(--rule);color:var(--gold);font-family:Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:7px 15px;display:inline-block;border-radius:4px;margin:6px 0 8px;}
+.linkbox{background:#141413;color:var(--gold);padding:16px 18px;border-radius:8px;border:1px solid var(--gold);font-family:Helvetica,Arial,sans-serif;margin:16px 0;} .linkbox code{background:#24231f;color:#f1d67a;}
+.footer{margin-top:52px;padding-top:18px;border-top:2px solid var(--gold);font-size:.85em;color:var(--muted);text-align:center;line-height:1.6;} .footer span{font-family:'Courier New',monospace;font-size:10px;color:#999;}
+@media(max-width:760px){body{margin:0;padding:18px;} header{grid-template-columns:1fr;} .grid{grid-template-columns:1fr;} .confidence{display:block;padding:20px;} .confidence .number{font-size:3em;} table{font-size:.82em;} th,td{padding:8px;}}
+table tr { background-color: transparent !important; }
+table tr:nth-child(even) { background-color: rgba(255,255,255,0.03) !important; }
+table tr:nth-child(odd) { background-color: transparent !important; }
+table td { background-color: transparent !important; color: var(--ink) !important; }
+table th { background-color: rgba(15, 26, 46, 0.9) !important; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="eyebrow">T2SAIM · NARRATIVE DECONSTRUCTION · 31 MAYIS 2026</div>
+    <h1>BBC "Putin Image" Makalesi — T2SAIM Counter-Narrative Analizi</h1>
+    <p class="subtitle">BBC'nin 'How Putin became master of the image' makalesine yönelik PsyOp (Psikolojik Harekât) ve Epistemik Hijyen Dekonstrüksiyon Raporu.</p>
+    <span class="stamp stamp-red">PsyOp Dekonstrüksiyonu</span>
+    <span class="stamp stamp-gold">LM-4 Çözümlemesi</span>
+  </div>
+  <div class="tarco-badge">TARCO<small>FORENSIC INTELLIGENCE</small></div>
+</header>
+
+<nav>
+<a href="#opening">Giriş</a><a href="#verdict">Nihai Bulgu</a><a href="#kinetic">Gizlenen Kinetik Gerçekler</a><a href="#psyop">Medya Dekonstrüksiyonu (PsyOp)</a><a href="#claims">Hakikat Tablosu</a>
+</nav>
+
+<section id="opening">
+<h2>Yayın Giriş Notu</h2>
+<p>Bu rapor, BBC'nin "How Putin became master of the image" (Bridget Kendall) başlıklı metnini T2SAIM Epistemik Hijyen ve LM-4 "Anlatı Ekolojisi" (Narrative Ecology) kurallarına göre analiz eder. Analiz; 25 yıllık bir jeopolitik paradigma değişimini salt "halkla ilişkiler (PR)" ve "reality show" dinamikleri üzerinden açıklamaya çalışan bu metnin arkasındaki operasyonel <em>Undermining</em> (Zayıflatma) mimarisini deşifre etmektedir.</p>
+<div class="linkbox"><strong>Hedef URL:</strong> <code>https://www.bbc.co.uk/news/articles/cddpl33v247o</code></div>
+</section>
+
+<section id="verdict" class="verdict-box">
+<h2>Nihai Bulgu</h2>
+<p><span class="big">BBC Anlatısı Klasik Bir LM-4 PsyOp (Küçültme) Vektörüdür.</span></p>
+<p>Metin, rakibin stratejik iradesini "Marlboro Man" imaj yönetimine indirgeyerek, Rus gücünün temelini oluşturan kinetik, ekonomik ve yapısal devlet aklını (statecraft) Batı kamuoyundan kasten gizlemeyi hedefler. Temel amaç, simetrik bir jeopolitik tehdidi, asimetrik bir algı operasyonuyla önemsizleştirmektir (Diminution).</p>
+</section>
+
+<section id="kinetic">
+<h2>I. Gizlenen Kinetik Gerçekler (Omitted Kinetic Reality)</h2>
+<p>Tarihsel veriler ile metindeki anlatı arasındaki yapısal "boşluklar", dezenformasyonun nerede kurgulandığını göstermektedir:</p>
+<div class="grid">
+<div class="card"><h3>2007: Münih vs. Marlboro Man</h3><p>BBC, 2007 yılını sadece Putin'in at üzerinde yarı çıplak fotoğrafları üzerinden "machismo'yu pompalayan" bir PR yılı olarak sunar. <strong>Gizlenen Gerçek:</strong> 2007, Putin'in Münih Güvenlik Konferansı'nda NATO'nun doğuya genişlemesini lanetlediği ve tek kutuplu düzene başkaldırdığı en büyük jeopolitik kırılma noktasıdır.</p></div>
+<div class="card"><h3>TV Yanılgısı vs. Oligark Tasfiyesi</h3><p>Makale, gücün anahtarının televizyon olduğunu iddia eder. <strong>Gizlenen Gerçek:</strong> Gerçek güç, 2003 yılında Yukos krizinde Oligarşinin yapısal şiddetle boyun eğdirilmesi ve bağımsız enerji varlıklarına el konulmasıyla elde edilmiştir. TV kontrolü bir sebep değil, sonuçtur.</p></div>
+<div class="card"><h3>PR Danışmanları vs. 1999 Savaşı</h3><p>Putin'in yükselişi "görsel imajın farkında olan PR danışmanlarına" atfedilir. <strong>Gizlenen Gerçek:</strong> Meşruiyetin gerçek katalizörü, apartman bombalamalarının ardından İkinci Çeçenistan Savaşı'nın kinetik şekilde yürütülmesi ve Rusya'nın çöküşünün (Derzhava) durdurulmasıdır.</p></div>
+</div>
+</section>
+
+<section id="psyop">
+<h2>II. Medya Dekonstrüksiyonu & PsyOp Karakteristiği</h2>
+<p>Düşmanla stratejik düzlemde simetrik bir mücadeleye girilemediğinde, medya aygıtları semantik torpidolar kullanarak hedefi kendi iç kamuoyunun gözünde psikolojik olarak küçültür.</p>
+<ul>
+  <li><strong>Semantik Kayma (Semantic Drift):</strong> Hedefin semantik çapası <em>"Jeopolitik Devlet Aktörü"</em> konumundan <em>"Üretilmiş Pop-Kültür Karikatürü"</em> konumuna kaydırılmaktadır.</li>
+  <li><strong>PsyOp Karakteristiği (The "Wizard of Oz" Protocol):</strong> Perdenin arkasında sadece duman, aynalar ve "PR danışmanlarından" başka bir şey olmadığı konusunda ısrar edilerek, öznenin sahip olduğu doğal ağırlığı (gravitas) elinden alınmaktadır. Devlet aklı (Statecraft), sahne sanatına (Stagecraft) dönüştürülmüştür.</li>
+</ul>
+
+<h3>Taktiksel İfade Analizi (Exact Phrase Extraction)</h3>
+<table>
+<tr><th>Orijinal İfade</th><th>Psikolojik Niyet</th><th>PsyOp Taktik Kodu</th></tr>
+<tr><td><em>"quiet, retiring child and self-effacing bureaucrat"</em></td><td><strong>Köken Üzerinden İğdiş Etme (Emasculation).</strong> Mevcut gücün doğal olmayan, hileli bir yapı olduğunu ima eder.</td><td>Origin-Story Subversion</td></tr>
+<tr><td><em>"he and his PR advisers showed themselves acutely aware..."</em></td><td><strong>Otorite Soyutlama (Agency Stripping).</strong> Otoritenin şahsa değil, arkasındaki danışmanlara ait bir "ürün" olduğu algısını yaratır.</td><td>The "Puppet/Manager" Trope</td></tr>
+<tr><td><em>"riding a horse like a Russian Marlboro Man"</em></td><td><strong>Metalaştırma (Commodification).</strong> Nükleer bir devlet liderini sigara reklamı maskotuna bağlayarak kurumsal bir parodiye indirger.</td><td>Pop-Culture Anchoring</td></tr>
+<tr><td><em>"in an era of the reality show, MTV and sugar daddies"</em></td><td><strong>Semantik Degradasyon.</strong> Devlet gücünü çöplük TV programlarıyla eşitleyerek jeopolitik riskleri en dibe çeker.</td><td>Degraded Equivalence</td></tr>
+</table>
+</section>
+
+<section id="claims">
+<h2>III. Hakikat Tablosu (Veritas Per Se)</h2>
+<table>
+<tr><th>Boyut</th><th>Durum</th><th>Değerlendirme</th></tr>
+<tr><td>Jeopolitik Tehdit Algısı</td><td><span class="bad">Karartılmış</span></td><td>BBC metni, devlet yönetimini popüler kültür referanslarıyla (MTV, Marlboro Man) önemsizleştirerek Batı kamuoyunun stratejik tehdidi kavramasını engellemektedir.</td></tr>
+<tr><td>Medya ve Liderlik Gücü</td><td><span class="watch">Varsayılan (PsyOp)</span></td><td>Liderin gücünün ve otoritesinin tamamen "PR danışmanları" tarafından üretilmiş bir medya illüzyonu olduğu algısı kasten kurgulanmaktadır.</td></tr>
+<tr><td>Asimetrik Küçültme (Diminution)</td><td><span class="good">Doğrulanmış Operasyon</span></td><td>Karşıdaki simetrik tehdidi küçültme taktiği başarıyla uygulanmış, Oligarşi tasfiyesi ve 2007 Münih gibi Kinetik Kırılmalar tamamen örtbas edilmiştir.</td></tr>
+</table>
+</section>
+
+<div class="footer">
+TarCo Forensic Intelligence Research · Computational Behavioural Analysis · Canonical Filing<br>
+Operation Integrity Shield · BBC Narrative Deconstruction · <em>Veritas Per Se</em><br>
+<span>TEMPORAL LOCK: 2026-05-31T18:29:00Z · SOURCE-SET: T2SAIM_NUCLEUS, INTELAIM, TARCOMAP, FNRES</span>
+</div>
+</body>
+</html>
