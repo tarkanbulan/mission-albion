@@ -9,56 +9,153 @@
   --ink:#0f1a2e; --paper:#f7f4ec; --rule:#1a2a4a; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280;
   --soft:#e8e4dc; --soft2:#ece8e0; --green:#15803d; --amber:#b45309; --red:#b91c1c;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);max-width:900px;margin:36px auto;padding:24px;line-height:1.68;font-size:16px;}
-header{display:grid;grid-template-columns:1fr auto;gap:22px;margin-bottom:30px;align-items:start;border-bottom:3px solid var(--gold);padding-bottom:18px;}
-.eyebrow{font-family:Helvetica,Arial,sans-serif;font-size:11px;color:var(--muted);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;}
-h1{font-family:Helvetica,Arial,sans-serif;color:var(--ink);font-size:2.05em;line-height:1.15;margin-bottom:6px;}
-.subtitle{font-style:italic;color:var(--muted);margin-top:4px;}
-.tarco-badge{background:#141413;color:var(--gold);font-family:Helvetica,Arial,sans-serif;font-size:13px;font-weight:900;letter-spacing:4px;padding:10px 18px;text-transform:uppercase;border:1.5px solid var(--gold);text-align:center;white-space:nowrap;border-radius:4px;box-shadow:0 3px 0 rgba(0,0,0,.15);}
-.tarco-badge small{display:block;font-size:6px;letter-spacing:2px;color:#c9a84c88;margin-top:2px;}
-.stamp{display:inline-block;padding:4px 11px;font-family:Helvetica,Arial,sans-serif;font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;border:2px solid;margin:10px 5px 0 0;border-radius:2px;}
-.stamp-red{border-color:var(--red);color:var(--red);} .stamp-gold{border-color:#8a5a00;color:#8a5a00;}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:26px 0;} 
-.card{background:var(--soft);border-top:4px solid var(--gold);padding:24px;border-radius:8px;text-decoration:none;color:var(--ink);display:block;transition:all 0.2s;} 
-.card:hover{transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,0.1);border-top-color:var(--accent);}
-.card h3{font-family:Helvetica,Arial,sans-serif;margin:0 0 10px;font-size:1.15em;}
-.card p{font-size:0.9em;color:var(--muted);margin-bottom:0;}
-.footer{margin-top:52px;padding-top:18px;border-top:2px solid var(--gold);font-size:.85em;color:var(--muted);text-align:center;line-height:1.6;} .footer span{font-family:'Courier New',monospace;font-size:10px;color:#999;}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:Georgia,'Times New Roman',serif; background:#0f1a2e; color:#f7f4ec; padding:24px; line-height:1.68; font-size:16px; }
+
+.wrap { max-width: 1000px; margin: 0 auto; }
+
+header { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 40px; animation: fadeInDown 1s ease-out; }
+.eyebrow { font-family:Helvetica,Arial,sans-serif; font-size:11px; color:var(--gold); letter-spacing:3px; text-transform:uppercase; margin-bottom:12px; }
+h1 { font-family:Helvetica,Arial,sans-serif; font-size:3rem; line-height:1.1; margin-bottom:12px; letter-spacing:-1px; }
+.subtitle { font-style:italic; color:var(--muted); max-width:600px; font-size:1.1rem; line-height:1.6; }
+
+.portal-card { background:#152440; border-top:4px solid var(--gold); padding:40px; border-radius:12px; box-shadow:0 15px 35px rgba(0,0,0,0.4); animation: fadeInUp 1s ease-out 0.2s both; }
+
+.quote-container { text-align:center; margin-bottom:40px; padding-bottom:30px; border-bottom:1px solid rgba(201,168,76,0.2); }
+.quote-text { font-size:1.4rem; font-style:italic; color:#e0dcd3; line-height:1.5; margin-bottom:10px; }
+.quote-author { font-family:Helvetica,Arial,sans-serif; font-size:10px; color:var(--gold); letter-spacing:2px; text-transform:uppercase; }
+
+.options-grid { display:grid; grid-template-columns:repeat(2, 1fr); gap:25px; }
+
+.option-button { display:flex; flex-direction:column; align-items:flex-start; justify-content:flex-start; padding:35px 25px; border-radius:8px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); text-decoration:none; transition:all 0.3s cubic-bezier(0.4,0,0.2,1); position:relative; }
+.option-button::after { content:'→'; position:absolute; right:25px; bottom:25px; font-size:20px; color:var(--gold); opacity:0; transform:translateX(-10px); transition:all 0.3s ease; }
+.option-button:hover { background:rgba(201,168,76,0.04); border-color:var(--gold); transform:translateY(-4px); }
+.option-button:hover::after { opacity:1; transform:translateX(0); }
+
+.lang-badge { font-family:Helvetica,Arial,sans-serif; font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); border:1px solid var(--gold); padding:4px 10px; border-radius:4px; margin-bottom:20px; }
+.option-title { font-family:Helvetica,Arial,sans-serif; font-size:1.4rem; color:#fff; margin-bottom:12px; font-weight:600; }
+.option-desc { font-size:0.9rem; color:#a3adc2; line-height:1.5; }
+
+footer { margin-top:40px; text-align:center; font-family:Helvetica,Arial,sans-serif; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); animation:fadeIn 1.5s ease-out; }
+.veritas { color:var(--gold); font-weight:700; }
+
+@keyframes fadeInDown { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeInUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+@keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+
+@media(max-width:768px){ h1{font-size:2.3rem;} .options-grid{grid-template-columns:1fr;gap:20px;} .portal-card{padding:30px 20px;} .option-button{padding:30px 20px;} }
 </style>
 </head>
 <body>
-<header>
-  <div>
-    <div class="eyebrow">MISSION ALBION · REPOSITORY DIRECTORY</div>
-    <h1>Mission Albion: Deconstructing British Disinformation</h1>
-    <p class="subtitle">A T2SAIM repository dedicated to the forensic analysis and deconstruction of UK-origin narrative manipulations, PsyOps, and epistemic containment vectors.</p>
-    <span class="stamp stamp-red">Restricted Access</span>
-    <span class="stamp stamp-gold">T2SAIM Protocol</span>
-  </div>
-  <div class="tarco-badge">TARCO<small>FORENSIC INTELLIGENCE</small></div>
-</header>
+    <div class="wrap">
+        <header>
+            <div class="eyebrow">T2SAIM Consolidated Intelligence</div>
+            <h1>MISSION ALBION</h1>
+            <p class="subtitle">Forensic Structural Analysis of Institutional Narratives, Geopolitical Logistics Shocks, and Synthetic Commodity Volatility.</p>
+        </header>
 
-<section>
-  <p>Welcome to the <strong>Mission Albion</strong> root directory. This repository tracks and analyses operations targeting geopolitical narrative dominance by British media apparatuses (e.g., BBC, The Guardian, Reuters). Below are the finalised Veritas Reports.</p>
-</section>
+        <div class="portal-card">
+            <div class="quote-container">
+                <p class="quote-text">"Inclusive institutions deliver information with its uncertainty intact... Extractive ones launder uncertainty out of their public communications."</p>
+                <p class="quote-author">Applying Acemoglu's Theory of Institutional Drift</p>
+            </div>
 
-<div class="grid">
-  <a href="BBC_Putin_Counter_Analysis.html" class="card">
-    <h3>BBC Putin PsyOp Analizi (TR)</h3>
-    <p>BBC'nin "Putin İmajı" makalesinin dekonstrüksiyon raporu. Türkçeye çevrilmiş ve "Undermining" imzaları T2SAIM filtresinden geçirilmiştir.</p>
-  </a>
-  <a href="BBC_Putin_Counter_Analysis_UK.html" class="card">
-    <h3>BBC Putin PsyOp Analysis (UK)</h3>
-    <p>The forensic deconstruction report of the BBC's "Putin Image" article, presented in formal UK English detailing the obfuscated kinetic realities.</p>
-  </a>
-</div>
+            <div class="options-grid">
 
-<div class="footer">
-TarCo Forensic Intelligence Research · Computational Behavioural Analysis · Canonical Filing<br>
-Operation Integrity Shield · Mission Albion Index<br>
-<span>TEMPORAL LOCK: 2026-05-31T18:35:00Z · SOURCE-SET: T2SAIM_NUCLEUS, INTELAIM, TARCOMAP</span>
-</div>
+                <a href="BBC_Putin_Counter_Analysis_UK.html" class="option-button">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">BBC Putin PsyOp Analysis</div>
+                        <p class="option-desc">Forensic deconstruction of the BBC's "Putin Image" article, detailing obfuscated kinetic realities.</p>
+                    </div>
+                </a>
+
+                <a href="BBC_Putin_Counter_Analysis.html" class="option-button">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">BBC Putin PsyOp Analizi</div>
+                        <p class="option-desc">BBC'nin "Putin İmajı" makalesinin dekonstrüksiyon raporu ve "Undermining" PsyOp taktikleri.</p>
+                    </div>
+                </a>
+
+                <a href="report_en.html" class="option-button" id="btn-report-en">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">The "Super El Niño" Story</div>
+                        <p class="option-desc">A forensic public report on BBC weather framing, urea shocks, and the Strait of Hormuz context.</p>
+                    </div>
+                </a>
+
+                <a href="report_tr.html" class="option-button" id="btn-report-tr">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">"Süper El Niño" Anlatısı</div>
+                        <p class="option-desc">BBC meteoroloji çerçevelemesi, üre fiyat dalgalanması ve Hürmüz Boğazı lojistik krizinin adli incelemesi.</p>
+                    </div>
+                </a>
+                
+                <a href="t2saim_forensics_rivet_joint_v1_uk.html" class="option-button" id="btn-report-uk">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">Rivet Joint Incident – UK Report</div>
+                        <p class="option-desc">Forensic analysis of the Black Sea Rivet Joint episode, English version.</p>
+                    </div>
+                </a>
+
+                <a href="t2saim_forensics_rivet_joint_v1_turkce.html" class="option-button" id="btn-report-tr2">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">Rivet Joint Olayı – Türkçe Rapor</div>
+                        <p class="option-desc">Karadeniz Rivet Joint olayı üzerine Türkçe adli inceleme.</p>
+                    </div>
+                </a>
+
+                <a href="UK_AIHM_Stalling_Strategy_Analysis.md" class="option-button" id="btn-aihm-en">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">UK ECHR Stalling Strategy</div>
+                        <p class="option-desc">Analysis of the Chișinău Declaration, family reunification ban, and the gradual erosion of ECtHR authority.</p>
+                    </div>
+                </a>
+
+                <a href="UK_AIHM_Oyalama_Stratejisi_Analizi.md" class="option-button" id="btn-aihm-tr">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">BK AİHM Oyalama Stratejisi</div>
+                        <p class="option-desc">Chișinău Bildirisi, aile birleşimi yasağı ve AİHM yetkisinin aşamalı erozyonu analizi.</p>
+                    </div>
+                </a>
+
+                <a href="OPERATION_INTEGRITY_SHIELD_CONSOLIDATED_UK_v2.html" class="option-button" id="btn-shield-en">
+                    <div class="lang-badge">English Edition</div>
+                    <div>
+                        <div class="option-title">Operation Integrity Shield</div>
+                        <p class="option-desc">T2SAIM Consolidated Intelligence protocol applied to institutional integrity.</p>
+                    </div>
+                </a>
+
+                <a href="OPERATION_INTEGRITY_SHIELD_BIRLESIK_TR_v2.html" class="option-button" id="btn-shield-tr">
+                    <div class="lang-badge">Türkçe Sürüm</div>
+                    <div>
+                        <div class="option-title">Doğruluk Kalkanı Operasyonu</div>
+                        <p class="option-desc">Kurumsal dürüstlük ve istihbarat manipülasyonu üzerine T2SAIM birleşik protokolü.</p>
+                    </div>
+                </a>
+
+                <a href="TR_Digital_Twin_Scenario_Matrix.html" class="option-button" id="btn-digital-twin">
+                    <div class="lang-badge">Dual Language</div>
+                    <div>
+                        <div class="option-title">TR Digital Twin Matrix</div>
+                        <p class="option-desc">Predictive Forensics: 24-Month Macroeconomic Scenario Matrix (Locked).</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>Tarco Forensic Intelligence &middot; 2026 &middot; <span class="veritas">Veritas Per Se</span></p>
+        </footer>
+    </div>
 </body>
 </html>
