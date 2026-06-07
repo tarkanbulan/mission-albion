@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM İntranet — Ana Sayfa</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --ink:#0f1a2e; --paper:#f7f4ec; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280; }
+  body { background:var(--ink); color:var(--paper); font-family:Georgia,"Times New Roman",serif; font-size:16px; line-height:1.7; padding:40px 24px; }
+  .page { max-width:960px; margin:0 auto; }
+  header { text-align:center; padding-bottom:32px; border-bottom:2px solid var(--gold); margin-bottom:36px; }
+  .eyebrow { font-family:Helvetica,Arial,sans-serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
+  h1 { font-weight:500; font-size:32px; color:var(--paper); margin:8px 0; }
+  .subtitle { color:rgba(247,244,236,0.5); font-style:italic; font-size:14px; }
+  
+  .module { margin:28px 0; padding:24px; border:1px solid rgba(201,168,76,0.08); }
+  .module h2 { font-size:20px; font-weight:500; color:var(--gold); margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px; }
+  .module p { color:rgba(247,244,236,0.6); font-size:14px; margin-bottom:12px; }
+  
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media(max-width:640px){.grid{grid-template-columns:1fr;}}
+  .link { display:block; padding:14px 18px; border:1px solid rgba(201,168,76,0.08); text-decoration:none; color:var(--paper); transition:all 0.2s; }
+  .link:hover { border-color:var(--gold); background:rgba(255,255,255,0.02); }
+  .link .ltitle { font-family:Helvetica,Arial,sans-serif; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:var(--gold); }
+  .link .ldesc { font-size:13px; color:rgba(247,244,236,0.5); margin-top:2px; }
+  
+  footer { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.05); text-align:center; font-size:12px; color:rgba(247,244,236,0.3); font-family:Helvetica,Arial,sans-serif; }
+  .seal { display:inline-block; margin-top:16px; border:1px solid var(--gold); color:var(--gold); padding:8px 24px; font-family:monospace; font-size:10px; letter-spacing:3px; text-transform:uppercase; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">T2SAIM · İNTRANET · GİZLİ</div>
+  <h1>Kriz Erken Uyarı Sistemi</h1>
+  <p class="subtitle">Üç ayaklı analiz sistemi · tüm raporlar · simülasyonlar · kalibrasyon</p>
+</header>
+
+<div class="module">
+  <h2>📡 Erken Uyarı Sistemi (3 Ayak)</h2>
+  <p>Toplumsal sinyaller, matematiksel göstergeler ve dijital özne simülasyonları — birleşik kriz değerlendirmesi.</p>
+  <div class="grid">
+    <a href="../t2saim_explainer.html" class="link"><div class="ltitle">🌐 Ana Sistem (EN)</div><div class="ldesc">İngilizce — teknik açıklama</div></a>
+    <a href="../t2saim_aciklama_tr.html" class="link"><div class="ltitle">🌐 Ana Sistem (TR)</div><div class="ldesc">Türkçe — sistem anlatımı</div></a>
+    <a href="../Spock_Rapor/6_kriz_sinyali_V2_aciklamali.html" class="link"><div class="ltitle">🔴 Sosyal Sinyaller</div><div class="ldesc">6 kriz sinyali — EFMI, güven, kutuplaşma, M2/NIR, CA, tevekkül</div></a>
+    <a href="../Spock_Rapor/matematiksel_gostergeler_V2_aciklamali.html" class="link"><div class="ltitle">🔵 Matematiksel Göstergeler</div><div class="ldesc">SRI, lambda, rezervler, horizon kronolojisi</div></a>
+    <a href="../Spock_Rapor/simulasyonlar_V2_aciklamali.html" class="link"><div class="ltitle">🟢 Dijital Özne Simülasyonu</div><div class="ldesc">CBC — 1M iterasyon, statik/dinamik</div></a>
+    <a href="../Spock_Rapor/BIRLESIK_KRİZ_RAPORU.html" class="link" style="border-color:rgba(201,168,76,0.3);"><div class="ltitle" style="color:var(--gold);">🏆 BİRLEŞİK RAPOR</div><div class="ldesc">Üç ayağın tek dosyada birleşimi</div></a>
+  </div>
+</div>
+
+<div class="module">
+  <h2>🧪 BTF Amnesia — Simülasyon Protokolü</h2>
+  <p>Kör yürüyüş protokolü. DATA, sadece geçmiş veriyi kullanarak 1994-2026 arasını adım adım yürüdü.</p>
+  <div class="grid">
+    <a href="index.html" class="link" style="border-color:rgba(139,26,26,0.3);"><div class="ltitle" style="color:var(--accent);">📊 BTF Sonuçları</div><div class="ldesc">3 koşu, 388 ay, performans karşılaştırması</div></a>
+    <a href="../Spock_Rapor/matematiksel_gostergeler_V1_formullu.md" class="link"><div class="ltitle">📐 Teknik Parametreler</div><div class="ldesc">Formüller, katsayılar, eşikler</div></a>
+  </div>
+</div>
+
+<div class="module">
+  <h2>📚 Kriz Kütüphanesi</h2>
+  <p>Türkiye kriz kronolojisi, 20 yıllık raporlar, zihin yapısı analizleri.</p>
+  <div class="grid">
+    <a href="../Spock_Rapor/6_kriz_sinyali_anatomisi.html" class="link"><div class="ltitle">📖 6 Kriz Sinyali Anatomisi</div><div class="ldesc">Derinlemesine — V1 iç kullanım</div></a>
+    <a href="../Spock_Rapor/20_yillik_rapor_cikarimi.html" class="link"><div class="ltitle">📜 20 Yıllık Rapor Çıkarımı</div><div class="ldesc">Hoffer · De Mesquita · Acemoğlu</div></a>
+    <a href="../Spock_Rapor/kriz_tahmin_sistemi_bilimsel_rapor.html" class="link"><div class="ltitle">🔬 Bilimsel Rapor</div><div class="ldesc">Metodoloji, ajan tipleri, katsayılar</div></a>
+  </div>
+</div>
+
+<div class="module">
+  <h2>⚙️ Sistem Dosyaları</h2>
+  <p>Python kodları, ABM prototipi, EVDS köprüsü.</p>
+  <div class="grid">
+    <a href="https://github.com/tarkanbulan/mission-albion" class="link"><div class="ltitle">📦 GitHub Repo</div><div class="ldesc">Tüm kaynak kodlar</div></a>
+    <a href="../../../../T2SAIM_ABM/main.py" class="link"><div class="ltitle">🤖 ABM Prototip</div><div class="ldesc">Fraudster-Bank-Regulator simülasyonu</div></a>
+  </div>
+</div>
+
+<footer>
+  <p>USS Verity · T2SAIM Federasyonu · Mission Albion</p>
+  <div class="seal">VERITAS PER SE</div>
+</footer>
+</div>
+</body>
+</html>

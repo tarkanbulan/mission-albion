@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BTF Amnesia — İndeks</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:#0f1a2e; color:#f7f4ec; font-family:Georgia,"Times New Roman",serif; font-size:17px; padding:48px 24px; }
+  .page { max-width:780px; margin:0 auto; }
+  header { text-align:center; border-bottom:1px solid rgba(201,168,76,0.15); padding-bottom:28px; margin-bottom:36px; }
+  .eyebrow { font-family:Helvetica,Arial,sans-serif; font-size:10px; letter-spacing:4px; text-transform:uppercase; color:#c9a84c; margin-bottom:12px; }
+  h1 { font-weight:500; font-size:32px; color:#f7f4ec; }
+  .subtitle { color:rgba(247,244,236,0.5); font-style:italic; font-size:15px; margin-top:8px; }
+  .section { margin:32px 0; }
+  .section h2 { color:#c9a84c; font-weight:500; font-size:20px; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:8px; }
+  .card { display:block; padding:20px 24px; border:1px solid rgba(201,168,76,0.1); margin-bottom:14px; text-decoration:none; color:#f7f4ec; transition:all 0.2s; }
+  .card:hover { border-color:rgba(201,168,76,0.3); background:rgba(255,255,255,0.02); }
+  .card .ctitle { font-family:Helvetica,Arial,sans-serif; font-size:13px; font-weight:600; text-transform:uppercase; letter-spacing:1px; color:#c9a84c; }
+  .card .cdesc { font-size:14px; color:rgba(247,244,236,0.6); margin-top:4px; }
+  .card .cmeta { font-family:monospace; font-size:11px; color:rgba(247,244,236,0.3); margin-top:6px; }
+  .badge { display:inline-block; font-family:Helvetica,Arial,sans-serif; font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 8px; margin-left:6px; }
+  .badge-new { background:#c9a84c; color:#0f1a2e; }
+  .badge-sec { background:#8b1a1a; color:#f7f4ec; }
+  footer { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.05); text-align:center; font-size:12px; color:rgba(247,244,236,0.3); font-family:Helvetica,Arial,sans-serif; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">T2SAIM · BTF AMNESIA · GİZLİ</div>
+  <h1>BTF Amnesia Protokolü</h1>
+  <p class="subtitle">Kriz erken uyarı sistemi — simülasyon, kalibrasyon, ve çıktılar</p>
+</header>
+
+<div class="section">
+  <h2>📊 Simülasyon Çıktıları</h2>
+  <a href="btf_sonuclar.html" class="card">
+    <div class="ctitle">BTF-001: İlk Koşu Sonuçları</div>
+    <div class="cdesc">DATA'nın 388 aylık kör yürüyüşü. 1994-2026 arası tüm kriz tespitleri, SRI değerleri, alarm durumları.</div>
+    <div class="cmeta">388 ay · 61 kriz · En yüksek SRI: 0.716</div>
+  </a>
+</div>
+
+<div class="section">
+  <h2>🔧 Kalibrasyon & Parametreler</h2>
+  <a href="../03_PARAMETRELER.md" class="card">
+    <div class="ctitle">Protokol Parametreleri</div>
+    <div class="cdesc">SRI kanal ağırlıkları, lambda, eşik değerleri, kriz tanımı.</div>
+    <div class="cmeta">v1.0 · İç kullanım</div>
+  </a>
+  <a href="../03_PARAMETRELER_v2_KALIBRE.md" class="card">
+    <div class="ctitle">Kalibre Edilmiş Parametreler <span class="badge badge-new">v2.0</span></div>
+    <div class="cdesc">5 kanallı SRI, yeni eşikler, sosyal şok dedektörü, global VIX kanalı.</div>
+    <div class="cmeta">Kalibrasyon sonrası · DATA 2. koşuya hazır</div>
+  </a>
+  <a href="GÖREV_TALİMAT\KALIBRASYON_TALIMATI.md" class="card">
+    <div class="ctitle">Kalibrasyon Talimatı <span class="badge badge-new">YENİ</span></div>
+    <div class="cdesc">DATA'ya verilecek düzeltilmiş parametreler ve beklenen iyileşme.</div>
+  </a>
+</div>
+
+<div class="section">
+  <h2>📋 Görev Belgeleri</h2>
+  <a href="GÖREV_TALİMAT\EMİRLER.md" class="card">
+    <div class="ctitle">Emirler</div>
+    <div class="cdesc">DATA'ya verilen ana görev talimatı.</div>
+  </a>
+  <a href="GÖREV_TALİMAT\SPOCK_GOREV_PAKETI.md" class="card">
+    <div class="ctitle">Spock Görev Paketi</div>
+    <div class="cdesc">Science Officer'dan DATA'ya iletilen teknik talimat.</div>
+  </a>
+  <a href="GÖREV_TALİMAT\DATA_RAPORU.md" class="card">
+    <div class="ctitle">DATA Görev Raporu</div>
+    <div class="cdesc">DATA'nın ürettiği sonuç raporu.</div>
+  </a>
+</div>
+
+<div class="section">
+  <h2>🔗 Bağlantılı Sistemler</h2>
+  <a href="../../08_IntelAIM_Analysis/t2saim_explainer.html" class="card">
+    <div class="ctitle">Ana T2SAIM Sistemi</div>
+    <div class="cdesc">Üç ayaklı kriz erken uyarı sisteminin ana dokümanı.</div>
+  </a>
+</div>
+
+<footer>
+  <p>Mission Albion · T2SAIM Federasyonu · Haziran 2026</p>
+  <p>Bu belge gizlidir. Yalnızca yetkili kişiler erişebilir.</p>
+</footer>
+</div>
+</body>
+</html>

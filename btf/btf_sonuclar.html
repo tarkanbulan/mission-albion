@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BTF Amnesia — Simülasyon Sonuçları</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --ink:#0f1a2e; --paper:#f7f4ec; --rule:#1a2a4a; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280; --serif:Georgia,"Times New Roman",serif; --sans:Helvetica,Arial,sans-serif; --mono:"Courier New",monospace; }
+  body { background:var(--ink); color:var(--paper); font-family:var(--serif); font-size:16px; line-height:1.7; padding:32px 24px; }
+  .page { max-width:960px; margin:0 auto; }
+  header { text-align:center; padding:40px 0 32px; border-bottom:1px solid rgba(201,168,76,0.15); margin-bottom:32px; }
+  .eyebrow { font-family:var(--sans); font-size:10px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:34px; color:var(--paper); margin-bottom:8px; }
+  .subtitle { color:rgba(247,244,236,0.6); font-style:italic; font-size:15px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:24px; color:var(--gold); margin:32px 0 16px; }
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:24px 0; }
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr);}}
+  .stat { text-align:center; padding:20px; border:1px solid rgba(201,168,76,0.15); }
+  .stat .num { font-size:36px; font-weight:700; color:var(--gold); }
+  .stat .lbl { font-family:var(--sans); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:rgba(247,244,236,0.4); margin-top:4px; }
+  table { width:100%; border-collapse:collapse; margin:20px 0; font-size:13.5px; }
+  th { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:1px; padding:10px 12px; background:rgba(201,168,76,0.1); color:var(--gold); text-align:left; }
+  td { padding:8px 12px; border-bottom:1px solid rgba(255,255,255,0.05); }
+  .tr-crisis { background:rgba(139,26,26,0.15); } .tr-warn { background:rgba(201,168,76,0.08); }
+  .badge-alarm { display:inline-block; font-family:var(--sans); font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:2px 8px; }
+  .badge-red { background:var(--accent); color:var(--paper); } .badge-gold { background:var(--gold); color:var(--rule); }
+  .sri-bar { height:14px; border-radius:7px; overflow:hidden; }
+  .sri-fill { height:100%; border-radius:7px; }
+  .footer { margin-top:48px; padding-top:24px; border-top:1px solid rgba(255,255,255,0.1); font-size:12px; color:rgba(247,244,236,0.4); text-align:center; font-family:var(--sans); }
+  .pwd-box { max-width:400px; margin:80px auto; text-align:center; padding:40px; border:1px solid var(--gold); }
+  .pwd-box input { background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.3); color:var(--paper); padding:10px 16px; font-size:16px; width:200px; margin-top:12px; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">T2SAIM · BTF AMNESIA · GİZLİ</div>
+  <h1>Kör Yürüyüş: 388 Aylık Kriz Simülasyonu</h1>
+  <p class="subtitle">DATA, sadece 1994 öncesi veriyi bilerek 2026'ya kadar adım adım yürüdü. Her adımda sadece o güne kadar olanı gördü. İşte sonuçlar.</p>
+</header>
+
+<h2>Genel İstatistikler</h2>
+<div class="stats">
+  <div class="stat"><div class="num">388</div><div class="lbl">Toplam Ay</div></div>
+  <div class="stat"><div class="num">61</div><div class="lbl">Kriz Tespiti</div></div>
+  <div class="stat"><div class="num">%15.7</div><div class="lbl">Kriz Oranı</div></div>
+  <div class="stat"><div class="num">0.716</div><div class="lbl">En Yüksek SRI</div></div>
+</div>
+
+<h2>Kriz Tespit Performansı</h2>
+<table>
+  <tr><th>Dönem</th><th>Alarm Oranı</th><th>En Yüksek SRI</th><th>Durum</th></tr>
+  <tr class="tr-crisis"><td>1994 Krizi</td><td>%100</td><td>0.639</td><td><span class="badge-alarm badge-red">MÜKEMMEL</span></td></tr>
+  <tr class="tr-crisis"><td>2001 Likidite Krizi</td><td>%91</td><td>0.499</td><td><span class="badge-alarm badge-gold">İYİ</span></td></tr>
+  <tr><td>2008 Küresel Kriz</td><td>%0</td><td>0.245</td><td><span style="color:var(--muted);">KAÇIRILDI</span></td></tr>
+  <tr><td>2013 Gezi</td><td>%0</td><td>0.310</td><td><span style="color:var(--muted);">KAÇIRILDI</span></td></tr>
+  <tr><td>2016 Darbe Girişimi</td><td>%0</td><td>0.343</td><td><span style="color:var(--muted);">KAÇIRILDI</span></td></tr>
+  <tr class="tr-warn"><td>2018 Kur Krizi</td><td>%83</td><td>0.439</td><td><span class="badge-alarm badge-gold">İYİ</span></td></tr>
+  <tr class="tr-warn"><td>2020 COVID</td><td>%75</td><td>0.475</td><td><span style="color:#d97706;">ORTA</span></td></tr>
+  <tr class="tr-crisis"><td>2021-2022 Enflasyon</td><td>%100</td><td>0.716</td><td><span class="badge-alarm badge-red">MÜKEMMEL</span></td></tr>
+  <tr class="tr-warn"><td>2023 Seçim Sonrası</td><td>%91</td><td>0.565</td><td><span class="badge-alarm badge-gold">İYİ</span></td></tr>
+</table>
+
+<h2>SRI Zaman Çizelgesi (En Yüksek 10)</h2>
+<table>
+  <tr><th>Tarih</th><th>SRI</th><th>Psiko</th><th>Finans</th><th>Vol</th><th>Olay</th></tr>
+  <tr class="tr-crisis"><td>2022-01</td><td><div class="sri-bar" style="width:100px;background:rgba(255,255,255,0.1)"><div class="sri-fill" style="width:100%;background:var(--accent);"></div></div> 0.716</td><td>0.58</td><td>0.72</td><td>0.85</td><td>Enflasyon zirvesi</td></tr>
+  <tr class="tr-crisis"><td>2022-02</td><td>0.676</td><td>0.58</td><td>0.72</td><td>0.72</td><td>Enflasyon</td></tr>
+  <tr class="tr-crisis"><td>2022-08</td><td>0.661</td><td>0.58</td><td>0.72</td><td>0.67</td><td>Enflasyon</td></tr>
+  <tr class="tr-crisis"><td>2023-07</td><td>0.651</td><td>0.59</td><td>0.75</td><td>0.58</td><td>Seçim sonrası</td></tr>
+  <tr class="tr-crisis"><td>1994-03</td><td>0.639</td><td>0.52</td><td>0.46</td><td>1.00</td><td>1994 krizi</td></tr>
+</table>
+
+<div class="footer">
+  <p>BTF-001 | DATA → Spock → Kaptan Tarco | Haziran 2026</p>
+  <p>Bu belge gizlidir. Yalnızca yetkili kişiler erişebilir.</p>
+</div>
+</div>
+</body>
+</html>
