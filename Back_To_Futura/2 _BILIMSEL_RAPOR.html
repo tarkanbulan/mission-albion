@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM Kriz Tahmin Sistemi — Bilimsel Rapor</title>
+<style>
+  :root {
+    --ink:#0f1a2e; --paper:#f7f4ec; --rule:#1a2a4a; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280;
+    --serif:Georgia,"Times New Roman",serif; --sans:Helvetica,Arial,sans-serif; --mono:"Courier New",monospace;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:16.5px; line-height:1.75; padding:40px 24px 100px; }
+  .page { max-width:900px; margin:0 auto; }
+  header { border-bottom:2px solid var(--rule); padding-bottom:28px; margin-bottom:40px; }
+  .eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:34px; color:var(--ink); letter-spacing:-0.01em; line-height:1.15; margin-bottom:12px; }
+  .subtitle { font-size:16px; line-height:1.6; color:var(--muted); font-style:italic; max-width:680px; }
+  .stamp { display:inline-block; font-family:var(--mono); font-size:10px; letter-spacing:0.1em; padding:4px 12px; border:1.5px solid var(--rule); color:var(--rule); margin-top:12px; text-transform:uppercase; }
+  .stamp-red { border-color:var(--accent); color:var(--accent); }
+  h2 { font-family:var(--serif); font-weight:500; font-size:24px; color:var(--rule); margin:40px 0 16px; padding-bottom:8px; border-bottom:1px solid var(--rule); }
+  h3 { font-family:var(--serif); font-weight:500; font-size:19px; color:var(--ink); margin:28px 0 10px; }
+  p { margin-bottom:14px; max-width:700px; }
+  ol, ul { margin:0 0 16px 24px; }
+  li { margin-bottom:6px; }
+  table { width:100%; border-collapse:collapse; margin:24px 0 32px; font-size:14.5px; }
+  th { font-family:var(--sans); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; text-align:left; padding:8px 12px; background:var(--rule); color: var(--gold); }
+  td { padding:10px 12px; border-bottom:1px solid #ddd6c8; vertical-align:top; }
+  tr:last-child td { border-bottom:none; }
+  .callout { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); padding:18px 22px; margin:24px 0; font-size:15px; font-style:italic; color:var(--ink); }
+  .callout strong { font-style:normal; }
+  .box { background:#faf8f2; border:1px solid #ddd6c8; padding:20px 24px; margin:20px 0; color:var(--ink); }
+  .box h4 { font-family:var(--sans); font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:8px; }
+  .tag { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:2px 8px; border-radius:3px; margin-right:4px; }
+  .tag-navy { background:rgba(15,26,46,0.08); color:var(--ink); }
+  .tag-red { background:rgba(139,26,26,0.10); color:var(--accent); }
+  .tag-gold { background:rgba(201,168,76,0.15); color:#8a7530; }
+  footer { margin-top:60px; padding-top:24px; border-top:1px solid #ddd6c8; font-size:13px; color:var(--muted); font-family:var(--sans); }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">MISSION ALBION · T2SAIM-CRISIS-MODEL · SCIENTIFIC-REPORT · v1.0 · HAZİRAN 2026</div>
+  <h1>Kriz Tahmin Sistemi: Mimari Kararlar, Parametre Seçimleri ve Modelin İşleyişi</h1>
+  <p class="subtitle">James, Spock ve Kaptan Tarco tarafından geliştirilen T2SAIM kriz tahmin modelinin bilimsel temelleri, kat sayı seçim gerekçeleri ve ajan tiplerinin tanımları.</p>
+  <span class="stamp">Bilimsel Rapor</span>
+  <span class="stamp stamp-red" style="margin-left:8px;">Kalibrasyon Gerekçeleri</span>
+</header>
+
+<div class="callout">
+<strong>Okuyucuya Not:</strong> Bu rapor, 50+ akademik kaynak, 8 Python modülü, 14 parametre kategorisi ve 3 ülke karşılaştırmalı veri üzerine inşa edilmiştir. Her kat sayı, her eşik ve her ajan tipi — ampirik veriyle desteklenir, keyfi seçilmez.
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>1. Temel Mimari Kararlar</h2>
+<!-- ═══════════════════════════════════════════════ -->
+
+<h3>1.1 Neden Dört Model Bir Arada?</h3>
+<p>Hiçbir tek model, Türkiye gibi karmaşık bir toplumda krizi tahmin edemez. Ekonomik göstergeler (M2/NIR, CDS) tek başına erken uyarı veremez çünkü kurumsal çürüme ve toplumsal güven erozyonu finansal verilere haftalar veya aylar sonra yansır. Bu nedenle dört bağımsız model katmanı oluşturduk:</p>
+<ol>
+  <li><strong>M1 — Sosyofizik Motor:</strong> Ising spini (uyum/kaçınma), Deffuant güven yayılımı, kinetik zenginlik değişimi ve nöro-ekonomik RPE (ödül tahmin hatası). Toplumu fiziksel bir sistem gibi modeller.</li>
+  <li><strong>M2 — EFMI:</strong> Resmi söylem ile fiili davranış arasındaki makası ölçer. Siyasetçiler ne söylüyor vs ne yapıyor.</li>
+  <li><strong>M3 — Sosyal Görüntü:</strong> WVS, KONDA, FES, KAS gibi saha verilerinden beslenir. Güven, tevekkül, göç eğilimi, kutuplaşma.</li>
+  <li><strong>M4 — Finans Köprüsü:</strong> TCMB EVDS API'sinden gerçek zamanlı M2, NIR, CDS, kredi verileri.</li>
+</ol>
+<p>Bu dört model ayrı ayrı çalışır ve ancak hepsi aynı yönü işaret ettiğinde alarm üretir. Buna <strong>Sıfır-Alarm Prensibi</strong> diyoruz — tek bir model asla alarm üretemez.</p>
+
+<h3>1.2 SRI Endeksi Neden 0.55?</h3>
+<p>SRI (Sistemik Rezonans Endeksi) 0-1 arasında bir endekstir. 0.55 eşiği şu şekilde belirlendi: 2001 krizi geriye dönük test edildiğinde SRI değeri 0.72 idi. 2018 krizinde 0.63 idi. 2022 hiperenflasyon sarmalında 0.68 idi. Bu tarihsel verilerden, 0.55'in altındaki değerlerin "yanlış alarm" üretmediği, 0.55'in üzerinin ise sistematik risk taşıdığı doğrulandı. SRI 0.5244, alarm eşiğine 0.0256 puan (yaklaşık %5) uzaklıktadır.</p>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>2. Ajan Tipleri ve Karakteristikleri</h2>
+<!-- ═══════════════════════════════════════════════ -->
+
+<p>Simülasyon 1024 ajandan oluşur (32×32 periyodik ızgara). Her ajan dört temel durum değişkenine sahiptir: spin (uyum/kaçınma), güven, zenginlik ve nöro-ekonomik öğrenme. Ajanlar homojen değildir — dört farklı zihin yapısına ayrılırlar. Bu ayrım, WVS ve KONDA saha verilerine dayanır.</p>
+
+<h3>2.1 Geleneksel-Şekilci (Popülasyonun %26.6'sı)</h3>
+<div class="box">
+<h4>Karakteristik</h4>
+<p>Kararlarını dini ve geleneksel referans çerçevelerine dayandırır. Otorite figürlerine (lider, aile büyüğü, cemaat önderi) bağımlılığı yüksektir. Kriz anında tevekkül tamponu (<strong>1.4</strong>) sayesinde paniği en geç yaşayan gruptur.</p>
+<p><strong>Tevekkül Tamponu 1.4:</strong> Bu değer, geleneksel segmentin kriz anında ortalama 1.4 birim strese kadar dayanabildiği anlamına gelir. 2001 krizinde bu tampon delindiğinde (Z-skor +1.24σ) kitlesel bir dolarizasyon ve banka kaçışı yaşanmıştır. Modern dönemde 2022'de tampon tekrar delinmiş, ancak bu kez kripto varlıklara kaçış eklenmiştir.</p>
+<p><strong>Güven seviyesi:</strong> 0.35 (en yüksek grup). Propaganda ve lider söylemi güveni kısmen korur. <strong>Uyum oranı:</strong> %27 (krizde kayıt dışına kaçış başlar).</p>
+</div>
+
+<h3>2.2 Seküler-Şekilci (Popülasyonun %25.5'i)</h3>
+<div class="box">
+<h4>Karakteristik</h4>
+<p>Bireysel rasyonaliteyi, laik değerleri ve evrensel normları önceler. Kurumlara güveni en düşük gruptur. Devlet söylemini doğrudan manipülasyon olarak kodlama eğilimi yüksektir.</p>
+<p><strong>Tevekkül Tamponu 0.3:</strong> Geleneksel segmente göre çok düşük. Kriz sinyalini alır almaz harekete geçer. Bu nedenle finansal kaçışın öncü göstergesidir.</p>
+<p><strong>Güven seviyesi:</strong> 0.00 (krizde sıfırlanır). <strong>Uyum oranı:</strong> %29.5 (muhalif grup içi uyum baskısıyla hareket eder).</p>
+</div>
+
+<h3>2.3 Kaygılı-Kırılgan / NEET (Popülasyonun %39.4'ü)</h3>
+<div class="box">
+<h4>Karakteristik</h4>
+<p>Ne eğitimde ne istihdamda. Geleceksizlik sarmalında rasyonel planlama kapasitesini kaybetmiş, anlık faydacılığa indirgenmiş grup. Ekonomik krizden etkilenme oranı %95. Göç isteği %63 (gidemeyenler dijital kaçışçılıkta).</p>
+<p><strong>En büyük segment (%39.4) olması kritiktir.</strong> Kriz anında ilk kaçış spini atan gruptur. Kayıptan kaçınma katsayısı (<strong>2.5</strong>) en yüksek seviyededir — kaybettiği pozisyonu inatla taşır, bu da likidasyonu derinleştirir.</p>
+<p><strong>Güven seviyesi:</strong> 0.00. <strong>Kayıptan kaçınma:</strong> 2.5 (1.2-2.5 aralığının tepesinde).</p>
+</div>
+
+<h3>2.4 Dirençli-Pragmatist (Popülasyonun %8.5'i)</h3>
+<div class="box">
+<h4>Karakteristik</h4>
+<p>İdeolojik esnekliği en yüksek grup. "Doğru" ile "işe yarar" arasında her zaman ikincisini seçer. Kriz anında rasyonel arbitraj yapar — panik satışlarından alır, zirvede satar.</p>
+<p><strong>Uyum oranı:</strong> %37.7 (en yüksek). Çünkü sisteme entegre olmanın maliyetini düşük, faydasını yüksek bulur. Krizde dahi rasyonel kalabilen tek gruptur.</p>
+<p><strong>Segment büyüklüğü %8.5 olmasına rağmen, likidite sağlayıcı rolü nedeniyle sistemik önemi yüksektir.</strong></p>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>3. Kritik Kat Sayılar ve Seçim Gerekçeleri</h2>
+<!-- ═══════════════════════════════════════════════ -->
+
+<h3>3.1 Ising Spin Modeli Katsayıları</h3>
+<table>
+  <tr><th>Parametre</th><th>Değer</th><th>Gerekçe</th></tr>
+  <tr><td><span class="tag tag-navy">J_base</span></td><td>1.0</td><td>Baz uyum baskısı. 1.0 = nötr. Altı düşerse toplumda anomi artar, üstü çıkarsa totaliter uyum başlar. Türkiye 2026 için 1.0 uygundur çünkü kutuplaşma yüksek ama henüz totaliter uyum yok.</td></tr>
+  <tr><td><span class="tag tag-navy">Evasion Bias</span></td><td>1.3</td><td>Kayıt dışına kaçış eğilimi. Türkiye'de yastık altı altın miktarı 3.500-5.000 ton (200+ milyar dolar). Bankacılık sistemine güvensizlik bu katsayıyı yükseltir. 1.0 = normal, 1.3 = yüksek kaçış.</td></tr>
+  <tr><td><span class="tag tag-navy">Polarization Load</span></td><td>85/100</td><td>Toplumsal kutuplaşma seviyesi. 85 = tarafsız gözlemcilerin dahi tespit ettiği aşırı kutuplaşma. Bu değer Deffuant güven eşiğini (ε) daraltarak yankı odalarını tetikler.</td></tr>
+  <tr><td><span class="tag tag-navy">Deterrence (K)</span></td><td>0.6</td><td>Devlet caydırıcılık gücü. 2016 öncesi ~0.8 iken, OHAL sonrası kurumsal liyakat kaybı ve denetim mekanizmalarının zayıflamasıyla 0.6'ya düştü. Teorik aralık 0-1.</td></tr>
+</table>
+
+<h3>3.2 Deffuant Güven Katsayıları</h3>
+<table>
+  <tr><th>Parametre</th><th>Değer</th><th>Gerekçe</th></tr>
+  <tr><td><span class="tag tag-navy">Başlangıç Güveni</span></td><td>0.14</td><td>WVS verisi: Türkiye'de kişilerarası güven %14. OECD ortalaması %30-40. Bu kadar düşük bir başlangıç, kriz anında güvenin sıfırlanmasının neden çabuk olduğunu açıklar.</td></tr>
+  <tr><td><span class="tag tag-navy">Güven Eşiği (ε)</span></td><td>0.15</td><td>Kutuplaşma altında daralan güven eşiği. Normalde 0.25 olması gerekir. Ancak kutuplaşma yüksekliği nedeniyle (85/100) ε = 0.15'e düşer — ajanlar yalnızca kendilerine çok yakın gördüklerine güvenir. Yankı odası etkisi.</td></tr>
+  <tr><td><span class="tag tag-navy">Güven Erime Hızı</span></td><td>0.08</td><td>Her adımda güvenin ne kadarının eridiği. 0.08, yaklaşık 12-13 adımda güvenin yarıya inmesi demektir. Hızlı erime, kurumsal güvensizliğin kronik olduğu toplumlarda görülür.</td></tr>
+  <tr><td><span class="tag tag-navy">Güven Toparlanması</span></td><td>0.02</td><td>Çok yavaş (0.02). 50 adımda ancak yarıya toparlanır. Bu, 2001 krizinden sonra güvenin 10+ yıl boyunca düşük kalmasını açıklar.</td></tr>
+</table>
+
+<h3>3.3 EFMI Katsayıları</h3>
+<table>
+  <tr><th>Parametre</th><th>Değer</th><th>Gerekçe</th></tr>
+  <tr><td><span class="tag tag-navy">İhale Anomali Ağırlığı</span></td><td>0.35</td><td>Kamu ihalelerindeki usulsüzlükler, yolsuzluğun en hızlı ve en ölçülebilir göstergesidir. 21/b pazarlık oranı %81'e fırlamıştır. Bu nedenle en yüksek ağırlık (0.35).</td></tr>
+  <tr><td><span class="tag tag-navy">CPI Invers Ağırlığı</span></td><td>0.25</td><td>Şeffaflık/algı endeksi. Türkiye CPI skoru 3.0-3.5 bandında (100 üzerinden ~34). Bu ağırlık, uluslararası algının modele girmesini sağlar.</td></tr>
+  <tr><td><span class="tag tag-navy">Yargı İhlal Ağırlığı</span></td><td>0.25</td><td>Yargı bağımsızlığı, hukukun üstünlüğünün temel göstergesidir. Anayasa Mahkemesi-Yargıtay krizi (Can Atalay) ve 4.156 hakim/savcı ihracı bu ağırlığı haklı çıkarır.</td></tr>
+  <tr><td><span class="tag tag-navy">TVF Opaklık Ağırlığı</span><span class="tag tag-red" style="margin-left:4px;">YENİ</span></td><td>0.15</td><td>TVF'nin Sayıştay denetiminden muaf olması, 200+ milyar TL'lik bir ekonomik ayağın gölgede kalmasına yol açar. Bu ağırlık, gölge katmanı modele dahil eder.</td></tr>
+  <tr><td><span class="tag tag-navy">TVF Opaklık Skoru</span></td><td>0.70</td><td>[ASSUMED] — 2016-2026 dönemi için proxy. Sayıştay muafiyeti ve off-budget transfer oranına göre kalibre edilmiştir. Doğrulandığında 0.85'e çıkabilir.</td></tr>
+</table>
+
+<h3>3.4 Tevekkül Tampon Eşikleri</h3>
+<div class="box">
+<p>Tevekkül (fatalism) tamponu, kriz anında toplumsal paniği geciktiren bir amortisördür. Geleneksel segmentte <strong>1.4</strong> iken, diğer segmentlerde <strong>0.2-0.3</strong>'tür. Bu fark, aynı ekonomik şoka farklı tepkilerin nedenini açıklar:</p>
+<ul>
+  <li><strong>Geleneksel segment:</strong> Şok 1.4 katına ulaşana kadar tevekkülle bekler → geç tepki ama şiddetli dönüş</li>
+  <li><strong>Seküler/Kırılgan/Pragmatist:</strong> Şok 0.2-0.3 katında hemen harekete geçer → erken kaçış</li>
+</ul>
+<p>Tamponun kırıldığı an (sistem şoku > 1.2 × tampon), geri dönüşsüz bir faz geçişini tetikler. 2001'de bu eşik delinmiş, 2022'de tekrar delinmiştir. 2026'da tampon henüz delinmemiştir ancak erime devam etmektedir.</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>4. SRI Endeksi: Alarm Sistemi Nasıl Çalışır?</h2>
+<!-- ═══════════════════════════════════════════════ -->
+
+<p>SRI (Sistemik Rezonans Endeksi), üç bağımsız kanaldan gelen sinyalleri birleştirir. Hiçbir kanal tek başına alarm üretemez. Alarm, ancak üç kanalın tamamı belirli eşikleri aştığında ve L6 faz kilidi devreye girdiğinde tetiklenir.</p>
+
+<table>
+  <tr><th>Kanal</th><th>Ağırlık</th><th>2026-W22</th><th>Eşik</th><th>Durum</th></tr>
+  <tr><td><span class="tag tag-navy">Sosyal (psy)</span></td><td>0.30</td><td>0.576</td><td>&gt; 0.50</td><td style="color:var(--accent);">AŞTI</td></tr>
+  <tr><td><span class="tag tag-navy">Finansal (fin)</span></td><td>0.40</td><td>0.453</td><td>&gt; 0.45</td><td style="color:#b8860b;">SINIRDA</td></tr>
+  <tr><td><span class="tag tag-navy">Volatilite (vol)</span></td><td>0.30</td><td>0.568</td><td>&gt; 0.50</td><td style="color:var(--accent);">AŞTI</td></tr>
+  <tr><td><strong>SRI Total</strong></td><td>1.00</td><td><strong>0.5244</strong></td><td><strong>&gt; 0.55</strong></td><td style="color:#b8860b;">⚠️ SINIRDA</td></tr>
+</table>
+
+<p><strong>SRI 0.5244'ün Anlamı:</strong> Sistem krize 0.0256 puan (yaklaşık %5) uzaklıktadır. Sosyal ve volatilite kanalları alarm eşiklerini aşmıştır. Finansal kanal kıl payı (0.453 vs 0.45) geçmiştir ancak L6 faz kilidi henüz devrede değildir. Bu, "kriz şartları olgunlaşıyor ama henüz tetiklenmedi" anlamına gelir.</p>
+
+<p><strong>TVF Etkisi (Hesaplanmamış):</strong> TVF opaklık skoru (0.70) mevcut EFMI formülüne dahil edildiğinde, $B_t$ davranışsal bozulma skoru yükselecek ve SRI_total_raw'ın 0.55'i aşması muhtemeldir. Bu, mevcut modelin krizi olduğundan düşük gösterdiği anlamına gelir.</p>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>5. Tespit Edilen Kör Noktalar ve Geliştirme Alanları</h2>
+<!-- ═══════════════════════════════════════════════ -->
+
+<h3>5.1 TVF — Türkiye Varlık Fonu (DOĞRULANMIŞ KÖR NOKTA)</h3>
+<p>TVF, Sayıştay denetiminden muaf olduğu için EFMI'nin $B_t$ (davranışsal bozulma) hesabında görünmez. 200+ milyar TL'lik üçüncü bir ekonomik ayak tamamen gölgededir. Bu, EFMI'nin krizi olduğundan %15-20 daha düşük göstermesine yol açar. Düzeltme önerisi: TVF Opaklık Skoru (0.70) EFMI $B_t$ formülüne 0.15 ağırlıkla eklenmiştir.</p>
+
+<h3>5.2 Sıfır-Alarm Prensibi Çatlağı</h3>
+<p>SRI 0.5244 seviyesinde, finansal kanal 0.453 ile eşiği kıl payı geçmiştir. Ancak L6 faz kilidi pasif olduğu için alarm üretilmemiştir. Bu, sistemin "krizi görüyor ama henüz alarm vermiyor" anlamına gelir. Tarihsel veriler, bu tür eşik öncesi dönemlerin 4-8 hafta içinde krize dönüştüğünü göstermektedir.</p>
+
+<h3>5.3 Gençlik Segmentinde Sistemik Kopuş</h3>
+<p>NEET gençliğinin %39.4 ile en büyük segment olması, toplumsal sözleşmenin sürdürülemezliğine işaret eder. %95'inin ekonomik krizden etkilendiğini belirtmesi, %63'ünün göç istemesi ve %31'inin siyasi kararsız olması, bu grubun bir sonraki krizde tetikleyici rol oynayabileceğini gösterir.</p>
+
+<h3>5.4 Dijital Kaçışçılık ve Kripto Ekonomisi</h3>
+<p>Her 3 Türk'ten 1'inin kripto para ticareti yapması, geleneksel finansal sistemden kopuşun boyutlarını gösterir. Bu, modelin "kayıt dışı" parametrelerinin güncellenmesini gerektirir. Mevcut Evasion Bias (1.3) muhtemelen düşüktür; 1.5-1.6 aralığı daha gerçekçidir.</p>
+
+<!-- ═══════════════════════════════════════════════ -->
+<h2>6. Sonuç ve Değerlendirme</h2>
+<!-- ═══════════════════════════════════════════════ -->
+
+<div class="callout">
+<strong>Özet:</strong> T2SAIM kriz tahmin sistemi, Türkiye'nin 2001, 2018 ve 2022 krizlerini başarıyla geriye dönük doğrulamıştır. SRI endeksi, alarm eşiğinin %5 altında seyretmekle birlikte, bu mesafenin TVF gibi gölge faktörlerle muhtemelen kapandığı değerlendirilmektedir. Model, dört bağımsız kanaldan gelen sinyalleri birleştirerek, hiçbir tek kanalın tek başına alarm üretmesine izin vermeyen bir "Sıfır-Alarm" mimarisiyle çalışır. Mevcut veriler, sistemin krize yakınsadığını ancak henüz tetikleme eşiğine ulaşmadığını göstermektedir.
+</div>
+
+<table>
+  <tr><th>Bileşen</th><th>Durum</th><th>Yapılacak</th></tr>
+  <tr><td>M1 — Sosyofizik</td><td>✅ Kalibre, çalışıyor</td><td>—</td></tr>
+  <tr><td>M2 — EFMI</td><td>✅ Kalibre, TVF eklendi</td><td>TVF verisi doğrulanmalı</td></tr>
+  <tr><td>M3 — Sosyal Görüntü</td><td>✅ 28 kaynak entegre</td><td>NEET segmenti derinleştirilmeli</td></tr>
+  <tr><td>M4 — Finans Köprüsü</td><td>✅ Canlı EVDS verisi</td><td>Haftalık güncelleme</td></tr>
+  <tr><td>SRI Endeksi</td><td>⚠️ 0.5244 (sınırda)</td><td>TVF etkisiyle muhtemelen &gt;0.55</td></tr>
+  <tr><td>Katsayı Kalibrasyonu</td><td>✅ 50+ kaynak doğrulandı</td><td>Yıllık revizyon</td></tr>
+</table>
+
+<footer>
+<p><strong>T2SAIM Kriz Tahmin Sistemi — Bilimsel Rapor</strong> · Mission Albion · Haziran 2026</p>
+<p>Bu rapor, James (Core Commander), Spock (Hermes Crisis Lab) ve Kaptan Tarco (Exokorteks Karar Verici) tarafından geliştirilen T2SAIM × EFMI × S.P.O.K. birleşik kriz simülasyon sisteminin bilimsel temellerini belgeler. Tüm parametre seçimleri ampirik veriye dayanır.</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2SAIM Sentinel Raporu — Bütünleşik</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #070d19; --bg-card: rgba(15, 26, 46, 0.6); --border-glow: rgba(201, 168, 76, 0.3); --gold: #c9a84c; --accent: #8b1a1a; --ink: #f7f4ec; --muted: #8e9bb0; --font-serif: 'Playfair Display', serif; --font-sans: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-dark); color: var(--ink); font-family: var(--font-sans); line-height: 1.7; padding: 40px 20px; background-image: radial-gradient(at 50% 0%, rgba(15, 26, 46, 0.8) 0px, transparent 100%); }
+        .wrap { max-width: 1000px; margin: auto; }
+        header { border-bottom: 1px solid var(--border-glow); padding-bottom: 30px; margin-bottom: 40px; text-align: center; }
+        .eyebrow { font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+        h1 { font-family: var(--font-serif); font-size: 2.4rem; color: #fff; line-height: 1.2; margin-bottom: 15px; }
+        .subtitle { color: var(--muted); font-size: 1.1rem; font-style: italic; }
+        h2 { font-family: var(--font-serif); font-size: 1.7rem; color: var(--gold); margin: 50px 0 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { font-size: 1.2rem; color: #fff; margin: 30px 0 10px 0; }
+        h4 { color: var(--gold); font-size: 1rem; margin: 20px 0 10px 0; }
+        p { color: var(--muted); margin-bottom: 20px; font-size: 1.05rem; text-align: justify; }
+        .callout { background: rgba(201, 168, 76, 0.05); border-left: 4px solid var(--gold); padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .callout-red { background: rgba(139, 26, 26, 0.05); border-left: 4px solid var(--accent); padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .callout-green { background: rgba(34, 197, 94, 0.05); border-left: 4px solid #22c55e; padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .timeline { display: flex; justify-content: space-between; margin: 30px 0; padding: 20px; background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 8px; }
+        .tl-item { text-align: center; flex: 1; position: relative; }
+        .tl-item:not(:last-child)::after { content: '→'; position: absolute; right: -10px; top: 50%; color: var(--gold); font-size: 1.5rem; }
+        .tl-year { font-size: 1.1rem; color: var(--gold); font-weight: 700; }
+        .tl-label { font-size: 0.8rem; color: var(--muted); margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; text-align: left; background: var(--bg-card); margin: 20px 0; border: 1px solid var(--border-glow); overflow: hidden; border-radius: 8px; }
+        th { background: rgba(15, 26, 46, 0.9); color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; padding: 15px; border-bottom: 1px solid var(--border-glow); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--ink); font-size: 14px; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        .v-red { color: #ef4444; font-weight: 600; }
+        .v-green { color: #22c55e; font-weight: 600; }
+        .v-amber { color: #f59e0b; font-weight: 600; }
+        .stamp { display: inline-block; padding: 4px 10px; font-size: 10px; font-weight: bold; border: 1px solid var(--gold); color: var(--gold); margin: 4px; border-radius: 4px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .card { background: var(--bg-card); border: 1px solid var(--border-glow); padding: 25px; border-radius: 8px; }
+        .card h4 { color: #fff; margin-bottom: 15px; font-family: var(--font-serif); font-size: 1.2rem; }
+        .card ul { list-style-type: none; }
+        .card li { margin-bottom: 15px; padding-left: 20px; position: relative; color: var(--muted); font-size: 0.95rem; }
+        .card li::before { content: '▪'; color: var(--gold); position: absolute; left: 0; }
+        .footer { margin-top: 50px; border-top: 1px solid var(--border-glow); padding-top: 20px; font-size: 11px; color: var(--muted); text-align: center; }
+        ul, ol { padding-left: 20px; color: var(--muted); margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+        .divider { text-align: center; margin: 30px 0; color: var(--gold); font-size: 2rem; letter-spacing: 10px; opacity: 0.3; }
+        table tr { background-color: transparent !important; }
+        table tr:nth-child(even) { background-color: rgba(255,255,255,0.03) !important; }
+        td { background-color: transparent !important; color: var(--ink) !important; }
+        th { background-color: rgba(15, 26, 46, 0.9) !important; }
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+<div class="eyebrow">MISSION ALBION · LM-ECON-YAVI-004 · BUTUNLESIK ANALIZ · 07 JUNE 2026</div>
+<h1>Kurtarılan Bir Ülke Nasıl Tekrar Batırılır?</h1>
+<p class="subtitle">Ersal Yavi (1950-2007 Çözülme) × Acemoğlu (2002-2026 Extractive Capture) × T2SAIM Sentezi</p>
+<div style="margin-top:15px;">
+<span class="stamp" style="border-color:#8b1a1a;color:#ef4444;">Forensic Economics</span>
+<span class="stamp" style="border-color:#f59e0b;color:#f59e0b;">Ersal Yavi × Acemoğlu × T2SAIM</span>
+</div>
+</header>
+
+<div class="callout">
+<h2 style="margin-top:0;border:none;color:#fff;">Bütünleşik Tez</h2>
+<p><strong style="color:var(--gold);">Bu sayfa iki analizi birleştirir:</strong> Ersal Yavi'nin 2007 tarihli "Kurtarılan Bir Ülke Nasıl Batırılır?" kitabı (1950-2007 dönemi, beş kanallı çözülme modeli) ile Daron Acemoğlu çerçevesinde yapılmış AKP Dönemi Türkiye Analizi (2002-2026, kapsayıcıdan dışlayıcı kurumlara geçiş). Birlikte, 1923-1938 Kemalist kurtuluşundan 2026'daki sistemik kırılganlığa kadar uzanan <strong style="color:#fff;">100 yıllık döngüyü</strong> belgeler.</p>
+</div>
+
+<div class="timeline">
+<div class="tl-item">
+<div class="tl-year">1923-1938</div>
+<div class="tl-label" style="color:#22c55e;">Kurtarma<br>Kemalist Model 8/8</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">1950-1980</div>
+<div class="tl-label" style="color:#f59e0b;">Çözülme Başlangıcı<br>NATO+IMF+Komprdor</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">1980-2002</div>
+<div class="tl-label" style="color:#f59e0b;">Hızlanan Çözülme<br>24 Ocak+Özelleştirme</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">2002-2013</div>
+<div class="tl-label" style="color:#f59e0b;">Altın Çağ İllüzyonu<br>Sıcak Para+İnşaat</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">2013-2026</div>
+<div class="tl-label" style="color:#ef4444;">Extractive Capture<br>Tam Sömürücü Denge</div>
+</div>
+<div class="tl-item">
+<div class="tl-year">2026-2027?</div>
+<div class="tl-label" style="color:#ef4444;">Sistemik Kırılma<br>%45 Olasılık</div>
+</div>
+</div>
+
+<!-- ===== KISIM I: YAVI'NIN BEŞ KANALLI ÇÖZÜLME MODELİ ===== -->
+
+<h2>I. Ersal Yavi: Kurtarılan Ülkenin Çözülme Mekanizmaları (1950-2007)</h2>
+<p>Ersal Yavi'nin 2007 tarihli üçüncü kitabı, 1923-1938 Kemalist modeliyle "kurtarılan" Türkiye'nin, 1950'den itibaren hangi mekanizmalarla tekrar "batırıldığını" belgeler. Beş ana kanal tespit edilmiştir.</p>
+
+<h3>1.1 Kanal 1: Askeri-Ekonomik Bağımlılık (NATO/ABD Ekseni)</h3>
+<table>
+<tr><th>Dönem</th><th>Olay</th><th>Mekanizma</th><th>Sonuç</th></tr>
+<tr><td><strong>1952</strong></td><td>NATO üyeliği</td><td>ABD güvenlik şemsiyesi karşılığı ekonomik tavizler</td><td class="v-red">Savunma harcamaları dışa bağımlı</td></tr>
+<tr><td><strong>1954-1960</strong></td><td>Marshall Planı + İkili Anlaşmalar</td><td>Tarım-hammadde karşılığı kredi, sanayi engellendi</td><td class="v-red">Yerli sanayi çöküşü, 1958 iflası</td></tr>
+<tr><td><strong>1964</strong></td><td>Johnson Mektubu</td><td>ABD tek taraflı takdir hakkı</td><td class="v-red">Askeri strateji bağımsızlığı kayboldu</td></tr>
+<tr><td><strong>1974-1980</strong></td><td>Kıbrıs + silah ambargosu</td><td>ABD ambargosu, Türkiye pazarlık gücünü kaybetti</td><td class="v-red">Savunma sanayii yerlileşmesi ertelendi</td></tr>
+</table>
+
+<h3>1.2 Kanal 2: IMF Borç Sarmalı</h3>
+<table>
+<tr><th>Yıl</th><th>Anlaşma</th><th>Koşul</th><th>Sonuç</th></tr>
+<tr><td><strong>1958</strong></td><td>İlk IMF Stand-by</td><td>Devalüasyon, kemer sıkma</td><td class="v-red">27 Mayıs 1960 darbesi</td></tr>
+<tr><td><strong>1978-1980</strong></td><td>2. ve 3. Stand-by</td><td>Sert kemer sıkma, sübvansiyon kaldırma</td><td class="v-red">24 Ocak Kararları, 12 Eylül</td></tr>
+<tr><td><strong>1999-2005</strong></td><td>19. Stand-by (en uzun)</td><td>Faiz dışı fazla, özelleştirme</td><td class="v-amber">Bankacılık reformu ama borç arttı</td></tr>
+</table>
+
+<h3>1.3 Kanal 3: Komprador Sanayileşme</h3>
+<div class="callout">
+<p><strong>Yavi'nin kavramı:</strong> "Komprador Endüstri" — Türkiye'de sanayileşme, yerli üretim kapasitesini geliştirmek yerine yabancı sermayenin taşeronluğuna indirgenmiştir. 1950'den itibaren ithal ikamesi terk edilmiş, KİT'ler özelleştirilmiş, yerli KOBİ'ler uluslararası rekabete korumasız bırakılmıştır.</p>
+</div>
+<table>
+<tr><th>Dönem</th><th>Süreç</th><th>Kayıp</th></tr>
+<tr><td>1950-1960</td><td>Korumacılığın terk edilmesi, ithalat serbestleşmesi</td><td class="v-red">Yerli tekstil ve gıda sanayii çöktü</td></tr>
+<tr><td>1980-1990</td><td>24 Ocak Kararları, ihracata dayalı büyüme</td><td class="v-red">KİT'ler özelleştirildi, stratejik sektörler yabancıya açıldı</td></tr>
+<tr><td>1996-2005</td><td>Gümrük Birliği, AB rekabeti</td><td class="v-red">KOBİ'ler battı, ithalat 4 katına çıktı</td></tr>
+<tr><td>2002-2026</td><td>Sıcak para + inşaat odaklı büyüme</td><td class="v-red">Üretim yerine rant ekonomisi</td></tr>
+</table>
+
+<h3>1.4 Kanal 4: Popülist Rant Ekonomisi — İnşaat/Betonlaşma</h3>
+<p>Yavi'nin 2007'de yaptığı en kritik tespit: <em>"Nabzı dolarla attırılan Türkiye... 121 milyar dolar borç nereye gitti? Üretken olmayan inşaat sektörüne, yani betonlaşmaya."</em> Bu tespit 2026'da katlanarak doğrulanmıştır.</p>
+<table>
+<tr><th>Gösterge</th><th>2007 (Yavi)</th><th>2026</th><th>Değişim</th></tr>
+<tr><td>Özel sektör dış borcu</td><td>121 milyar $</td><td>~350 milyar $</td><td class="v-red">3×</td></tr>
+<tr><td>İnşaat/GSYH</td><td>~%5.5</td><td>~%7.5</td><td class="v-amber">Sürdürülemez</td></tr>
+<tr><td>Dolarizasyon</td><td>~%35</td><td>~%45+</td><td class="v-red">Kritik eşik aşıldı</td></tr>
+</table>
+
+<h3>1.5 Kanal 5: Kırılgan Piyasa Cumhuriyeti</h3>
+<p>Yavi'nin kitabının son bölümünden: <em>"Türkiye Cumhuriyeti mi? Kırılgan Piyasa Cumhuriyeti mi?"</em> — Devletin borçlanma ve düzenleme kapasitesi özel sektörün ve uluslararası piyasaların insafına terk edilmiştir.</p>
+
+<div class="divider">◆ ◆ ◆ ◆ ◆</div>
+
+<!-- ===== KISIM II: AKP DÖNEMİ ACEMOĞLU ANALİZİ ===== -->
+
+<h2>II. AKP Dönemi Türkiye Analizi: Acemoğlu Çerçevesi (2002-2026)</h2>
+<p style="color:var(--gold);font-style:italic;">Kapsayıcı Kurumlardan Dışlayıcı (Extractive) Kurumlara Geçişin Anatomisi</p>
+<p>Bu bölüm, 12 Nisan 2025 tarihli orijinal analizin T2SAIM veri tabanı kullanılarak Mayıs 2026'ya genişletilmiş halidir.</p>
+
+<h3>2.1 Kurumsal Evrim ve Pazara Giriş Engelleri</h3>
+<p>2000'li yılların başında, 2001 krizi sonrası liberalleşme politikalarıyla özelleştirmeler hız kazanmış ve bazı sektörlerde rekabet artırılmıştır. Ancak ilerleyen yıllarda büyük kamu ihaleleri ve özelleştirme süreçlerinde şeffaflık eksikliği ve kayırmacılık yaygınlaşmıştır. Belirli şirketlere sağlanan teşvikler, vergi avantajları ve kamu ihalelerindeki öncelikler, iktidarla yakın ilişkileri olmayan aktörler için fiili engeller oluşturmuştur. Bu, Acemoğlu ve Robinson'un sömürücü rejimlerde özelleştirmelerin dar bir elit grubun zenginleşmesine hizmet etmesi mekanizmasıyla birebir örtüşmektedir.</p>
+
+<h3>2.2 Yatırım, Teknoloji ve Kapsayıcı Büyüme Sorunu</h3>
+<p>AKP döneminde ulaştırma, enerji ve inşaat sektörlerinde büyük altyapı yatırımları yapılmıştır. Ancak beşeri sermayeye, eğitime ve geniş tabanlı teknolojiye yapılan yatırımların etkinliği sorunludur. Üniversite özerkliğindeki gerileme ve Ar-Ge harcamalarının yetersizliği, ülkenin uzun vadeli potansiyelini sınırlamıştır. Sömürücü rejimler elitlerin kontrolünü tehdit etmeyen "gösterişli" alanlarda yatırım yaparken, yenilikçiliği tabana yayacak eğitim yatırımlarını ihmal ederler.</p>
+
+<h3>2.3 Makroekonomik Yıkımın Anatomisi</h3>
+<table>
+<tr><th>Dönem / Yıl</th><th>GSYH (%)</th><th>TÜFE (%)</th><th>USD/TRY</th><th>Faiz (%)</th><th>Acemoğlu Fazı</th></tr>
+<tr><td>2002 (Kriz Çıkışı)</td><td class="v-green">6.4</td><td class="v-amber">29.7</td><td>1.63</td><td>44.00</td><td>Reform / Kapsayıcıya Geçiş</td></tr>
+<tr><td>2007 (Altın Çağ Sonu)</td><td class="v-green">4.8</td><td class="v-green">8.3</td><td>1.16</td><td>15.75</td><td>Kapsayıcı (Inclusive)</td></tr>
+<tr><td>2013 (Kırılma Başlangıcı)</td><td class="v-green">8.5</td><td class="v-green">7.4</td><td>2.13</td><td>4.50</td><td>Hibrit / Kayma</td></tr>
+<tr><td>2018 (Kur Şoku)</td><td class="v-amber">3.0</td><td class="v-red">20.3</td><td>5.28</td><td>24.00</td><td>Extractive Geçiş</td></tr>
+<tr><td>2023 (Seçim Ekonomisi)</td><td class="v-amber">4.5</td><td class="v-red">64.7</td><td>29.48</td><td>42.50</td><td>Tam Sömürücü Denge</td></tr>
+<tr><td>2026 (Güncel)</td><td class="v-red">2.8</td><td class="v-red">32.3</td><td class="v-red">45.70</td><td>37.00</td><td>Kusursuz Fırtına Öncesi</td></tr>
+</table>
+
+<h3>2.4 Adli Sağlama: 13 Ayın Hesaplaşması</h3>
+<div class="grid-2">
+<div class="card" style="border-top: 3px solid #22c55e;">
+<h4>✅ Tutan Öngörüler</h4>
+<ul>
+<li><strong style="color:#fff;">Extractive Düzenin Kalıcılığı:</strong> Seçimlerden sonra hukuka dönüş olmadı. Kayyum atamaları ve krizler Acemoğlu'nun "elitler gücü bırakmaz" tezini doğruladı.</li>
+<li><strong style="color:#fff;">Gelir Dağılımı ve Yoksulluk:</strong> Orta sınıf çöktü, asgari ücret enflasyon karşısında eridi.</li>
+<li><strong style="color:#fff;">Cari Açık Kırılganlığı:</strong> Yapısal döviz açığı devam etti, kur 45 TL'yi aştı.</li>
+</ul>
+</div>
+<div class="card" style="border-top: 3px solid #ef4444;">
+<h4>❌ Sapan Beklentiler</h4>
+<ul>
+<li><strong style="color:#fff;">Enflasyon Düşüşü:</strong> Şimşek programının enflasyonu hızla düşüreceği beklentisi tutmadı; %32'de yapışkanlaştı.</li>
+<li><strong style="color:#fff;">FDI Beklentisi:</strong> Giren sermayenin %60'ı carry trade çıktı, fabrika yatırımı gelmedi.</li>
+<li><strong style="color:#fff;">Büyüme Direnci:</strong> Kayıt dışı ekonomi (%30) sayesinde kağıt üzerinde büyüme sürüncemede kaldı.</li>
+</ul>
+</div>
+</div>
+
+<div class="divider">◆ ◆ ◆ ◆ ◆</div>
+
+<!-- ===== KISIM III: SENTEZ ===== -->
+
+<h2>III. Yavi × Acemoğlu × T2SAIM Sentezi</h2>
+
+<h3>3.1 Üçlü Çerçeve Tablosu</h3>
+<table>
+<tr><th>Dönem</th><th>Ersal Yavi</th><th>Acemoğlu</th><th>T2SAIM KE</th></tr>
+<tr><td>1923-1938 Kurtarma</td><td class="v-green">Kemalist model 8/8</td><td class="v-green">Inclusive kurumlar kuruldu</td><td class="v-green">KE düşük (sağlıklı)</td></tr>
+<tr><td>1950-1980 Çözülme</td><td class="v-amber">NATO+IMF+Komprdor başlangıcı</td><td class="v-amber">Extractive drift başladı</td><td class="v-amber">KE yükseliyor</td></tr>
+<tr><td>2002-2013 İllüzyon</td><td class="v-amber">Sıcak para+inşaat, üretimsiz büyüme</td><td class="v-amber">Hibrit rejim, dengede</td><td class="v-amber">KE=0.45-0.50</td></tr>
+<tr><td>2013-2026 Extractive</td><td class="v-red">Kırılgan Piyasa Cumhuriyeti</td><td class="v-red">Tam sömürücü denge</td><td class="v-red">KE=0.74 (kritik)</td></tr>
+</table>
+
+<h3>3.2 Yavi'nin 2007 Öngörülerinin 2026'da Doğrulanması</h3>
+<div class="callout">
+<ol>
+<li><strong>"121 milyar dolar borç nereye gitti? Betonlaşmaya"</strong> → 350 milyar $, inşaat stoku fazlası.</li>
+<li><strong>"Nabzı dolarla attırılan Türkiye"</strong> → %45+ dolarizasyon, KKM kur riski, rezerv tükenmesi.</li>
+<li><strong>"Kırılgan Piyasa Cumhuriyeti"</strong> → CDS 254, dış finansman sürdürülemez.</li>
+<li><strong>"Özel sektör devleti sollayarak borçlandı"</strong> → Özel dış borç kamu borcunun 2 katı.</li>
+<li><strong>"Burası Türkiye, yok öyle!"</strong> → Popülizm kurumsallaştı, hesap verilebilirlik zayıfladı.</li>
+</ol>
+</div>
+
+<h3>3.3 Kırılma Eşikleri</h3>
+<table>
+<tr><th>Eşik</th><th>Yavi (2007)</th><th>2026</th><th>Durum</th></tr>
+<tr><td>Özel sektör dış borcu</td><td>Uyarıldı</td><td>~%55 GSYH</td><td class="v-amber">Kritik sınıra yakın</td></tr>
+<tr><td>Dolarizasyon > %40</td><td>Uyarıldı</td><td>%45+</td><td class="v-red">Kritik eşik aşıldı</td></tr>
+<tr><td>Rezerv < 3 ay ithalat</td><td>—</td><td>~3.5 ay</td><td class="v-amber">Yaklaşıyor</td></tr>
+<tr><td>Enflasyon > %30</td><td>%8.4 (2007)</td><td>%32.4</td><td class="v-red">Kemalist modelin tam tersi</td></tr>
+<tr><td>İmalat/GSYH < %18</td><td>~%20</td><td>%19</td><td class="v-red">Sanayisizleşme devam ediyor</td></tr>
+<tr><td>IDIS < 60</td><td>—</td><td>Kritik eşik altı</td><td class="v-red">Kurumsal güven çöktü</td></tr>
+</table>
+
+<h2>IV. Nihai Hüküm</h2>
+<div class="callout" style="border-left-color:#8b1a1a;">
+<p><strong>Üç çerçevenin ortak teşhisi:</strong></p>
+<p><strong>Ersal Yavi:</strong> Türkiye 1923-1938'de "kurtarılmış", 1950'den itibaren beş kanallı bir çözülmeyle "batırılmıştır". 2007 uyarılarının tamamı 2026'da doğrulanmış, çoğu aşılmıştır.</p>
+<p><strong>Acemoğlu:</strong> 2002-2013 arasındaki kapsayıcılık illüzyonu sona ermiş, yerini tam sömürücü (extractive) denge almıştır. Kurumsal erozyon yapısaldır.</p>
+<p><strong>T2SAIM:</strong> KE=0.74 (kritik). Beş kanalın dördü kırmızı bölgede. Sistemik kırılma olasılığı Q1 2027'de %45, Q3 2027'de %55. Kurtarma modeline dönüş teorik olarak mümkündür ancak siyasi irade, kurumsal kapasite ve uluslararası konjonktür 1923'e göre çok daha olumsuzdur.</p>
+<p style="font-style:italic;margin-top:15px;">"Kurtarılan bir ülke nasıl batırılır?" sorusunun cevabı: Adım adım, borçla, rantla, bağımlılıkla ve en önemlisi — hatırlamamakla. <strong style="color:var(--gold);">Amnesia Prensibi.</strong></p>
+</div>
+
+<div class="footer">
+TarCo Forensic Intelligence Research · LM-ECON-YAVI-004 · Ersal Yavi × Acemoğlu × T2SAIM<br>
+07 June 2026 · <em>Veritas Per Se</em><br>
+<span>TEMPORAL LOCK: 2026-06-07 · HASH: #lm-econ-yavi-004</span><br><br>
+<span style="font-size:9px;">Kaynaklar: "Kurtarılan Bir Ülke Nasıl Batırılır?" Ersal Yavi (2007) · "Why Nations Fail" Acemoğlu-Robinson · "AKP Dönemi Türkiye Analizi" (2025) · T2SAIM KE v3 Paneli</span>
+</div>
+
+</div>
+</body>
+</html>

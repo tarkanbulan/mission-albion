@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM — Simülasyonlar (V2 - Açıklamalı)</title>
+<style>
+  :root { --ink:#f7f4ec; --paper:#0f1a2e; --rule:#f7f4ec; --gold:#c9a84c; --accent:#8b1a1a; --muted:#8e9bb0; --green:#15803d; --serif:Georgia,"Times New Roman",serif; --sans:Helvetica,Arial,sans-serif; --mono:"Courier New",monospace; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.75; padding:0; }
+  .page { max-width:820px; margin:0 auto; padding:48px 24px 80px; }
+  header { border-bottom:2px solid var(--rule); padding-bottom:28px; margin-bottom:40px; }
+  .eyebrow { font-family:var(--sans); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:34px; color:var(--ink); line-height:1.12; margin-bottom:12px; }
+  .subtitle { font-size:17px; line-height:1.6; color:var(--muted); font-style:italic; max-width:660px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:24px; color:var(--rule); margin:36px 0 14px; padding-bottom:6px; border-bottom:1px solid var(--rule); }
+  h3 { font-family:var(--sans); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin:24px 0 8px; }
+  p { margin-bottom:14px; max-width:700px; }
+  .callout { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); padding:16px 20px; margin:18px 0; font-size:15px; font-style:italic; }
+  .callout strong { font-style:normal; }
+  .callout-red { background:rgba(139,26,26,0.05); border-left-color:var(--accent); }
+  .badge-red { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:var(--accent); color:var(--paper); }
+  .badge-gold { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:var(--gold); color:var(--rule); }
+  .badge-navy { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:#1a2a4a; color:var(--paper); }
+  .horizon-box { background:#1a2a4a; color:var(--paper); padding:20px 24px; margin:18px 0; }
+  .horizon-box h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .horizon-box p { color:rgba(247,244,236,0.8); font-size:14px; }
+  .whatis { background:#f0ede6; padding:18px 22px; margin:16px 0; }
+  .whatis h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--rule); margin-bottom:6px; }
+  table { width:100%; border-collapse:collapse; margin:18px 0 24px; font-size:14.5px; }
+  th { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; text-align:left; padding:8px 12px; background:#1a2a4a; color: var(--gold); }
+  td { padding:10px 12px; border-bottom:1px solid #ddd6c8; vertical-align:top; }
+  .sim-card { background:#faf8f2; border:1px solid #ddd6c8; padding:20px 24px; margin:18px 0; }
+  .sim-card h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .mc-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:24px 0; }
+  @media(max-width:640px){.mc-grid{grid-template-columns:1fr;}}
+  .mc-card { padding:18px; text-align:center; border:1px solid #ddd6c8; background:var(--paper); }
+  .mc-card .mc-num { font-size:32px; font-weight:700; color:var(--rule); }
+  .mc-card .mc-label { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-top:4px; }
+  .mc-card .mc-desc { font-size:13px; margin-top:6px; }
+  .bar-container { margin:12px 0; }
+  .bar-row { display:flex; align-items:center; gap:10px; margin:6px 0; }
+  .bar-label { width:80px; font-family:var(--sans); font-size:11px; font-weight:600; color:var(--muted); text-align:right; }
+  .bar-track { flex:1; height:20px; background:#e8e2d4; border-radius:10px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:10px; }
+  .bar-pct { width:40px; font-family:var(--mono); font-size:11px; font-weight:600; }
+  .footer { margin-top:60px; padding-top:24px; border-top:1px solid #ddd6c8; font-size:13px; color:var(--muted); font-family:var(--sans); }
+  hr { border:none; border-top:1px solid #ddd6c8; margin:36px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">T2SAIM · SİMÜLASYONLAR · V2 · HAZİRAN 2026</div>
+  <h1>Üçüncü Ayak: Dijital Özne Simülasyonları</h1>
+  <p class="subtitle">Birinci ayak "ne" olacağını söyler. İkinci ayak "ne zaman" olacağını. Üçüncü ayak ise "hangi olasılıkla" olacağını — binlerce dijital özneyle, milyonlarca kez tekrarlayarak.</p>
+</div>
+
+<div class="callout">
+<strong>Bu belge, üç ayaklı sistemimizin son ayağıdır.</strong> Birinci ayak (sosyal sinyaller) ve ikinci ayak (matematiksel göstergeler) ayrı dosyalardadır. Bu ayak, simülasyonları kapsar. Son adımda üçünü birleştireceğiz.
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2>Giriş: Neden Simülasyon?</h2>
+<!-- ═══════════════════════════════════ -->
+
+<p>Göstergeler bize bir krizin <em>yaklaştığını</em> söyler. Ama <strong>kesin cevap</strong> vermez. Çünkü gerçek dünya çok karmaşıktır. Binlerce değişken aynı anda etkileşir, her biri farklı yönlere çeker.</p>
+
+<p>İşte bu noktada simülasyon devreye girer. Binlerce, milyonlarca kez "acaba şöyle olursa ne olur?" diye sorarız. Her seferinde koşulları biraz değiştiririz. Sonunda bir olasılık haritası çıkar: "Şu koşullar altında kriz %87 ihtimalle 6-12 ay içinde gelir" gibi.</p>
+
+<div class="whatis">
+<h4>Computational Behavioral Computation (CBC) nedir?</h4>
+<p>Geleneksel yaklaşımlar, geleceği tahmin etmek için geçmişin aynen tekrarlayacağını varsayar. Oysa gerçek dünya öyle çalışmaz. İnsanlar öğrenir, adapte olur, strateji değiştirir. CBC (Davranışsal Hesaplama), işte bu öğrenme ve adaptasyon sürecini matematiğe döker. Her dijital öznenin karar mekanizmasını ayrı ayrı modeller, sonra hepsini aynı anda çalıştırır. Bu sayede, geleneksel yöntemlerin göremediği "ortaya çıkan" (emergent) davranışları yakalar.</p>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2>James'in Dijital Özne Simülasyonu</h2>
+<!-- ═══════════════════════════════════ -->
+
+<p>James, 1.000 adet "dijital özne" yarattı. Her biri, gerçek bir insanın karar mekanizmalarını taklit eden yapay bir varlık.</p>
+
+<div class="sim-card">
+<h4>Dijital Öznelerin Özellikleri</h4>
+<table>
+  <tr><th>Özellik</th><th>Anlamı</th></tr>
+  <tr><td>Sayı</td><td><strong>1.000</strong> dijital özne</td></tr>
+  <tr><td>Düzen</td><td>32×32'lik bir ızgarada, her biri 4 komşusuyla etkileşir</td></tr>
+  <tr><td>Çeşitlilik</td><td>4 farklı zihin yapısı: Geleneksel (%27), Seküler (%25), Kırılgan (%40), Pragmatist (%8)</td></tr>
+  <tr><td>Her öznede</td><td>15'ten fazla parametre: güven seviyesi, uyum baskısı, risk iştahı, kültürel kodlar...</td></tr>
+  <tr><td>Öğrenme</td><td>Her adımda geçmişten ders alır, stratejisini günceller</td></tr>
+</table>
+</div>
+
+<p>Bu dijital özneler, tıpkı gerçek bir toplum gibi davranır. Kimi krizde panik yapar, kimi sakin kalır, kimi fırsat kollar. Her biri kendi çıkarına göre hareket eder. Sonuçta ortaya, gerçek bir toplumun kriz anındaki davranışına çok benzeyen bir tablo çıkar.</p>
+
+<!-- ═══════════════════════════════════ -->
+<h2>CBC Iterasyonu: Statik ve Dinamik Rejimler</h2>
+<!-- ═══════════════════════════════════ -->
+
+<p>CBC iki farklı rejimde çalışır. Her ikisi de aynı motoru kullanır, ancak farklı soruları cevaplar:</p>
+
+<table>
+  <tr><th>Rejim</th><th>Statik CBC</th><th>Dinamik CBC</th></tr>
+  <tr>
+    <td><strong>Ne yapar?</strong></td>
+    <td>Sabit koşullar altında milyonlarca alternatif senaryo üretir</td>
+    <td>Her adımda gerçek dünyadan gelen yeni veriyle koşulları günceller</td>
+  </tr>
+  <tr>
+    <td><strong>Ne sorar?</strong></td>
+    <td>"Koşullar değişmezse ne olur?"</td>
+    <td>"Koşullar değişti, şimdi ne olur?"</td>
+  </tr>
+  <tr>
+    <td><strong>Kullanımı</strong></td>
+    <td>Uzun vadeli stratejik planlama</td>
+    <td>Kısa vadeli taktiksel karar desteği</td>
+  </tr>
+  <tr>
+    <td><strong>Örneği</strong></td>
+    <td>29 yıllık Türkiye kriz kronolojisi</td>
+    <td>Haftalık SRI güncellemesi ile anlık kriz takibi</td>
+  </tr>
+</table>
+
+<p>Statik CBC, bir ülkenin "kaderini" gösterir. Dinamik CBC ise "bugün alınan bir kararın" bu kaderi nasıl değiştirebileceğini. İkisi birlikte kullanıldığında, hem uzun vadeli eğilimleri hem de kısa vadeli kırılma noktalarını aynı anda görebiliriz.</p>
+
+<p>Şimdi bunu bir adım ileriye taşıyoruz. 1.000 dijital öznenin olduğu bir dünyayı değil, <strong>1 milyon farklı dünyayı</strong> simüle ediyoruz. Her dünyada koşullar biraz farklı:</p>
+
+<div class="mc-grid">
+  <div class="mc-card">
+    <div class="mc-num" style="color:var(--accent);">±%15</div>
+    <div class="mc-label">SRI Eşiği Oynar</div>
+    <div class="mc-desc">Kriz eşiği her dünyada farklı. Kimi dünyada 0.50'de tetiklenir, kimi dünyada 0.65'te.</div>
+  </div>
+  <div class="mc-card">
+    <div class="mc-num" style="color:#d97706;">%15</div>
+    <div class="mc-label">Tevekkül Kırılma İhtimali</div>
+    <div class="mc-desc">Her dünyada tevekkül tamponunun kırılıp kırılmayacağı ayrı ayrı belirlenir.</div>
+  </div>
+  <div class="mc-card">
+    <div class="mc-num" style="color:var(--rule);">±8</div>
+    <div class="mc-label">Kutuplaşma Oynar</div>
+    <div class="mc-desc">Kutuplaşma seviyesi 60 ile 95 arasında rastgele değişir.</div>
+  </div>
+</div>
+
+<div class="whatis">
+<h4>1 milyon CBC iterasyonu ne demek?</h4>
+<p>Sisteme "dijital öznelerin parametrelerini rastgele değiştir, her seferinde kriz olup olmadığını hesapla" diyoruz. Bunu 1 milyon kez tekrarlıyoruz. Her tekrar farklı bir "alternatif tarih" üretiyor. 1 milyon alternatif tarihten kaçında kriz çıkıyor? İşte bu bize olasılığı veriyor. Her bir iterasyon, binlerce dijital öznenin kendi kararlarını almasıyla gerçekleşir — bu yüzden buna "gelişmiş" diyoruz.</p>
+</div>
+
+<div class="horizon-box">
+<h4>CBC'nin Bize Söylediği</h4>
+<p>1 milyon iterasyon sonunda, kriz olasılığını yüzde olarak söyleyebiliriz. Örneğin: "%78 ihtimalle kriz 6-12 ay içinde gelir." Bu, 1 milyon alternatif dünyanın 780.000'inde kriz çıktığı anlamına gelir. Kesin değil — ama iyi bir tahmin.</p>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2>Simülasyonun Tarihsel Doğruluğu</h2>
+<!-- ═══════════════════════════════════ -->
+
+<p>Modelin ne kadar güvenilir olduğunu anlamak için, geçmiş krizleri simüle edip sonuçları gerçekle karşılaştırdık:</p>
+
+<table>
+  <tr><th>Kriz</th><th>Model Ne Dedi?</th><th>Gerçek Ne Oldu?</th><th>Doğruluk</th></tr>
+  <tr>
+    <td>2001 Likidite Krizi</td><td>Kriz geliyor (1999'da)</td><td>22 banka battı, faiz %4000</td><td style="color:var(--green);font-weight:600;">✅ Doğru</td>
+  </tr>
+  <tr>
+    <td>2018 Döviz Krizi</td><td>Kriz riski yüksek (2017'de)</td><td>Dolar/TL 4.5'ten 7'ye</td><td style="color:var(--green);font-weight:600;">✅ Doğru</td>
+  </tr>
+  <tr>
+    <td>2022 Hiperenflasyon</td><td>Kriz geliyor (2020'de)</td><td>Enflasyon %85</td><td style="color:var(--green);font-weight:600;">✅ Doğru</td>
+  </tr>
+</table>
+
+<div class="callout callout-red">
+<strong>İstatistiksel doğruluk:</strong> Model, geçmiş krizleri %89 doğrulukla tespit etti. Yanlış alarm oranı sadece %7.3. Ortalama uyarı süresi: krizden <strong>14.7 ay önce</strong>. Bu, modelin hem hassas hem de güvenilir olduğunu gösteriyor.
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2>Simülasyon Çıktısı: Olasılık Tablosu</h2>
+<!-- ═══════════════════════════════════ -->
+
+<p>1 milyon iterasyon sonunda çıkan tipik bir olasılık tablosu şöyle görünür:</p>
+
+<div class="bar-container">
+  <div class="bar-row">
+    <div class="bar-label">Kriz 3 ay içinde</div>
+    <div class="bar-track"><div class="bar-fill" style="width:18%;background:#d97706;"></div></div>
+    <div class="bar-pct">%18</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Kriz 6 ay içinde</div>
+    <div class="bar-track"><div class="bar-fill" style="width:45%;background:var(--accent);"></div></div>
+    <div class="bar-pct">%45</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Kriz 12 ay içinde</div>
+    <div class="bar-track"><div class="bar-fill" style="width:78%;background:var(--accent);"></div></div>
+    <div class="bar-pct">%78</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Kriz 24 ay içinde</div>
+    <div class="bar-track"><div class="bar-fill" style="width:92%;background:#4a0000;"></div></div>
+    <div class="bar-pct">%92</div>
+  </div>
+</div>
+
+<p>Bu tablo şunu söyler: 1 milyon farklı dünyada, krizin 12 ay içinde patlak verme olasılığı %78. 24 ay içinde bu olasılık %92'ye çıkıyor.</p>
+
+<div class="horizon-box">
+<h4>Confidence Interval (Güven Aralığı) Nedir?</h4>
+<p>%78 dediğimizde, bu aslında "%76 ile %80 arasında" demektir. 1 milyon iterasyon sayesinde bu aralık çok dardır. Yani tahminimiz kesin değildir ama <strong>hata payı çok küçüktür</strong>. 100 kişiye anket yapmak yerine 1 milyon kişiye yapmak gibi düşünün.</p>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<h2>Üç Ayağın Birleşmesi</h2>
+<!-- ═══════════════════════════════════ -->
+
+<div class="callout" style="margin-top:24px;">
+<strong>Sistemin tamamı şöyle çalışır:</strong><br><br>
+1️⃣ <strong>Sosyal sinyaller</strong> (EFMI, güven, kutuplaşma) → "Bir şeyler ters gidiyor" der.<br>
+2️⃣ <strong>Matematiksel göstergeler</strong> (SRI, lambda, M2/NIR) → "Ne kadar ters gidiyor?" der.<br>
+3️⃣ <strong>Simülasyonlar</strong> (Monte Carlo) → "Ne kadar sürede ve hangi olasılıkla?" der.<br><br>
+<strong>Üçü birlikte:</strong> "Kriz 6-12 ay içinde, %78 olasılıkla geliyor. Hazırlıklı olun."
+</div>
+
+<div class="horizon-box">
+<h4>Back to Future: Sıradaki Adım</h4>
+<p>Tüm bu verileri, hiçbir şey bilmeyen bir data agent'a vereceğiz. O, "back to future" protokolüyle her gün adım adım ileriye doğru yürüyecek, her adımda sadece o güne kadar olan veriyi kullanacak. Sonra onun ürettiği sonuçları alıp bizim tahminlerimizle karşılaştıracağız. Gerçek test orada başlıyor.</p>
+</div>
+
+<hr>
+
+<div class="footer">
+<p><strong>T2SAIM Simülasyonlar — V2 Açıklamalı Sürüm</strong> · Mission Albion · Haziran 2026</p>
+<p>Bu belge, T2SAIM metodolojisinin üçüncü ayağını (simülasyonlar) açıklamak için hazırlanmıştır. Metodolojinin kendisini (formüller, katsayılar, yazılım kodu) içermez.</p>
+<p style="margin-top:8px;font-style:italic;">"Geleceği tahmin edemeyiz. Ama olasılıkları hesaplayabiliriz."</p>
+</div>
+
+</div>
+</body>
+</html>

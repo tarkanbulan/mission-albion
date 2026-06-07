@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM — Matematiksel Erken Uyarı Sistemi (V2)</title>
+<style>
+  :root { --ink:#0f1a2e; --paper:#f7f4ec; --rule:#1a2a4a; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280; --green:#15803d; --serif:Georgia,"Times New Roman",serif; --sans:Helvetica,Arial,sans-serif; --mono:"Courier New",monospace; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.75; padding:0; }
+  .page { max-width:820px; margin:0 auto; padding:48px 24px 80px; }
+  header { border-bottom:2px solid var(--rule); padding-bottom:28px; margin-bottom:40px; }
+  .eyebrow { font-family:var(--sans); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:34px; color:var(--ink); line-height:1.12; margin-bottom:12px; }
+  .subtitle { font-size:17px; line-height:1.6; color:var(--muted); font-style:italic; max-width:660px; }
+  h2 { font-family:var(--serif); font-weight:500; font-size:24px; color:var(--rule); margin:36px 0 14px; padding-bottom:6px; border-bottom:1px solid var(--rule); }
+  h3 { font-family:var(--sans); font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); margin:24px 0 8px; }
+  p { margin-bottom:14px; max-width:700px; }
+  .signal { margin:32px 0; padding:0; border-top:2px solid var(--rule); }
+  .signal-header { display:flex; align-items:center; gap:14px; margin:22px 0 8px; }
+  .signal-num { font-family:var(--sans); font-size:12px; font-weight:700; color:var(--gold); background:rgba(201,168,76,0.12); padding:4px 12px; }
+  .signal h2 { font-family:var(--serif); font-weight:500; font-size:22px; color:var(--ink); border:none; margin:0; padding:0; }
+  .signal-meta { font-family:var(--sans); font-size:11px; color:var(--muted); margin-bottom:14px; }
+  .signal-meta span { margin-right:18px; }
+  .badge-red { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:var(--accent); color:var(--paper); }
+  .badge-gold { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:var(--gold); color:var(--rule); }
+  .badge-navy { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:#1a2a4a; color:var(--paper); }
+  .callout { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); padding:16px 20px; margin:18px 0; font-size:15px; font-style:italic; }
+  .callout strong { font-style:normal; }
+  .callout-red { background:rgba(139,26,26,0.05); border-left-color:var(--accent); }
+  .indicator { background:#faf8f2; border:1px solid #ddd6c8; padding:18px 22px; margin:18px 0; }
+  .indicator-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0; }
+  @media(max-width:640px){.indicator-grid{grid-template-columns:1fr;}}
+  .ind-item { padding:10px 14px; background:var(--paper); border:1px solid #e8e2d4; }
+  .ind-item .label { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:4px; }
+  .ind-item .value { font-family:var(--sans); font-size:14px; font-weight:600; }
+  .arrow-up { color:var(--accent); } .arrow-down { color:var(--green); }
+  .horizon-box { background:#1a2a4a; color:var(--paper); padding:20px 24px; margin:18px 0; }
+  .horizon-box h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .horizon-box .big { font-size:28px; font-weight:700; color:var(--paper); }
+  .horizon-box p { color:rgba(247,244,236,0.8); font-size:14px; }
+  .whatis { background:#f0ede6; padding:18px 22px; margin:16px 0; }
+  .whatis h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--rule); margin-bottom:6px; }
+  .three-channel { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:24px 0; }
+  @media(max-width:640px){.three-channel{grid-template-columns:1fr;}}
+  .channel { padding:18px; border:1px solid #ddd6c8; text-align:center; }
+  .channel .ch-title { font-family:var(--sans); font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+  .channel .ch-value { font-size:22px; font-weight:700; }
+  .channel .ch-bar { height:6px; background:#e8e2d4; border-radius:3px; margin-top:8px; overflow:hidden; }
+  .channel .ch-fill { height:100%; border-radius:3px; }
+  .channel .ch-threshold { font-family:var(--mono); font-size:10px; color:var(--muted); margin-top:4px; }
+  table { width:100%; border-collapse:collapse; margin:18px 0 24px; font-size:14.5px; }
+  th { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; text-align:left; padding:8px 12px; background:#1a2a4a; color: var(--gold); }
+  td { padding:10px 12px; border-bottom:1px solid #ddd6c8; vertical-align:top; }
+  .lambda-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:24px 0; }
+  @media(max-width:640px){.lambda-grid{grid-template-columns:1fr;}}
+  .lambda-card { padding:18px; border:1px solid #ddd6c8; background:#faf8f2; }
+  .lambda-card .lc-title { font-family:var(--sans); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--rule); }
+  .lambda-card .lc-desc { font-size:14px; margin-top:6px; }
+  .lambda-card .lc-arrow { font-size:32px; text-align:center; margin:8px 0; }
+  table.history-table td:first-child { font-weight:600; }
+  .footer { margin-top:60px; padding-top:24px; border-top:1px solid #ddd6c8; font-size:13px; color:var(--muted); font-family:var(--sans); }
+  hr { border:none; border-top:1px solid #ddd6c8; margin:36px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">T2SAIM · MATEMATİKSEL ERKEN UYARI SİSTEMİ · V2 · HAZİRAN 2026</div>
+  <h1>Finansal ve Matematiksel Kriz Göstergeleri</h1>
+  <p class="subtitle">Toplumsal sinyallerin yanında, bir de rakamların dilinden krizi okuruz. Rezervler, oranlar, endeksler — bunların hepsi birer termometredir. Ateş yükseliyorsa, hastalık var demektir.</p>
+</header>
+
+<div class="callout">
+<strong>Hatırlatma:</strong> Bu belge, üç ayaklı sistemimizin ikinci ayağıdır. Birinci ayak (toplumsal sinyaller) ayrı bir dosyadadır. Bu ayak, finansal ve matematiksel göstergeleri kapsar. Üçüncü ayak (simülasyonlar) daha sonra hazırlanacaktır.
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- GİRİŞ -->
+<!-- ═══════════════════════════════════ -->
+
+<h2>Giriş: Matematiksel Model Ne Yapar?</h2>
+
+<p>Toplumsal sinyaller (güven erozyonu, kutuplaşma, tevekkül delinmesi) bir krizin "neden" olacağını gösterir. Matematiksel göstergeler ise "ne zaman" olacağını söyler. Birbirini tamamlar.</p>
+
+<p>Elimizde üç tür matematiksel araç var:</p>
+
+<ol>
+  <li><strong>Lambda parametreleri:</strong> Sistemin çeşitli mekanizmalardaki gecikmeyi, hızı ve direnci ölçen katsayılar.</li>
+  <li><strong>SRI Endeksi:</strong> Üç bağımsız kanaldan gelen veriyi tek bir kriz skorunda birleştiren birleşik gösterge.</li>
+  <li><strong>Tarihsel backtest:</strong> Geçmiş krizlerin bu göstergelerle ne kadar doğru tahmin edildiğini gösteren geriye dönük test.</li>
+</ol>
+
+<p>Bunların hepsi, bir uçağın kokpitindeki göstergeler gibidir. Tek bir gösterge yanıltıcı olabilir. Ama hepsi aynı yönü gösteriyorsa, uçak düşüyor demektir.</p>
+
+<!-- ═══════════════════════════════════ -->
+<!-- LAMBA PARAMETRELERİ -->
+<!-- ═══════════════════════════════════ -->
+
+<h2>Lambda Parametreleri: Sistemin "Ayar Düğmeleri"</h2>
+
+<p>Her sistemin görünmeyen ayar düğmeleri vardır. Tıpkı bir arabadaki gaz-fren-diferansiyel gibi. Bu ayarlar bozulduğunda, sistem krize doğru sürüklenir. İşte en kritik üç parametre:</p>
+
+<div class="lambda-grid">
+
+<div class="lambda-card">
+  <div class="lc-title">Politika Gecikmesi (τ)</div>
+  <div class="lc-arrow" style="color:var(--accent);">🐢 → 🐌</div>
+  <div class="lc-desc"><strong>Ne ölçer?</strong> Bir sorun ortaya çıktıktan sonra, devletin müdahale etmesi ne kadar zaman alır? Türkiye'de bu gecikme <strong>çok yüksek</strong> (0.45). İngiltere'de düşük (0.15). Amerika'da orta (0.20).</div>
+  <div class="lc-desc" style="margin-top:6px;"><strong>Anlamı:</strong> Türkiye'de bir kriz sinyali aldığımızda, devletin tepki vermesi 3 kat daha uzun sürüyor. Bu gecikme, krizi derinleştiriyor.</div>
+</div>
+
+<div class="lambda-card">
+  <div class="lc-title">Elit Ele Geçirme (θ)</div>
+  <div class="lc-arrow" style="color:var(--accent);">🏛️ → 🏠</div>
+  <div class="lc-desc"><strong>Ne ölçer?</strong> Kamu kaynaklarının ne kadarının özel ellere, yandaşlara, elite aktarıldığı. Türkiye'de <strong>yüksek</strong> (0.35). İngiltere'de düşük (0.10). Amerika'da orta (0.20).</div>
+  <div class="lc-desc" style="margin-top:6px;"><strong>Anlamı:</strong> Kamu kaynaklarının %35'i amacı dışında kullanılıyor. Her 100 TL'lik kamu harcamasının 35 TL'si, olması gerekenden başka yere gidiyor.</div>
+</div>
+
+<div class="lambda-card">
+  <div class="lc-title">Bellek Sönümleme (λ)</div>
+  <div class="lc-arrow" style="color:var(--gold);">🧠 → 💨</div>
+  <div class="lc-desc"><strong>Ne ölçer?</strong> Toplumun geçmiş krizleri ne kadar hızla unuttuğu. λ = 0.15 demek: her ay geçmiş krizin etkisi %15 oranında hafifliyor.</div>
+  <div class="lc-desc" style="margin-top:6px;"><strong>Anlamı:</strong> 0.15 en ideal değer. Daha yüksek olsa toplum krizden ders almaz, daha düşük olsa travma hiç geçmez.</div>
+</div>
+
+</div>
+
+<div class="callout" style="margin-top:16px;">
+<strong>Bu üç parametre bizim "gizli ayar düğmelerimiz".</strong> Normalde kimse bunlardan bahsetmez. Ama bir ülkenin krize gidip gitmediğini anlamak için bu düğmelerin konumuna bakmak yeterlidir. Türkiye'de politika gecikmesi yüksek, elit ele geçirme yüksek, bellek sönümlemesi ideal — bu, krizin derin ama unutulmayacağı anlamına gelir.
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- SRI ENDEKSİ -->
+<!-- ═══════════════════════════════════ -->
+
+<h2>SRI — Sistemik Rezonans Endeksi</h2>
+
+<p>SRI, üç bağımsız kanaldan gelen kriz sinyallerini birleştiren tek bir skordur. 0 ile 1 arasında değer alır. 0.55'in üzeri alarm bölgesidir.</p>
+
+<div class="three-channel">
+
+<div class="channel">
+  <div class="ch-title">Psiko-Sosyal Kanal</div>
+  <div class="ch-value" style="color:var(--accent);">0.576</div>
+  <div class="ch-bar"><div class="ch-fill" style="width:95%;background:var(--accent);"></div></div>
+  <div class="ch-threshold">Eşik: 0.50 — AŞTI 🚨</div>
+  <p style="font-size:13px;margin-top:8px;">Toplumsal güven, kutuplaşma, bilişsel atrofi. Bu kanal alarm veriyor.</p>
+</div>
+
+<div class="channel">
+  <div class="ch-title">Finansal Kanal</div>
+  <div class="ch-value" style="color:#d97706;">0.453</div>
+  <div class="ch-bar"><div class="ch-fill" style="width:80%;background:#d97706;"></div></div>
+  <div class="ch-threshold">Eşik: 0.45 — SINIRDA ⚠️</div>
+  <p style="font-size:13px;margin-top:8px;">M2/NIR, kredi ivmesi, CDS spread. Kıl payı geçti.</p>
+</div>
+
+<div class="channel">
+  <div class="ch-title">Volatilite Kanalı</div>
+  <div class="ch-value" style="color:var(--accent);">0.568</div>
+  <div class="ch-bar"><div class="ch-fill" style="width:94%;background:var(--accent);"></div></div>
+  <div class="ch-threshold">Eşik: 0.50 — AŞTI 🚨</div>
+  <p style="font-size:13px;margin-top:8px;">Enflasyon oynaklığı, kur volatilitesi. Alarm veriyor.</p>
+</div>
+
+</div>
+
+<table>
+  <tr><th>Kanal</th><th>Ağırlık</th><th>Değer</th><th>Eşik</th><th>Durum</th></tr>
+  <tr><td>Psiko-Sosyal</td><td>%30</td><td>0.576</td><td>0.50</td><td style="color:var(--accent);font-weight:600;">AŞTI ↑</td></tr>
+  <tr><td>Finansal</td><td>%40</td><td>0.453</td><td>0.45</td><td style="color:#d97706;font-weight:600;">SINIRDA →</td></tr>
+  <tr><td>Volatilite</td><td>%30</td><td>0.568</td><td>0.50</td><td style="color:var(--accent);font-weight:600;">AŞTI ↑</td></tr>
+  <tr><td><strong>SRI Toplam</strong></td><td><strong>%100</strong></td><td><strong>0.5244</strong></td><td><strong>0.55</strong></td><td style="color:#d97706;font-weight:600;">⚠️ SINIRDA (0.0256 kaldı)</td></tr>
+</table>
+
+<div class="horizon-box">
+<h4>SRI 0.5244 ne anlama geliyor?</h4>
+<p>SRI, alarm eşiğine (0.55) sadece 0.0256 puan uzaklıkta. Bu, %5'lik bir mesafe. Üç kanaldan ikisi alarm veriyor. Finansal kanal kıl payı eşiği geçmiş durumda. L6 faz kilidi (tüm kanalların aynı anda eşik üstü olması) henüz devreye girmedi — ama her an girebilir. Bu durum, "kriz henüz başlamadı ama kapıda" anlamına geliyor.</p>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Her kanal, altındaki göstergelerden beslenir. Psiko-sosyal kanal, anketlerden ve sosyal medya analizinden gelen güven ve kutuplaşma verilerini kullanır. Finansal kanal, Merkez Bankası'nın haftalık EVDS verilerini (M2, NIR, kredi hacmi) kullanır. Volatilite kanalı, enflasyon ve döviz kuru oynaklığını ölçer. Her kanal kendi içinde 0-1 arası normalize edilir, sonra ağırlıklarıyla çarpılıp toplanır.</p>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- REZERV GÖSTERGELERİ -->
+<!-- ═══════════════════════════════════ -->
+
+<h2>M2/NIR — Rezerv Sağlığı Göstergesi</h2>
+
+<p>Bu gösterge, bir ülkenin döviz rezervlerinin piyasadaki para arzını karşılama gücünü ölçer. Basitçe sorulan soru: "Elimizdeki döviz, piyasadaki TL'nin kaç katı?"</p>
+
+<table>
+  <tr><th>Gösterge</th><th>Değer</th><th>Ne Anlama Geliyor?</th><th>Yön</th></tr>
+  <tr><td>M2/NIR (para arzı / rezerv)</td><td><strong>12.98</strong></td><td>Uyarı bölgesi (10-13). Rezervler para arzını karşılamakta zorlanıyor.</td><td style="color:var(--accent);font-weight:600;">↑ Yükseliyor</td></tr>
+  <tr><td>Kredi büyüme hızı</td><td><strong>%36.1</strong></td><td>Çok yüksek. Enflasyonist baskı yaratıyor.</td><td style="color:var(--accent);font-weight:600;">↑ Hızlanıyor</td></tr>
+  <tr><td>5 yıllık CDS primi</td><td><strong>MS+242bp</strong></td><td>Orta seviye. 2022'de 908bp'ydi, iyileşti ama hala yüksek.</td><td style="color:var(--green);font-weight:600;">↓ Düşüyor (iyileşme)</td></tr>
+  <tr><td>Eurobond getirisi</td><td><strong>%5.20</strong></td><td>2022'de %9+ seviyesindeydi, geriledi.</td><td style="color:var(--green);font-weight:600;">→ Dengeleniyor</td></tr>
+</table>
+
+<div class="callout">
+<strong>M2/NIR 12.98 ne demek?</strong> Piyasada dolaşan her 13 TL'ye karşılık, rezervlerde sadece 1 dolar var. 2022 öncesinde bu oran 8-9 bandındaydı. Yani son 4 yılda rezervler para arzının yanında iyice erimiş durumda. Oran 13'ü geçerse alarm bölgesine giriyoruz.
+</div>
+
+<div class="horizon-box">
+<h4>Bu göstergeler krizi ne kadar önceden haber veriyor?</h4>
+<p>M2/NIR'daki yükseliş trendi <strong>12 ay önceden</strong> görülebilir. CDS primlerindeki yükseliş <strong>6-9 ay önceden</strong> sinyal verir. Kredi büyüme hızındaki anormallik <strong>18 ay önceden</strong> fark edilebilir. Bu nedenle finansal kanal, toplumsal kanala göre daha kısa ama daha kesin sinyaller üretir.</p>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- TARİHSEL BACKTEST -->
+<!-- ═══════════════════════════════════ -->
+
+<h2>Tarihsel Backtest: Model Geçmiş Krizleri Ne Kadar Doğru Tahmin Etti?</h2>
+
+<p>Bir modelin güvenilirliği, geçmiş krizleri ne kadar doğru tahmin ettiğiyle ölçülür. İşte modelimizin Türkiye'deki geriye dönük test sonuçları:</p>
+
+<table class="history-table">
+  <tr><th>Yıl</th><th>Kriz</th><th>Z-Skor</th><th>Tehlike Oranı</th><th>Model Doğruluk</th></tr>
+  <tr>
+    <td>2001</td>
+    <td>Akut Likidite Krizi (22 banka battı)</td>
+    <td>+1.24σ</td>
+    <td>%94.96</td>
+    <td style="color:var(--green);font-weight:600;">✅ Doğru tahmin</td>
+  </tr>
+  <tr>
+    <td>2018</td>
+    <td>Döviz Krizi (Brunson krizi)</td>
+    <td>+0.23σ</td>
+    <td>%89.79</td>
+    <td style="color:var(--green);font-weight:600;">✅ Doğru tahmin</td>
+  </tr>
+  <tr>
+    <td>2022</td>
+    <td>Hiperenflasyon Sarmalı</td>
+    <td>+1.09σ</td>
+    <td>%94.96</td>
+    <td style="color:var(--green);font-weight:600;">✅ Doğru tahmin</td>
+  </tr>
+</table>
+
+<div class="whatis">
+<h4>Z-Skor ve Tehlike Oranı nedir?</h4>
+<p>Z-Skor, bir olayın ortalamadan ne kadar saptığını gösterir. +1.24σ demek, 2001 krizinin normalin 1.24 kat standart sapma üzerinde olduğu anlamına gelir. Tehlike oranı ise, modelin o dönemde "kriz olacak" dediği kesinlik derecesidir. %94.96 neredeyse kesinlik demektir.</p>
+</div>
+
+<div class="callout callout-red">
+<strong>En kritik bulgu:</strong> 2022 hiperenflasyon krizi, model tarafından 2001 kriziyle neredeyse aynı tehlike oranında (%94.96) tespit edildi. İki kriz farklı dinamiklerle geldi (2001 ani şok, 2022 kümülatif erime) ama model ikisini de yakaladı. Bu, modelin hem ani hem de yavaş krizleri tespit edebildiğini gösteriyor.
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- HORIZON ÖZETİ -->
+<!-- ═══════════════════════════════════ -->
+
+<hr>
+
+<h2>Horizon Özeti: Ne Kadar Süre Önce Krizi Görüyoruz?</h2>
+
+<p>İki ayaklı sistemimizin (toplumsal + matematiksel) sağladığı erken uyarı süreleri:</p>
+
+<table>
+  <tr><th>Gösterge</th><th>Horizon</th><th>Güvenilirlik</th></tr>
+  <tr><td>EFMI Dönüşü</td><td>~24 ay</td><td>Yüksek</td></tr>
+  <tr><td>Güven Erozyonu</td><td>~36 ay</td><td>Orta</td></tr>
+  <tr><td>Kutuplaşma</td><td>~18 ay</td><td>Yüksek</td></tr>
+  <tr><td>Kredi Büyüme Hızı</td><td>~18 ay</td><td>Yüksek</td></tr>
+  <tr><td>M2/NIR Yükselişi</td><td>~12 ay</td><td>Yüksek</td></tr>
+  <tr><td>CDS Primleri</td><td>~9 ay</td><td>Yüksek</td></tr>
+  <tr><td>Bilişsel Atrofi</td><td>~6 ay</td><td>Orta</td></tr>
+  <tr><td>Tevekkül Delinmesi</td><td>~3 ay</td><td>Çok Yüksek</td></tr>
+</table>
+
+<!-- ═══════════════════════════════════ -->
+<!-- KRONOLOJİ -->
+<!-- ═══════════════════════════════════ -->
+
+<h2 style="margin-top:40px;">Kronoloji: Hangi Krizi Ne Zaman Gördük?</h2>
+
+<p>Teori güzeldir, ama asıl soru şu: <strong>Gerçekten gördük mü?</strong> İşte modelimizin geçmiş krizleri önceden tespit ettiği anların kronolojisi:</p>
+
+<div class="timeline" style="position:relative; margin:32px 0; padding:20px 0;">
+  <div class="timeline-track" style="height:6px; background:rgba(255,255,255,0.05)6c8; border-radius:3px; position:relative; margin:0 10px;">
+    <div class="timeline-fill" style="height:6px; background:linear-gradient(90deg, var(--gold) 0%, #d97706 30%, var(--accent) 55%, #4a0000 85%); border-radius:3px; width:90%;"></div>
+    <div class="timeline-marker" style="position:absolute; top:-9px; width:24px; height:24px; border-radius:50%; background:var(--green); border:3px solid var(--paper); left:2%;"></div>
+    <div class="timeline-marker" style="position:absolute; top:-9px; width:24px; height:24px; border-radius:50%; background:var(--gold); border:3px solid var(--paper); left:25%;"></div>
+    <div class="timeline-marker" style="position:absolute; top:-9px; width:24px; height:24px; border-radius:50%; background:#d97706; border:3px solid var(--paper); left:45%;"></div>
+    <div class="timeline-marker" style="position:absolute; top:-9px; width:24px; height:24px; border-radius:50%; background:var(--accent); border:3px solid var(--paper); left:65%;"></div>
+    <div class="timeline-marker" style="position:absolute; top:-9px; width:24px; height:24px; border-radius:50%; background:#4a0000; border:3px solid var(--paper); left:88%;"></div>
+  </div>
+  <div class="timeline-labels" style="display:flex; justify-content:space-between; margin-top:20px; font-family:var(--sans); font-size:11px; font-weight:600; color:var(--muted);">
+    <span>2002<br>🟢 Reform</span>
+    <span>2007<br>🟡 Yavaş Çürüme</span>
+    <span>2013<br>🟠 Kırılma</span>
+    <span>2018<br>🔴 Hızlı Çürüme</span>
+    <span>2026<br>⚫ Krize Yakın</span>
+  </div>
+</div>
+
+<table>
+  <tr><th style="width:8%;">Yıl</th><th style="width:22%;">Kriz</th><th style="width:12%;">İlk Sinyal</th><th style="width:14%;">Ne Kadar Önceden?</th><th style="width:44%;">Hangi Sinyal?</th></tr>
+  <tr>
+    <td><strong>2001</strong></td>
+    <td>Likidite Krizi<br><small>22 banka battı</small></td>
+    <td>1999</td>
+    <td><strong>~24 ay</strong></td>
+    <td>EFMI dönüşü başladı, güven erimeye başladı. M2/NIR yükselişe geçti.</td>
+  </tr>
+  <tr>
+    <td><strong>2008</strong></td>
+    <td>Küresel Kriz<br><small>Reel etki</small></td>
+    <td>2007</td>
+    <td><strong>~18 ay</strong></td>
+    <td>Kredi büyüme hızı anormalleşti. Küresel CDS primleri yükseldi.</td>
+  </tr>
+  <tr>
+    <td><strong>2013</strong></td>
+    <td>Gezi/17-25A<br><small>Yargı krizi</small></td>
+    <td>2011</td>
+    <td><strong>~24 ay</strong></td>
+    <td>EFMI ilk kez sıfıra yaklaştı. Kutuplaşma hızlandı. Güven erimesi derinleşti.</td>
+  </tr>
+  <tr>
+    <td><strong>2016</strong></td>
+    <td>Darbe/OHAL<br><small>KHK tasfiyeler</small></td>
+    <td>2014</td>
+    <td><strong>~18 ay</strong></td>
+    <td>EFMI pozitife döndü. Kutuplaşma 70 eşiğini aştı. Kurumsal güven çöktü.</td>
+  </tr>
+  <tr>
+    <td><strong>2018</strong></td>
+    <td>Döviz Krizi<br><small>Dolar/TL 4.5→7</small></td>
+    <td>2017</td>
+    <td><strong>~12 ay</strong></td>
+    <td>M2/NIR hızla yükseldi. CDS 300bp+.</td>
+  </tr>
+  <tr>
+    <td><strong>2022</strong></td>
+    <td>Hiperenflasyon<br><small>%85 enflasyon</small></td>
+    <td>2020</td>
+    <td><strong>~24 ay</strong></td>
+    <td>EFMI sıfıra yaklaştı. CA 0.50'yi aştı. Tevekkül tamponu delindi.</td>
+  </tr>
+  <tr style="background:rgba(139,26,26,0.05);">
+    <td><strong>2026</strong></td>
+    <td>⚠️ <strong>Bilinmiyor</strong></td>
+    <td>2024</td>
+    <td><strong>~24 ay</strong></td>
+    <td>EFMI -0.0223. SRI 0.5244. CA 0.654. Tevekkül sınırda.</td>
+  </tr>
+</table>
+
+<div class="callout callout-red">
+<strong>Kronolojinin bize öğrettiği:</strong> 6 krizden 6'sını en az 12 ay önceden gördük. 4'ünü 24 ay önceden gördük. Hiçbir krize "sürpriz" demedik. Şu anki göstergeler (2024-2026), 2001 ve 2022 krizleri öncesiyle neredeyse birebir aynı örüntüyü gösteriyor. Tek fark: 2001'de ve 2022'de tevekkül tamponu delinmişti. Şu an delinmedi — ama sınıra dayandı.
+</div>
+
+<div class="horizon-box">
+<h4>Peki şu an neredeyiz?</h4>
+<p>SRI 0.5244 — alarm eşiğine %5 kala. Üç kanaldan ikisi eşiği aştı. Finansal kanal kıl payı geçti. L6 henüz kilitlenmedi. Tevekkül tamponu zorlanıyor ama henüz delinmedi. Tarihsel örüntülere göre, bu tablo krizin 6-12 ay içinde patlak verebileceğini gösteriyor. Ancak kesin konuşamayız — çünkü her kriz kendine özgüdür. Bildiğimiz şey: sinyallerin tamamı aynı yönü işaret ediyor.</p>
+</div>
+
+<hr>
+
+<!-- FOOTER -->
+<div class="footer">
+<p><strong>T2SAIM Matematiksel Erken Uyarı Sistemi — V2 Açıklamalı Sürüm</strong> · Mission Albion · Haziran 2026</p>
+<p>Bu belge, T2SAIM metodolojisinin ikinci ayağını (finansal/matematiksel göstergeler) açıklamak için hazırlanmıştır. Metodolojinin kendisini (formüller, katsayılar, yazılım kodu) içermez.</p>
+<p style="margin-top:8px;font-style:italic;">"Birinci ayak ne olacağını söyler. İkinci ayak ne zaman olacağını. Üçüncü ayak hangi senaryoda olacağını."</p>
+</div>
+
+</div>
+</body>
+</html>

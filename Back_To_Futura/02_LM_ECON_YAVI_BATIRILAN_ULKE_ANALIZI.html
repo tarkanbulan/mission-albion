@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T2SAIM Sentinel Raporu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-dark: #070d19; --bg-card: rgba(15, 26, 46, 0.6); --border-glow: rgba(201, 168, 76, 0.3); --gold: #c9a84c; --accent: #8b1a1a; --ink: #f7f4ec; --muted: #8e9bb0; --font-serif: 'Playfair Display', serif; --font-sans: 'Inter', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--bg-dark); color: var(--ink); font-family: var(--font-sans); line-height: 1.7; padding: 40px 20px; background-image: radial-gradient(at 50% 0%, rgba(15, 26, 46, 0.8) 0px, transparent 100%); }
+        .wrap { max-width: 900px; margin: auto; }
+        
+        /* Overriding old styles */
+        header { border-bottom: 1px solid var(--border-glow); padding-bottom: 30px; margin-bottom: 40px; }
+        .eyebrow { font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 10px; font-weight: 700; }
+        h1 { font-family: var(--font-serif); font-size: 2.2rem; color: #fff; line-height: 1.2; margin-bottom: 15px; }
+        .subtitle { color: var(--muted); font-size: 1.1rem; }
+        h2 { font-family: var(--font-serif); font-size: 1.6rem; color: var(--gold); margin: 40px 0 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { font-size: 1.2rem; color: #fff; margin: 25px 0 10px 0; }
+        p { color: var(--muted); margin-bottom: 20px; font-size: 1.05rem; text-align: justify; }
+        
+        .callout, .v-box { background: rgba(201, 168, 76, 0.05); border-left: 4px solid var(--gold); padding: 20px; margin: 25px 0; border-radius: 0 8px 8px 0; }
+        .callout-gold { background: rgba(201, 168, 76, 0.1); border-left: 4px solid var(--gold); padding: 20px; margin: 25px 0; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; background: var(--bg-card); margin: 20px 0; border: 1px solid var(--border-glow); overflow: hidden; border-radius: 8px; }
+        th { background: rgba(15, 26, 46, 0.9); color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; padding: 15px; border-bottom: 1px solid var(--border-glow); }
+        td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--ink); font-size: 14px; }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        
+        .v-red { color: #ef4444; font-weight: 600; }
+        .v-green { color: #22c55e; font-weight: 600; }
+        .v-amber { color: #f59e0b; font-weight: 600; }
+        .tarco-badge { display: none; }
+        .stamp { display: inline-block; padding: 4px 10px; font-size: 10px; font-weight: bold; border: 1px solid var(--gold); color: var(--gold); margin-right: 10px; border-radius: 4px; }
+        .footer { margin-top: 50px; border-top: 1px solid var(--border-glow); padding-top: 20px; font-size: 11px; color: var(--muted); text-align: center; }
+        ul, ol { padding-left: 20px; color: var(--muted); margin-bottom: 20px; }
+        li { margin-bottom: 10px; }
+    
+        /* GitHub Pages Theme Overrides for Tables */
+        table tr { background-color: transparent !important; }
+        table tr:nth-child(even) { background-color: rgba(255,255,255,0.03) !important; }
+        table tr:nth-child(odd) { background-color: transparent !important; }
+        table td { background-color: transparent !important; color: var(--ink) !important; }
+        table th { background-color: rgba(15, 26, 46, 0.9) !important; }
+
+    </style>
+</head>
+<body>
+<div class="wrap">
+
+
+<header>
+<div class="header-content">
+<div class="eyebrow">MISSION ALBION · LM-ECON-YAVI-001 · STRUCTURAL DEBT ANALYSIS · 22 MAY 2026</div>
+<h1>Ersal Yavi Çerçevesi: Batırılan Bir Ülke ve Türkiye 2026</h1>
+<p >"En ucuz, en uydurulmuş, en uslandırılmış" — 400 Yıllık Döngü ve Günümüz Türkiyesi</p>
+<span class="stamp stamp-red">Forensic Economics</span><span class="stamp stamp-gold">Ersal Yavi × T2SAIM</span>
+</div>
+<div class="tarco-badge">TARCO<small>FORENSIC INTELLIGENCE</small></div>
+</header>
+
+<div class="v-box">
+<h2>Temel Tez</h2>
+<p >Ersal Yavi'nin 2001 tarihli kitabı, bir ülkenin nasıl ekonomik olarak çökertildiğini 400 yıllık tarihsel döngüyle anlatır. Üç dayatma: <strong >"en ucuz, en uydurulmuş, en uslandırılmış"</strong>. Bu döngü 1838'den 2026'ya kesintisiz devam etmektedir. Türkiye 2026, bu döngünün en kritik eşiğindedir.</p>
+</div>
+
+<h2>I. Ersal Yavi'nin 400 Yıllık Döngü Modeli</h2>
+
+<h3>1.1 Üç Dayatma (1838→1995→2026)</h3>
+<table>
+<tr><th>Dönem</th><th>Dayatma</th><th>Mekanizma</th><th>Sonuç</th></tr>
+<tr><td><strong>1838</strong> Baltalimanı Ticaret Antlaşması</td><td>Serbest ticaret dayatması</td><td>Osmanlı gümrükleri sıfırlandı, İngiliz sanayi ürünleri kontrolsüz girdi</td><td>Yerli sanayi çöktü, Osmanlı hammadde ihracatçısına dönüştü</td></tr>
+<tr><td><strong>1946-1953</strong> Marshall Planı</td><td>"Paranızı devalüe edin, sanayileşmeyin"</td><td>ABD: tarım ürünleri + hammadde karşılığı kredi</td><td>TL devalüe edildi, sanayi yatırımı ertelendi, dışa bağımlılık arttı</td></tr>
+<tr><td><strong>1995</strong> Gümrük Birliği</td><td>En ucuz tedarik + en uydurulmuş mevzuat</td><td>AB rekabetine açık, korumasız sanayi</td><td>KOBİ'ler battı, ithalat patladı, cari açık kronikleşti</td></tr>
+<tr><td><strong>2001-2026</strong> Sıcak para + borç sarmalı</td><td>En uslandırılmış — politik bağımlılık</td><td>%37 faizle carry trade, KKM, döviz bağımlılığı</td><td>Merkez Bankası rezervleri tükendi, sıcak para çevrilemez</td></tr>
+</table>
+
+<h3>1.2 Lord Curzon'un Kehaneti (Lozan 1923)</h3>
+<div class="callout">
+<p><strong>"Birkaç yıl sonra kapımızı çalacaksınız, bugün reddettiklerinizi kabul edeceksiniz."</strong> — Lord Curzon, İsmet İnönü'ye, Lozan 1923</p>
+<p>Ersal Yavi'nin kitabının ana tezi: Bu kehanet, 1923'ten 2026'ya her dönemde doğrulanmıştır. Türkiye her krizde Batı kurumlarına (IMF, AB, ABD) başvurmuş, reddettiği koşulları kabul etmiştir.</p>
+</div>
+
+<h2>II. Kemalist Model: "Batırılan Ülke Nasıl Kurtarılır?"</h2>
+
+<h3>2.1 1923-1938 Modelinin Değişkenleri</h3>
+<p>Kitabın en kritik bölümü: 1923'te Türkiye'nin sıfır imkânla (para yok, ordu yok, sanayi yok, döviz yok, dış borç var) nasıl bağımsız ve onurlu bir ekonomi kurduğunu anlatır.</p>
+
+<table>
+<tr><th>Değişken</th><th>1923-1938 (Kemalist Model)</th><th>2026 (Mevcut Durum)</th></tr>
+<tr><td>Dış Borç</td><td class="v-green">Sıfır — Osmanlı borçları reddedildi, ödendi</td><td class="v-red">~2.8 trilyon TL iç borç + dış borç</td></tr>
+<tr><td>Para Politikası</td><td class="v-green">Sağlam para, dengeli bütçe, 1929-38 deflasyon (%29 fiyat düşüşü)</td><td class="v-red">%32 enflasyon, TL yılda %34 değer kaybediyor</td></tr>
+<tr><td>Sanayi Stratejisi</td><td class="v-green">Planlı sanayileşme, ithal ikamesi, devlet öncülüğü</td><td class="v-amber">Karma model, sanayi üretimi var ama teknoloji bağımlısı</td></tr>
+<tr><td>Döviz Rezervi</td><td class="v-green">Altın + döviz: 1946'da 218 milyon $ (dönemin şartlarında yüksek)</td><td class="v-red">Net $30 milyar altı (swap hariç)</td></tr>
+<tr><td>Dışa Bağımlılık</td><td class="v-green">Asgari — "Yoktan var etme" modeli</td><td class="v-red">Enerji, teknoloji, sermaye, gıdada dışa bağımlı</td></tr>
+<tr><td>Altın Rezervi</td><td class="v-green">1946'da 28 milyon TL altın mevcudu</td><td class="v-amber">TCMB altını var ama rehin/swaplı olup olmadığı sorgulanır</td></tr>
+</table>
+
+<h3>2.2 "Yoktan Var Etme" Modelinin 8 Prensibi</h3>
+<ol>
+<li><strong>Borçsuz bağımsızlık:</strong> Dış borç özgürlüğü sınırlar. Borçlanma sadece üretim içindir, tüketim için değil.</li>
+<li><strong>Sağlam para = sağlam devlet:</strong> Para basarak zengin olunmaz. 1929-38'de %29 deflasyon yaşandı (bugün %32 enflasyon).</li>
+<li><strong>Sanayileşme = kurtuluş:</strong> Dışa bağımlı üretim değil, ulusal sanayi. Nazilli Basma Fabrikası sembolüdür.</li>
+<li><strong>Dengeli bütçe:</strong> Harcama kadar gelir. Faiz dışı fazla şart.</li>
+<li><strong>Korumacılık:</strong> Bebek sanayii korumadan ulusal kalkınma olmaz.</li>
+<li><strong>Eğitim = kalkınma:</strong> Sanayileşme okulla birlikte yürür.</li>
+<li><strong>Altyapı:</strong> Demiryolları, limanlar, fabrikalar — sıfırdan inşa.</li>
+<li><strong>Milli para egemenliği:</strong> Dolarizasyon ve euroizasyon yasak.</li>
+</ol>
+
+<h2>III. Çapraz Veri Doğrulama (TÜİK ↑ Dünya Bankası ↑ Diğer Ülkeler)</h2>
+
+<h3>3.1 Güvenilmez Veri Kaynakları</h3>
+<div class="callout">
+<p><strong>TÜİK verilerine güvenmiyoruz.</strong> Bu rapor, Türkiye'nin ekonomik göstergelerini üç bağımsız kaynakla çapraz doğrulamıştır:</p>
+<ol>
+<li>Dünya Bankası (WDI) — en güvenilir uluslararası kaynak</li>
+<li>IMF (WEO) — konservatif tahminler</li>
+<li>ENAG — bağımsız enflasyon ölçümü</li>
+<li>Diğer ülke istatistik kurumları (Trading Economics, Bloomberg, Reuters)</li>
+</ol>
+</div>
+
+<table>
+<tr><th>Gösterge</th><th>TÜİK (Resmi)</th><th>Bağımsız/Uluslararası</th><th>Fark</th></tr>
+<tr><td>Enflasyon (Nisan 2026)</td><td><strong>%32.37</strong></td><td>ENAG: ~%50-55</td><td class="v-red">~18 puan makas</td></tr>
+<tr><td>İşsizlik (2025)</td><td><strong>%8.7</strong></td><td>ILO metod: ~%12-14 (genç + kadın gizli işsizlik)</td><td class="v-amber">~%4-5 puan fark</td></tr>
+<tr><td>GSYH Büyüme (2025)</td><td><strong>%3.6</strong></td><td>Dünya Bankası: %2.6, IMF: %2.7</td><td class="v-red">~1 puan fark</td></tr>
+<tr><td>Yoksulluk (2024)</td><td><strong>%13.5</strong></td><td>Dünya Bankası: ~%20+ (ENPRI tahmini)</td><td class="v-red">~%7 puan fark</td></tr>
+<tr><td>Cari Açık (2025)</td><td><strong>-$25.2B</strong></td><td>IMF WEO: -$26.8B (küçük fark)</td><td class="v-green">~%6 fark — kabul edilebilir</td></tr>
+</table>
+
+<h3>3.2 Uluslararası Karşılaştırma: Türkiye vs. Benchmark Ülkeler</h3>
+<table>
+<tr><th>Gösterge</th><th>Türkiye (2026)</th><th>Endonezya</th><th>Meksika</th><th>Güney Kore (2000)</th><th>Not</th></tr>
+<tr><td>Enflasyon</td><td class="v-red">%32.4</td><td>%3.0</td><td>%4.5</td><td>%2.3</td><td>Türkiye 10× kötü</td></tr>
+<tr><td>Faiz Oranı</td><td class="v-red">%37</td><td>%5.75</td><td>%10.0</td><td>%5.0</td><td>Türkiye 6-7× kötü</td></tr>
+<tr><td>CDS (bps)</td><td class="v-red">254</td><td>~70</td><td>~100</td><td>~50</td><td>Türkiye 3-5× kötü</td></tr>
+<tr><td>USD/Kur (yıllık baz)</td><td class="v-red">45.6</td><td>16,200 (IDR)</td><td>18.5 (MXN)</td><td>1,350 (KRW 2000)</td><td>Benzer gelişmekte olan profili</td></tr>
+<tr><td>Rezerv/İthalat (ay)</td><td class="v-amber">3.5</td><td>~6.5</td><td>~4.0</td><td>~8.0</td><td>Türkiye kritik eşikte</td></tr>
+<tr><td>WJP Hukuk Endeksi</td><td class="v-red">117/142</td><td>~60</td><td>~85</td><td>~25</td><td>Türkiye çok geride</td></tr>
+</table>
+
+<h2>IV. Ersal Yavi × Acemoğlu × T2SAIM Sentezi</h2>
+
+<h3>4.1 Üçlü Çerçeve</h3>
+<table>
+<tr><th>Ersal Yavi</th><th>Acemoğlu</th><th>T2SAIM</th><th>2026 Türkiye</th></tr>
+<tr><td>"En ucuz" — ucuz emek+hammadde, düşük kur dayatması</td><td>Extractive institutions — kaynak sömürüsü</td><td>KE (LM-2): merkezi ağ anomalisi</td><td class="v-red">TL bilinçli olarak düşük tutuluyor, ucuz işgücü ihracatı</td></tr>
+<tr><td>"En uydurulmuş" — dışarıdan dayatılan mevzuat</td><td>Commitment problem — taahhüt tutarsızlığı</td><td>KE (LM-1): zaman anomalisi</td><td class="v-red">AB mevzuatı tek yönlü uyum, Gümrük Birliği asimetrik</td></tr>
+<tr><td>"En uslandırılmış" — politik bağımlılık</td><td>Narrow Corridor — dar koridor</td><td>KE (LM-4): devlet-toplum dengesizliği</td><td class="v-red">Dış politikada manevra alanı daralıyor</td></tr>
+</table>
+
+<h3>4.2 T2SAIM Adli Metrikleri: IDIS Nedir?</h3>
+<div class="callout-gold">
+<p><strong>IDIS (Kurumsal Veri Bütünlüğü Skoru - Institutional Data Integrity Score):</strong> T2SAIM tarafından kullanılan, bir devletin ana kolonlarının (Merkez Bankası, Yargı, İstatistik Kurumları) ürettiği verilere ve kararlara duyulan <em>organik</em> güveni ölçen adli bir endekstir. 100 üzerinden değerlendirilir ve 60'ın altı "Sömürücü (Extractive) Zafiyet" eşiğidir. Bir sistem bu eşiğin altına indiğinde, ülkeye fabrika kuracak kalıcı yatırımcı gelmez; onun yerine sadece yüksek faiz ve düşük kur arbitrajından yararlanan, vur-kaç yapan tefeci sıcak para girer. Bu da Ersal Yavi'nin bahsettiği 400 yıllık "uslandırılma ve batırılma" döngüsünün modern versiyonudur.</p>
+</div>
+
+<h3>4.3 400 Yıllık Döngünün 2026'daki Yansıması</h3>
+<div class="callout">
+<p><strong>Ersal Yavi'nin tezi:</strong> Türkiye'ye yönelik Batı politikaları 400 yıldır değişmez. 1838 Baltalimanı = 1995 Gümrük Birliği = 2026 Sıcak Para+Sermaye Kontrolleri. Her döngüde aynı mekanizma: borçlandır → kurunu düşür → sanayini engelle → ucuz hammadde + emek al → politik olarak kontrol et.</p>
+<p><strong>T2SAIM tespiti:</strong> Bu döngü Kritik IDIS seviyeleriyle teyit edilmiştir. Türkiye 2026'da döngünün "en uslandırılmış" aşamasındadır. Sıcak para çevrilemez, rezervler tükenmiştir, politik manevra alanı daralmıştır.</p>
+<p><strong>Kemalist çözüm (Yavi'ye göre):</strong> Borçtan arınma, sağlam para, millî sanayi, denk bütçe, bağımsız dış politika. 1923'te sıfır imkânla yapıldıysa, bugün de yapılabilir — ama siyasi irade şart.</p>
+</div>
+
+<h2>V. Entegre Sonuç ve Projeksiyon</h2>
+
+<h3>5.1 Türkiye 2026 — Döngünün Neresinde?</h3>
+<table>
+<tr><th>Aşama</th><th>Ersal Yavi Modeli</th><th>Türkiye 2026</th><th>Durum</th></tr>
+<tr><td>1</td><td>Borçlandırma</td><td>2.8 trilyon TL iç borç, %37 faiz</td><td class="v-red">✓ Aktif</td></tr>
+<tr><td>2</td><td>Kur baskısı</td><td>USD/TRY 45.6, 22 ayda %34 değer kaybı</td><td class="v-red">✓ Aktif</td></tr>
+<tr><td>3</td><td>Sanayisizleştirme</td><td>İmalat PMI düşüşte, teknoloji bağımlılığı</td><td class="v-amber">Kısmen</td></tr>
+<tr><td>4</td><td>Politik bağımlılık</td><td>Epstein/Halkbank şantaj dosyaları, İsrail hexagon</td><td class="v-red">✓ Kritik</td></tr>
+<tr><td>5</td><td>Rezerv tükenmesi</td><td>Net rezerv &lt;$30 milyar</td><td class="v-red">✓ Aktif</td></tr>
+<tr><td>6</td><td>Kriz/IMF</td><td>Q1 2027 projeksiyonu</td><td class="v-amber">Öngörülüyor</td></tr>
+</table>
+
+<h3>5.2 Kırılma Eşikleri (Güncellenmiş)</h3>
+<p>Ersal Yavi modeli + Acemoğlu + T2SAIM verileriyle belirlenen kırılma noktaları:</p>
+<table>
+<tr><th>Eşik</th><th>Değer</th><th>Şu An</th><th>Durum</th></tr>
+<tr><td>Net rezerv &lt; ithalatın 3 ayı</td><td>&lt;$20 milyar</td><td>~$30 milyar (~3.5 ay)</td><td class="v-amber">Yaklaşıyor</td></tr>
+<tr><td>CDS &gt; 350 bps</td><td>Borçlanma maliyeti sürdürülemez</td><td>254 bps</td><td class="v-amber">Yükseliyor</td></tr>
+<tr><td>ENAG-TÜİK makası &gt; 25 puan</td><td>Veri güveni tam kayıp</td><td>~18 puan</td><td class="v-amber">Eşiğe yakın</td></tr>
+<tr><td>Sıcak para çıkışı &gt; $10 milyar/ay</td><td>BoP krizi</td><td>İzleniyor</td><td class="v-amber">Risk var</td></tr>
+<tr><td>KKM çözülmesi &lt; $15 milyar</td><td>Sistemik bankacılık krizi</td><td>~$35 milyar</td><td class="v-green">Şimdilik güvenli</td></tr>
+</table>
+
+<h3>5.3 Nihai Hüküm</h3>
+<div class="callout">
+<p><strong>Üç çerçevenin ortak teşhisi:</strong></p>
+<p><strong>Ersal Yavi:</strong> 400 yıllık döngünün son aşaması — "en uslandırılmış" Türkiye. Çözüm: 1923 modeline dönüş (borçsuz, sağlam para, millî sanayi).</p>
+<p><strong>Acemoğlu:</strong> Extractive equilibrium — Kritik IDIS Skoru. Kurumsal reform olmadan çıkış yok.</p>
+<p><strong>T2SAIM:</strong> KE=0.74. Fiziksel sürdürülebilirlik 6-9 ay. Q1 2027'de sistemik kırılma olasılığı %45.</p>
+<p >"Bir ülke nasıl batırılır?" sorusunun cevabı 400 yıldır aynı. "Nasıl kurtarılır?" sorusunun cevabı ise 1923'te verilmiş. Tekerlek yeniden icat edilmeyecek.</p>
+</div>
+
+<div class="footer">
+TarCo Forensic Intelligence Research · LM-ECON-YAVI × ACEMOĞLU × T2SAIM<br>
+Kaynak: Ersal Yavi "Batırılan Bir Ülke Nasıl Kurtarılır?" (2001) · Daron Acemoğlu "Why Nations Fail"<br>
+22 May 2026 · <em>Veritas Per Se</em><br>
+<span>TEMPORAL LOCK: 2026-05-22 · HASH: #lm-econ-yavi-001</span>
+</div>
+
+
+</div>
+</body>
+</html>

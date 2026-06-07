@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Back to Futura — Ana İndeks</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root { --ink:#0f1a2e; --paper:#f7f4ec; --rule:#1a2a4a; --gold:#c9a84c; --accent:#8b1a1a; --muted:#6b7280; --serif:Georgia,"Times New Roman",serif; --sans:Helvetica,Arial,sans-serif; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--ink); color:var(--paper); font-family:var(--serif); font-size:16px; line-height:1.8; padding:0; }
+  .page { max-width:960px; margin:0 auto; padding:40px 24px 60px; }
+  header { text-align:center; border-bottom:2px solid var(--gold); padding-bottom:28px; margin-bottom:36px; }
+  .eyebrow { font-family:var(--sans); font-size:9px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
+  h1 { font-weight:500; font-size:30px; margin:8px 0; }
+  .subtitle { color:rgba(247,244,236,0.5); font-style:italic; font-size:14px; }
+  
+  .bilingual { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:28px 0; }
+  @media(max-width:720px){.bilingual{grid-template-columns:1fr;}}
+  
+  .panel { padding:24px; border:1px solid rgba(201,168,76,0.1); }
+  .panel h2 { font-size:16px; font-weight:500; color:var(--gold); text-align:center; letter-spacing:3px; text-transform:uppercase; font-family:var(--sans); margin-bottom:16px; }
+  .panel .divider { width:30px; height:2px; background:var(--gold); margin:0 auto 16px; }
+  .panel .section-title { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin:20px 0 8px; padding-bottom:6px; border-bottom:1px solid rgba(255,255,255,0.05); }
+  
+  .panel ul { list-style:none; }
+  .panel ul li { padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.03); }
+  .panel ul li:last-child { border-bottom:none; }
+  .panel ul li a { color:rgba(247,244,236,0.7); text-decoration:none; display:flex; align-items:flex-start; gap:10px; transition:all 0.2s; }
+  .panel ul li a:hover { color:var(--gold); }
+  .panel ul li .num { font-family:var(--sans); font-size:11px; font-weight:600; color:var(--gold); min-width:22px; }
+  .panel ul li .desc { font-size:12px; color:rgba(247,244,236,0.3); margin-left:32px; margin-top:2px; }
+  
+  footer { margin-top:48px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05); text-align:center; font-size:11px; color:rgba(247,244,236,0.2); font-family:var(--sans); }
+  .seal { display:inline-block; margin-top:12px; padding:6px 20px; border:1px solid var(--gold); color:var(--gold); font-size:8px; letter-spacing:3px; text-transform:uppercase; font-family:var(--sans); }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">Back to Futura · T2SAIM · Mission Albion</div>
+  <h1>📖 Kriz Erken Uyarı Sistemi</h1>
+  <p class="subtitle">T2SAIM raporları ve ekonomi tarihi analizleri — iki dilde.</p>
+</header>
+
+<div class="bilingual">
+  <!-- TÜRKÇE -->
+  <div class="panel">
+    <h2>📘 Türkçe</h2>
+    <div class="divider"></div>
+    
+    <div class="section-title">📡 T2SAIM Kriz Raporları</div>
+    <ul>
+      <li><a href="2%20_BILIMSEL_RAPOR.html"><span class="num">01</span> Bilimsel Rapor<div class="desc">Metodoloji, ajan tipleri, katsayılar</div></a></li>
+      <li><a href="3%20_20_YILLIK_CIKARIM.html"><span class="num">02</span> 20 Yıllık Çıkarım<div class="desc">Hoffer · De Mesquita · Acemoğlu</div></a></li>
+      <li><a href="4%20simulasyonlar_V2_aciklamali.html"><span class="num">03</span> Dijital Özne Simülasyonları<div class="desc">CBC — milyonlarca iterasyon</div></a></li>
+      <li><a href="5%20matematiksel_gostergeler_V2_aciklamali.html"><span class="num">04</span> Matematiksel Göstergeler<div class="desc">SRI, lambda, rezervler</div></a></li>
+      <li><a href="6_kriz_sinyali_V2_aciklamali.html"><span class="num">05</span> Altı Kriz Sinyali<div class="desc">EFMI'den tevekküle</div></a></li>
+      <li><a href="7%20BIRLESIK_KRİZ_RAPORU.html"><span class="num">06</span> Birleşik Kriz Raporu<div class="desc">Üç ayağın birleşimi</div></a></li>
+    </ul>
+    
+    <div class="section-title">📜 Ekonomi Tarihi</div>
+    <ul>
+      <li><a href="01%20LM_ECON_COMPARATIVE_KEMALIST_MODEL.html"><span class="num">K1</span> Kemalist Modelin Dünyadaki Durumu<div class="desc">8 prensibin 8 ülkede karşılaştırması</div></a></li>
+      <li><a href="02_LM_ECON_YAVI_BATIRILAN_ULKE_ANALIZI.html"><span class="num">K2</span> Batırılan Bir Ülke Analizi<div class="desc">Osmanlı İmparatorluğu'nun çöküşü</div></a></li>
+      <li><a href="03_LM_ECON_YAVI_KURTARILAN_ULKE_ANALIZI.html"><span class="num">K3</span> Kurtarılan Bir Ülke Analizi<div class="desc">Cumhuriyet'in inşası ve yükselişi</div></a></li>
+      <li><a href="03%20LM_ECON_DARON_TURKIYE_SURDURULEBILIRLIK.html"><span class="num">K4</span> Ekonomik Sürdürülebilirlik<div class="desc">Daron Acemoğlu perspektifi</div></a></li>
+    </ul>
+  </div>
+  
+  <!-- UK ENGLISH -->
+  <div class="panel">
+    <h2>📗 UK English</h2>
+    <div class="divider"></div>
+    
+    <div class="section-title">📡 T2SAIM Crisis Reports</div>
+    <ul>
+      <li><span class="num">01</span> Scientific Report<div class="desc">Methodology, agent types, coefficients</div></li>
+      <li><span class="num">02</span> 20-Year Inference<div class="desc">Hoffer · De Mesquita · Acemoglu</div></li>
+      <li><span class="num">03</span> Digital Subject Simulations<div class="desc">CBC — millions of iterations</div></li>
+      <li><span class="num">04</span> Mathematical Indicators<div class="desc">SRI, lambda, reserves</div></li>
+      <li><span class="num">05</span> Six Crisis Signals<div class="desc">EFMI to fatalism breach</div></li>
+      <li><span class="num">06</span> Unified Crisis Report<div class="desc">All three pillars combined</div></li>
+    </ul>
+    
+    <div class="section-title">📜 Economic History</div>
+    <ul>
+      <li><span class="num">K1</span> Kemalist Model Worldwide<div class="desc">8 principles tested in 8 countries</div></li>
+      <li><span class="num">K2</span> Analysis of a Ruined Country<div class="desc">The fall of the Ottoman Empire</div></li>
+      <li><span class="num">K3</span> Analysis of a Rescued Country<div class="desc">The rise of the Republic</div></li>
+      <li><span class="num">K4</span> Economic Sustainability<div class="desc">Daron Acemoglu perspective</div></li>
+    </ul>
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:20px;">
+  <a href="../../BTF_AMNESIA/sonuc_kalibrasyon.html" style="display:inline-block;padding:12px 32px;border:2px solid var(--gold);color:var(--gold);text-decoration:none;font-family:var(--sans);font-size:11px;letter-spacing:3px;text-transform:uppercase;">🏆 Kalibrasyon Sonucu: %100</a>
+</div>
+
+<footer>
+  <p>Back to Futura · Kaptan Tarco &amp; Spock · Haziran 2026</p>
+  <div class="seal">Veritas Per Se</div>
+</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM — Altı Kriz Sinyali (V2 - Açıklamalı)</title>
+<style>
+  :root { --ink:#f7f4ec; --paper:#0f1a2e; --rule:#f7f4ec; --gold:#c9a84c; --accent:#8b1a1a; --muted:#8e9bb0; --green:#15803d; --serif:Georgia,"Times New Roman",serif; --sans:Helvetica,Arial,sans-serif; --mono:"Courier New",monospace; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.75; padding:0; }
+  .page { max-width:820px; margin:0 auto; padding:48px 24px 80px; }
+  header { border-bottom:2px solid var(--rule); padding-bottom:28px; margin-bottom:40px; }
+  .eyebrow { font-family:var(--sans); font-size:10px; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  h1 { font-family:var(--serif); font-weight:500; font-size:34px; color:var(--ink); line-height:1.12; margin-bottom:12px; }
+  .subtitle { font-size:17px; line-height:1.6; color:var(--muted); font-style:italic; max-width:640px; }
+  .tabs { display:flex; gap:6px; margin:24px 0; flex-wrap:wrap; }
+  .tab { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:8px 16px; background:rgba(15,26,46,0.04); border:1px solid #ddd6c8; cursor:default; }
+  .tab-active { background:#1a2a4a; color:var(--paper); border-color:var(--rule); }
+  .signal { margin:40px 0; padding:0; border-top:3px solid var(--rule); }
+  .signal-header { display:flex; align-items:center; gap:14px; margin:28px 0 10px; }
+  .signal-num { font-family:var(--sans); font-size:13px; font-weight:700; color:var(--gold); background:rgba(201,168,76,0.12); padding:4px 12px; }
+  .signal h2 { font-family:var(--serif); font-weight:500; font-size:24px; color:var(--ink); }
+  .signal-meta { font-family:var(--sans); font-size:11px; color:var(--muted); letter-spacing:0.04em; margin-bottom:16px; }
+  .signal-meta span { margin-right:20px; }
+  .badge-red { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:var(--accent); color:var(--paper); }
+  .badge-gold { display:inline-block; font-family:var(--sans); font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 12px; background:var(--gold); color:var(--rule); }
+  p { margin-bottom:14px; }
+  .callout { background:rgba(201,168,76,0.08); border-left:3px solid var(--gold); padding:16px 20px; margin:18px 0; font-size:15px; font-style:italic; }
+  .callout strong { font-style:normal; }
+  .callout-red { background:rgba(139,26,26,0.05); border-left-color:var(--accent); }
+  .indicator { background:#faf8f2; border:1px solid #ddd6c8; padding:18px 22px; margin:18px 0; }
+  .indicator-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0; }
+  @media(max-width:640px){.indicator-grid{grid-template-columns:1fr;}}
+  .ind-item { padding:10px 14px; background:var(--paper); border:1px solid #e8e2d4; }
+  .ind-item .label { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:4px; }
+  .ind-item .value { font-family:var(--sans); font-size:14px; font-weight:600; }
+  .arrow-up { color:var(--accent); } .arrow-down { color:var(--green); } .arrow-flat { color:var(--muted); }
+  .horizon-box { background:#1a2a4a; color:var(--paper); padding:20px 24px; margin:18px 0; }
+  .horizon-box h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .horizon-box .big { font-size:28px; font-weight:700; color:var(--paper); }
+  .horizon-box p { color:rgba(247,244,236,0.8); font-size:14px; }
+  .timeline { position:relative; margin:32px 0; padding:20px 0; }
+  .timeline-track { height:4px; background:rgba(255,255,255,0.05)6c8; border-radius:2px; position:relative; margin:0 20px; }
+  .timeline-fill { height:4px; background:linear-gradient(90deg, var(--gold) 0%, var(--accent) 60%, #4a0000 100%); border-radius:2px; width:85%; }
+  .timeline-marker { position:absolute; top:-8px; width:20px; height:20px; border-radius:50%; border:2px solid var(--paper); }
+  .timeline-marker-yellow { background:var(--gold); left:10%; }
+  .timeline-marker-orange { background:#d97706; left:40%; }
+  .timeline-marker-red { background:var(--accent); left:65%; }
+  .timeline-marker-dark { background:#4a0000; left:85%; }
+  .timeline-labels { display:flex; justify-content:space-between; margin-top:16px; font-family:var(--sans); font-size:11px; font-weight:600; color:var(--muted); }
+  .timeline-labels span { text-align:center; }
+  .whatis { background:#f0ede6; padding:18px 22px; margin:16px 0; }
+  .whatis h4 { font-family:var(--sans); font-size:11px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--rule); margin-bottom:6px; }
+  .footer { margin-top:60px; padding-top:24px; border-top:1px solid #ddd6c8; font-size:13px; color:var(--muted); font-family:var(--sans); }
+  hr { border:none; border-top:1px solid #ddd6c8; margin:40px 0; }
+  table { width:100%; border-collapse:collapse; margin:18px 0 24px; font-size:14.5px; }
+  th { font-family:var(--sans); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; text-align:left; padding:8px 12px; background:#1a2a4a; color: var(--gold); }
+  td { padding:10px 12px; border-bottom:1px solid #ddd6c8; vertical-align:top; }
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <div class="eyebrow">T2SAIM · KRİZ SİNYAL SİSTEMİ · V2 · HAZİRAN 2026</div>
+  <h1>Altı Kriz Sinyali: Ne Anlama Gelir, Nasıl Okunur?</h1>
+  <p class="subtitle">Bir ülkenin krize doğru yürüyüp yürümediğini gösteren altı bağımsız gösterge. Her biri farklı bir açıdan bakar. Hepsi aynı yönü gösterdiğinde, kriz kaçınılmazdır.</p>
+  <div class="tabs">
+    <span class="tab tab-active">Sinyaller</span>
+    <span class="tab">Kronoloji</span>
+    <span class="tab">Sözlük</span>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════ -->
+<!-- GİRİŞ: Horizon Nedir? -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="whatis">
+<h4>Önce Bir Kavram: "Horizon" Ne Demek?</h4>
+<p>Horizon, bir sinyalin krizi ne kadar süre önceden haber verdiğidir. Örneğin "EFMI dönüşünün horizonu 24 aydır" demek, EFMI göstergesinde bir bozulma gördüğümüzde, krizin yaklaşık 24 ay sonra patlak vereceğini biliriz anlamına gelir.</p>
+<p>Horizon ne kadar uzunsa, o kadar erken uyarı alırız — ama sinyal o kadar zayıf olabilir. Horizon ne kadar kısaysa, sinyal o kadar güçlüdür — ama krize o kadar yakınızdır. Bu bir denge meselesidir. Uzun horizonlu sinyaller "bir şeyler ters gidiyor" der, kısa horizonlu sinyaller "kriz kapıda" der.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Kriz Sinyal Haritası</h4>
+<div class="timeline">
+  <div class="timeline-track">
+    <div class="timeline-fill"></div>
+    <div class="timeline-marker timeline-marker-yellow" style="left:10%;"></div>
+    <div class="timeline-marker timeline-marker-orange" style="left:40%;"></div>
+    <div class="timeline-marker timeline-marker-red" style="left:65%;"></div>
+    <div class="timeline-marker timeline-marker-dark" style="left:85%;"></div>
+  </div>
+  <div class="timeline-labels">
+    <span>Sağlıklı<br><small>2002-2010</small></span>
+    <span>Yavaş Çürüme<br><small>2011-2015</small></span>
+    <span>Hızlı Çürüme<br><small>2016-2021</small></span>
+    <span>Krize Yakın<br><small>2022-2026</small></span>
+  </div>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- 1. EFMI DÖNÜŞÜ -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="signal">
+<div class="signal-header">
+  <span class="signal-num">01</span>
+  <h2>EFMI Dönüşü — Söylem ile Gerçeklik Arasındaki Makas</h2>
+</div>
+<div class="signal-meta">
+  <span>🕐 Horizon: <strong>~24 ay</strong></span>
+  <span>📊 Güvenilirlik: <strong>Yüksek</strong></span>
+  <span><span class="badge-red">Yapısal Gösterge</span></span>
+</div>
+
+<p><strong>Ne demek?</strong>
+EFMI, bir ülkenin yöneticilerinin söyledikleri ile yaptıkları arasındaki farkı ölçer. Bu fark ne kadar büyükse, sistem o kadar çürümüştür.</p>
+
+<p>Şöyle düşünün: Bir hükümet "yolsuzlukla mücadele ediyoruz" der ama kamu ihaleleri usulsüzce yandaşlara veriliyorsa, arada bir makas vardır. Bu makas açıldıkça, toplum yöneticilere olan inancını kaybeder. İşte EFMI bu makası ölçer.</p>
+
+<div class="callout">
+<strong>Türkiye'de ne oldu?</strong> 2005-2012 arasında makas kapalıydı. Reformlar yapılıyordu, AB ile müzakereler ilerliyordu, yolsuzluk algısı düşüktü. 2013'te (17-25 Aralık operasyonları) makas açılmaya başladı. 2016'dan sonra açık hızla büyüdü. 2024 itibarıyla makas neredeyse tamamen açık durumda — söylem ile gerçeklik arasındaki fark artık gizlenemiyor.</p>
+</div>
+
+<div class="indicator">
+<h4>Bu sinyalin seyri</h4>
+<div class="indicator-grid">
+  <div class="ind-item"><div class="label">2005-2012</div><div class="value" style="color:var(--green);">↓ Makas kapalı (reform dönemi)</div></div>
+  <div class="ind-item"><div class="label">2013-2015</div><div class="value" style="color:#d97706;">→ Makas açılıyor</div></div>
+  <div class="ind-item"><div class="label">2016-2021</div><div class="value" style="color:var(--accent);">↑ Makas hızla açılıyor</div></div>
+  <div class="ind-item"><div class="label">2022-2026</div><div class="value" style="color:var(--accent);">↑↑ Makas neredeyse maksimumda</div></div>
+</div>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Dört ayrı kanaldan gelen veri birleştiriliyor: (1) Kamu ihalelerindeki usulsüzlükler, (2) Uluslararası yolsuzluk algı endeksleri, (3) Yargı bağımsızlığına yönelik ihlaller, (4) Türkiye Varlık Fonu gibi denetimsiz kamu kuruluşlarının opaklığı. Her kanal ayrı ayrı ölçülüyor, sonra tek bir göstergeye birleştiriliyor.</p>
+<p>Örneğin kamu ihalelerinde "pazarlık usulü" ile yapılan ihalelerin oranı %81'e fırladığında, bu kanaldan gelen sinyal "kırmızı" yanıyor demektir.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Neden 24 ay önceden görülüyor?</h4>
+<p>Çünkü bir ülkenin kurumsal çürümesi bir gecede olmaz. Yargının bağımsızlığını kaybetmesi, kamu ihalelerinin yandaşa kayması, medyanın susturulması — bunların hepsi aylar ve yıllar alan süreçlerdir. EFMI'deki dönüş, bu süreçlerin geri döndürülemez bir noktaya geldiğini gösterir. Kriz genellikle bu dönüşten 18-24 ay sonra patlak verir.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- 2. GÜVEN EROZYONU -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="signal">
+<div class="signal-header">
+  <span class="signal-num">02</span>
+  <h2>Güven Erozyonu — Toplumun Birbirine ve Kurumlara Güveni</h2>
+</div>
+<div class="signal-meta">
+  <span>🕐 Horizon: <strong>~36 ay</strong></span>
+  <span>📊 Güvenilirlik: <strong>Orta</strong></span>
+  <span><span class="badge-gold">Sosyal Gösterge</span></span>
+</div>
+
+<p><strong>Ne demek?</strong>
+İnsanların birbirine ve devlet kurumlarına duyduğu güvenin zamanla aşınması. Güven, bir toplumun "işlem maliyeti"dir. Güvenin yüksek olduğu toplumlarda işler hızlı yürür, sözleşmeler tokalaşmayla biter, mahkemelere gerek kalmaz. Güven düştükçe her işlem pahalanır, her anlaşma avukat gerektirir, her ilişki şüpheyle başlar.</p>
+
+<p>Bu sinyal, ünlü "Deffuant modeli" olarak bilinen bir matematiksel yaklaşımla ölçülür. Modelin özü şudur: İnsanlar, kendilerine yakın gördükleri kişilerle fikir alışverişi yapar. Güven eşiği ne kadar darsa, insanlar yalnızca kendilerine çok benzeyenlere güvenir — bu da "yankı odaları"nı oluşturur. Toplum kendi içinde bölünür, farklı gruplar birbiriyle konuşmayı bırakır.</p>
+
+<div class="callout callout-red">
+<strong>Türkiye'de ne oldu?</strong> Kişilerarası güven %14-15 civarında. OECD ortalaması %30-40. Bu, Türkiye'nin dünyada güvenin en düşük olduğu ülkelerden biri olduğu anlamına geliyor. 2007-2021 arasında Türkiye, kurumsal güvenin en dramatik şekilde düştüğü ülke oldu. En çok güvenilen kurum TSK (%71). En az güvenilenler: yargı, medya, siyasi partiler.</p>
+</div>
+
+<div class="indicator">
+<h4>Bu sinyalin seyri</h4>
+<div class="indicator-grid">
+  <div class="ind-item"><div class="label">Kişilerarası güven</div><div class="value" style="color:var(--accent);">%14 ↓</div></div>
+  <div class="ind-item"><div class="label">Güven erime hızı</div><div class="value" style="color:var(--accent);">Hızlı ↑</div></div>
+  <div class="ind-item"><div class="label">Güven toparlanması</div><div class="value" style="color:var(--accent);">Çok yavaş ↓</div></div>
+  <div class="ind-item"><div class="label">Hükümete güven</div><div class="value" style="color:#d97706;">%46 →</div></div>
+</div>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Dünya Değerler Araştırması (WVS), Pew Araştırma Merkezi ve KONDA gibi kuruluşların yıllık anketleri kullanılıyor. "Genel olarak insanlara güvenilir mi?" sorusuna verilen "evet" cevaplarının oranı temel gösterge. Bunun yanında "hükümete güveniyor musunuz?", "yargıya güveniyor musunuz?" gibi sorularla kurumsal güven de ölçülüyor.</p>
+<p>Güvenin ne kadar hızlı eridiği (erime hızı) ve kriz sonrası ne kadar hızlı toparlandığı (toparlanma hızı) ayrı ayrı hesaplanıyor. Türkiye'de güven hızlı eriyor ama çok yavaş toparlanıyor. 2001 krizinden sonra güvenin toparlanması 10 yıldan fazla sürdü.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Neden 36 ay önceden görülüyor?</h4>
+<p>Güven, en yavaş değişen toplumsal göstergedir. Bir toplumun güveni yıllar içinde birikir ve yıllar içinde erir. 36 ay önceden güven erozyonunu görmek mümkündür. Ancak tek başına kriz göstergesi değildir — diğer sinyallerle birleştiğinde anlam kazanır. Güven erozyonu + EFMI dönüşü + kutuplaşma = neredeyse kesin kriz sinyali.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- 3. KUTUPLAŞMA / ÖTEKİLEŞTİRME -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="signal">
+<div class="signal-header">
+  <span class="signal-num">03</span>
+  <h2>Kutuplaşma — Toplumun Bölünmesi ve Ötekileştirme</h2>
+</div>
+<div class="signal-meta">
+  <span>🕐 Horizon: <strong>~18 ay</strong></span>
+  <span>📊 Güvenilirlik: <strong>Yüksek</strong></span>
+  <span><span class="badge-red">Sosyo-Politik Gösterge</span></span>
+</div>
+
+<p><strong>Ne demek?</strong>
+Toplumun farklı siyasi, dini veya etnik gruplar arasında giderek derinleşen bölünmesi. Kutuplaşma arttıkça, gruplar birbirleriyle konuşmayı bırakır, kendi yankı odalarına çekilir ve "öteki"ni düşman olarak görmeye başlar.</p>
+
+<p>Bu sinyal, fizikteki "Ising modeli" olarak bilinen bir yaklaşımla ölçülür. Ising modeli aslında mıknatısların nasıl hizalandığını açıklar — ama toplumlar için de aynı mantık geçerlidir: Her birey, etrafındakilere bakarak hangi yöne döneceğine karar verir. Etraftaki herkes aynı yöne dönükse, birey de o yöne döner. Buna "grup içi uyum baskısı" denir. Kutuplaşma arttıkça bu baskı şiddetlenir ve gruplar birbirinden kopar.</p>
+
+<div class="callout callout-red">
+<strong>Türkiye'de ne oldu?</strong> Kutuplaşma seviyesi 100 üzerinden 85'e ulaşmış durumda. Bu, neredeyse herkesin kendi grubuna çekildiği, "öteki" ile diyaloğun imkansız hale geldiği anlamına geliyor. Güven eşiği o kadar daralmış ki insanlar yalnızca kendilerine çok yakın olanlara güveniyor. Geri kalan herkes "düşman" veya "potansiyel tehdit".</p>
+</div>
+
+<div class="indicator">
+<h4>Bu sinyalin seyri</h4>
+<div class="indicator-grid">
+  <div class="ind-item"><div class="label">Kutuplaşma seviyesi</div><div class="value" style="color:var(--accent);">85/100 ↑ (çok yüksek)</div></div>
+  <div class="ind-item"><div class="label">Grup içi uyum baskısı</div><div class="value" style="color:var(--accent);">Yüksek ↑</div></div>
+  <div class="ind-item"><div class="label">Güven eşiği (ne kadar dar)</div><div class="value" style="color:var(--accent);">Dar ↓ (sadece yakın gruba güven)</div></div>
+  <div class="ind-item"><div class="label">Yankı odası etkisi</div><div class="value" style="color:var(--accent);">Güçlü ↑</div></div>
+</div>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Anketlerle: "Kendinizi hangi siyasi görüşe yakın görüyorsunuz?", "Karşı görüşten biriyle evlenir misiniz?", "Karşı görüşten biriyle komşu olmak ister misiniz?" gibi sorular kutuplaşmanın derinliğini ölçer. Bunun yanında sosyal medya analizi, haber kaynaklarının tüketim şekli ve grup içi/dışı güven oranları da kullanılır.</p>
+<p>Kutuplaşma kritik eşiği (70/100) aştığında, toplum "kırılma noktasına" gelir. Ufak bir kıvılcım (bir skandal, bir terör olayı, bir ekonomik şok) büyük bir toplumsal çatışmayı tetikleyebilir.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Neden 18 ay önceden görülüyor?</h4>
+<p>Kutuplaşma, medya ve siyasi söylemle beslenen dinamik bir süreçtir. Bir seçim döngüsünde (4 yıl) kutuplaşma belirgin şekilde artar. Kritik eşiğe (70 üzeri) ulaşması yaklaşık 18 ay alır. Bu eşik aşıldığında, toplum "kırılma noktasına" gelir.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- 4. M2/NIR REZERV RASYOSU -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="signal">
+<div class="signal-header">
+  <span class="signal-num">04</span>
+  <h2>M2/NIR — Rezerv Yeterlilik Rasyosu</h2>
+</div>
+<div class="signal-meta">
+  <span>🕐 Horizon: <strong>~12 ay</strong></span>
+  <span>📊 Güvenilirlik: <strong>Yüksek</strong></span>
+  <span><span class="badge-gold">Finansal Gösterge</span></span>
+</div>
+
+<p><strong>Ne demek?</strong>
+Bir ülkenin piyasadaki toplam parasının (M2), döviz rezervlerine (NIR) oranı. Kabaca sorulan soru şu: "Ülkenin piyasadaki parası, rezervlerinin kaç katı?"</p>
+
+<p>Bu oran yükseldikçe, ülkenin dışsal şoklara karşı kırılganlığı artar. Çünkü rezervler, piyasadaki parayı gerektiğinde destekleyecek güçte değildir. Oran 10'un altındayken ülke rahattır. 10-15 arası uyarı bölgesidir. 15'in üstü alarmdır — rezervler para arzını karşılayamaz hale gelmiştir.</p>
+
+<div class="callout">
+<strong>Türkiye'de ne oldu?</strong> 2026 itibarıyla M2/NIR oranı 12.98 — uyarı bölgesinde. 2022 krizi öncesinde bu oran 8-9 bandındaydı. Son 4 yılda oran %50'den fazla arttı. Bu, rezervlerin hızla eridiği anlamına geliyor.</p>
+</div>
+
+<div class="indicator">
+<h4>Bu sinyalin seyri</h4>
+<div class="indicator-grid">
+  <div class="ind-item"><div class="label">M2/NIR (2026)</div><div class="value" style="color:#d97706;">12.98 → (uyarı bölgesi)</div></div>
+  <div class="ind-item"><div class="label">Kredi büyüme hızı</div><div class="value" style="color:var(--accent);">%36.1 ↑ (enflasyonist)</div></div>
+  <div class="ind-item"><div class="label">CDS primi</div><div class="value" style="color:#d97706;">MS+242bp → (orta)</div></div>
+  <div class="ind-item"><div class="label">Rezerv trendi</div><div class="value" style="color:var(--accent);;">Düşüyor ↓</div></div>
+</div>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Merkez Bankası'nın haftalık verileri kullanılıyor. M2 (toplam para arzı) ve NIR (net uluslararası rezervler) TCMB EVDS sistemi üzerinden alınıyor. Oran her hafta güncelleniyor. Ayrıca kredi büyüme hızı ve CDS primleri de destekleyici gösterge olarak kullanılıyor.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Neden 12 ay önceden görülüyor?</h4>
+<p>Finansal göstergeler, yapısal göstergelere göre daha hızlı değişir. Rezervler bir gecede erimez — ama aylar içinde ciddi şekilde azalabilir. 12 aylık horizon, merkez bankasının tipik bir planlama döngüsüdür. M2/NIR'deki yükseliş trendi 12 ay önceden görülebilir.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- 5. BİLİŞSEL ATROFİ -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="signal">
+<div class="signal-header">
+  <span class="signal-num">05</span>
+  <h2>Bilişsel Atrofi — Devlet Söylemine İnancın Kırpılması</h2>
+</div>
+<div class="signal-meta">
+  <span>🕐 Horizon: <strong>~6 ay</strong></span>
+  <span>📊 Güvenilirlik: <strong>Orta</strong></span>
+  <span><span class="badge-gold">Algı Göstergesi</span></span>
+</div>
+
+<p><strong>Ne demek?</strong>
+Devletin resmi açıklamalarına ve taahhütlerine duyulan inancın ne kadarının kaybolduğu. Örneğin bir bakan "enflasyon düşecek" dediğinde, halkın yüzde kaçı buna inanıyor?</p>
+
+<p>Bilişsel atrofi yükseldikçe, devletin söylediği hiçbir şeye inanılmaz. Bu, politika aktarım mekanizmasının çöküşüdür. Devlet faiz indirirse kimse inanmaz, vergi affı açıklarsa kimse inanmaz, "ekonomi iyiye gidiyor" derse herkes güler. Devlet konuşur ama kimse dinlemez.</p>
+
+<div class="callout callout-red">
+<strong>Türkiye'de ne oldu?</strong> Bilişsel atrofi seviyesi 0.654 — yani devletin resmi taahhütlerine duyulan inanç %65.4 oranında kırpılmış. Halkın sadece %34.6'sı resmi açıklamalara inanıyor. Bu, TÜİK verilerine güvensizlik, Merkez Bankası'nın bağımsızlığının sorgulanması ve resmi enflasyon verileri ile alternatif endeksler (ENAG) arasındaki farkın giderek açılmasıyla besleniyor.</p>
+</div>
+
+<div class="indicator">
+<h4>Bu sinyalin seyri</h4>
+<div class="indicator-grid">
+  <div class="ind-item"><div class="label">Bilişsel atrofi</div><div class="value" style="color:var(--accent);">0.654 ↑ (çok yüksek)</div></div>
+  <div class="ind-item"><div class="label">Devlet söylemine inanç</div><div class="value" style="color:var(--accent);">%34.6 ↓ (çok düşük)</div></div>
+  <div class="ind-item"><div class="label">Alternatif bilgi kaynakları</div><div class="value" style="color:var(--accent);">Baskın ↑</div></div>
+  <div class="ind-item"><div class="label">Politika aktarımı</div><div class="value" style="color:var(--accent);">Çökmüş ↓</div></div>
+</div>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Resmi verilerle alternatif veriler arasındaki fark (örneğin TÜİK enflasyonu ile ENAG enflasyonu arasındaki makas), anketlerde "hükümetin açıklamalarına inanıyor musunuz?" sorusuna verilen cevaplar, ve sosyal medyada resmi açıklamalara verilen tepkilerin analizi birleştirilerek hesaplanıyor.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Neden 6 ay önceden görülüyor?</h4>
+<p>Bilişsel atrofi, diğer göstergelerin birikmiş etkisinin halkın zihninde olgunlaşmasıyla oluşur. EFMI'deki bozulma, güven erozyonu ve kutuplaşma bir süre sonra bilişsel atrofiye yansır. Bu nedenle bilişsel atrofi, diğer sinyallere göre yaklaşık 6 ay gecikmeli bir göstergedir. Ancak yükseldiğinde, krizin kaçınılmaz olduğunu gösterir çünkü artık devlet yönetemez hale gelmiştir.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- 6. TEVEKKÜL DELİNMESİ -->
+<!-- ═══════════════════════════════════ -->
+
+<div class="signal">
+<div class="signal-header">
+  <span class="signal-num">06</span>
+  <h2>Tevekkül Delinmesi — Toplumsal Sabrın Tükenmesi</h2>
+</div>
+<div class="signal-meta">
+  <span>🕐 Horizon: <strong>~3 ay</strong></span>
+  <span>📊 Güvenilirlik: <strong>Çok Yüksek</strong></span>
+  <span><span class="badge-red">Ani Faz Geçişi</span></span>
+</div>
+
+<p><strong>Ne demek?</strong>
+Geleneksel toplumlarda insanlar, ekonomik ve sosyal strese karşı psikolojik bir tampon geliştirir. "Allah'ın takdiri", "nasip", "elhamdülillah" gibi inançlar, kriz anında paniği geciktirir, kitlesel kaosu engeller. Buna tevekkül tamponu diyoruz.</p>
+
+<p>Ancak her tamponun bir kırılma noktası vardır. Tampon ne kadar uzun süre dayanmışsa, kırıldığında o kadar şiddetli olur. Bu bir barajın yıkılmasına benzer. Aylar ve yıllar boyunca biriken stres, tek bir anda boşalır. İşte bu ana "tevekkül delinmesi" diyoruz.</p>
+
+<p>Bu sinyale ayrıca şunu da eklemek gerekir: Son yıllarda Türkiye'de deizme yönelim artıyor, insanların dine olan bağlılığı zayıflıyor. Bu, tevekkül tamponunu doğrudan zayıflatıyor. Çünkü tamponun kendisi inançla beslenir. İnanç zayıfladıkça, kriz anında paniği geciktirecek bir mekanizma kalmıyor.</p>
+
+<div class="callout callout-red">
+<strong>Türkiye'de ne oldu?</strong> Geleneksel kesimde tevekkül tamponu 1.4 seviyesinde. Diğer kesimlerde 0.2-0.3. 2001 krizinde tampon delindi (Z-skor +1.24σ) ve 22 banka battı. 2022'de tekrar delindi (Z-skor +1.09σ) ve enflasyon %85'e fırladı. 2026'da SRI 0.5244 — tampon henüz delinmemiş ama sınıra yaklaşılmış durumda. En son delinen tampon, en şiddetli krizi işaret eder.</p>
+</div>
+
+<div class="indicator">
+<h4>Bu sinyalin seyri</h4>
+<div class="indicator-grid">
+  <div class="ind-item"><div class="label">Tevekkül tamponu (Geleneksel)</div><div class="value" style="color:#d97706;">1.4 → (yüksek, zorlanıyor)</div></div>
+  <div class="ind-item"><div class="label">Tevekkül tamponu (Diğer)</div><div class="value" style="color:var(--accent);">0.2-0.3 ↓ (çok düşük)</div></div>
+  <div class="ind-item"><div class="label">Sistem şoku seviyesi</div><div class="value" style="color:#d97706;">0.52 → (sınıra yakın)</div></div>
+  <div class="ind-item"><div class="label">Deizm/İnançsızlık</div><div class="value" style="color:var(--accent);">Artıyor ↑ (tampon zayıflıyor)</div></div>
+</div>
+</div>
+
+<div class="whatis">
+<h4>Nasıl ölçülüyor?</h4>
+<p>Tevekkül tamponu, anketlerde "ekonomik zorluklar karşısında ne yaparsınız?" sorusuna verilen cevaplarla ölçülüyor. "Allah'a dua ederim" veya "nasip" diyenlerin oranı, tamponun gücünü gösteriyor. Sistem şoku ise SRI endeksi ile bilişsel atrofinin birleşiminden hesaplanıyor. Tamponun kırıldığı an, bu iki değerin çarpımının belirli bir eşiği aştığı noktadır.</p>
+</div>
+
+<div class="horizon-box">
+<h4>Neden 3 ay önceden görülüyor?</h4>
+<p>Tevekkül delinmesi, diğer tüm sinyallerin birikmesiyle oluşan ani bir faz geçişidir. Bir barajın yıkılması gibi — aylarca su birikir, sonra bir anda patlar. Tamponun kırılması genellikle bir "son damla" olayıyla tetiklenir: ani bir kur şoku, bir skandal, bir doğal afet. Bu nedenle tevekkül delinmesi en kısa horizonlu sinyaldir (3 ay), ama aynı zamanda en güvenilir olanıdır. Çünkü tampon delindiğinde, kriz zaten başlamıştır.</p>
+</div>
+</div>
+
+
+<!-- ═══════════════════════════════════ -->
+<!-- KRONOLOJİ CETVELİ -->
+<!-- ═══════════════════════════════════ -->
+
+<hr>
+
+<h2 style="font-family:var(--serif);font-weight:500;font-size:22px;margin-bottom:16px;">Kronoloji Cetveli: Çürümenin Aşamaları</h2>
+
+<p>Bir kriz, gece ansızın gelmez. Aylar ve yıllar önceden sinyaller vermeye başlar. İşte Türkiye'deki çürümenin kronolojisi:</p>
+
+<table>
+  <tr><th>Dönem</th><th>Ne Oldu?</th><th>Renk</th></tr>
+  <tr><td><strong>2002-2010</strong></td><td>Reform dönemi. AB müzakereleri, ekonomik büyüme, kurumsal iyileşme. EFMI negatif, güven yükseliyor.</td><td style="color:var(--green);">🟢 Sağlıklı</td></tr>
+  <tr><td><strong>2011-2013</strong></td><td>Yavaş çürüme başlıyor. Merkezileşme artıyor, yargı baskı altında. EFMI sıfıra yaklaşıyor.</td><td style="color:var(--gold);">🟡 Sarı</td></tr>
+  <tr><td><strong>2013-2015</strong></td><td>Kırılma: Gezi + 17-25 Aralık. Yargıya müdahale, medya baskısı. EFMI sıfır geçişi.</td><td style="color:#d97706;">🟠 Turuncu</td></tr>
+  <tr><td><strong>2016-2021</strong></td><td>Hızlı çürüme: OHAL, KHK'lar, liyakat tasfiyesi. Güven eriyor, kutuplaşma artıyor, M2/NIR yükseliyor.</td><td style="color:var(--accent);">🔴 Kırmızı</td></tr>
+  <tr><td><strong>2022-2026</strong></td><td>Krize yakın: Enflasyon %85, SRI 0.52, CA 0.65, tevekkül tamponu zorlanıyor.</td><td style="color:#4a0000;">⚫ Koyu Kırmızı</td></tr>
+</table>
+
+<div class="timeline">
+  <div class="timeline-track">
+    <div class="timeline-fill"></div>
+    <div class="timeline-marker timeline-marker-yellow" style="left:10%;"></div>
+    <div class="timeline-marker" style="background:var(--gold);left:28%;"></div>
+    <div class="timeline-marker" style="background:#d97706;left:40%;"></div>
+    <div class="timeline-marker timeline-marker-red" style="left:57%;"></div>
+    <div class="timeline-marker" style="background:var(--accent);left:72%;"></div>
+    <div class="timeline-marker timeline-marker-dark" style="left:85%;"></div>
+  </div>
+  <div class="timeline-labels">
+    <span>2002<br>🟢</span>
+    <span>2007<br>🟢</span>
+    <span>2013<br>🟠</span>
+    <span>2016<br>🔴</span>
+    <span>2021<br>🔴</span>
+    <span>2026<br>⚫</span>
+  </div>
+</div>
+
+<div class="callout" style="margin-top:24px;">
+<strong>Bu kronoloji bize ne söylüyor?</strong> Çürüme yavaş başlar, yıllar içinde birikir ve bir noktadan sonra hızlanır. EFMI dönüşü (2011-2013) ilk işarettir. Kutuplaşma ve güven erozyonu bunu takip eder. Finansal göstergeler (M2/NIR) 2016 sonrası bozulur. Bilişsel atrofi 2020 sonrası kritik seviyeye ulaşır. Tevekkül delinmesi — henüz olmadı ama sınıra yaklaşıldı.
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<p><strong>T2SAIM Kriz Sinyal Sistemi — V2 Açıklamalı Sürüm</strong> · Mission Albion · Haziran 2026</p>
+<p>Bu belge, T2SAIM metodolojisinin kullandığı altı kriz sinyalini açıklamak için hazırlanmıştır. Metodolojinin kendisini (formüller, katsayılar, yazılım kodu) içermez. Detaylı teknik dokümantasyon için ayrı bir kanonik belge mevcuttur.</p>
+<p style="margin-top:8px;font-style:italic;">"Krizi hissetmek yetmez — ölçmek gerekir."</p>
+</div>
+
+</div>
+</body>
+</html>
