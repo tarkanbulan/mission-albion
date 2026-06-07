@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM — A Walk Through the System</title>
+<style>
+  :root {
+    --ink:   #0f1a2e;
+    --paper: #f7f4ec;
+    --rule:  #1a2a4a;
+    --gold:  #c9a84c;
+    --accent:#8b1a1a;
+    --muted: #6b7280;
+    --navy-light: #1e3a5f;
+    --cream-light: #faf8f2;
+    --gold-light: rgba(201,168,76,0.12);
+    --red-light: rgba(139,26,26,0.08);
+    --blue-light: rgba(15,26,46,0.06);
+    --serif: Georgia, "Times New Roman", serif;
+    --sans:  Helvetica, Arial, sans-serif;
+    --mono:  "Courier New", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+  }
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 24px 100px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    margin-bottom: 14px;
+  }
+  .subtitle {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 660px;
+  }
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 5px 14px;
+    margin-top: 14px;
+    text-transform: uppercase;
+  }
+  .badge-navy { background: var(--rule); color: var(--paper); }
+  .badge-gold { background: var(--gold); color: var(--rule); }
+  .badge-red  { background: var(--accent); color: var(--paper); }
+
+  /* ── TYPOGRAPHY ── */
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 25px;
+    color: var(--rule);
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h2 .section-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--gold);
+    margin-right: 10px;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink);
+    margin: 28px 0 10px;
+  }
+  p { margin-bottom: 16px; max-width: 700px; }
+
+  /* ── SCENE BLOCK (the scenario question) ── */
+  .scene {
+    background: var(--rule);
+    color: var(--paper);
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    border-left: 4px solid var(--gold);
+  }
+  .scene .scene-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .scene strong { color: var(--paper); }
+
+  /* ── FINDING BLOCK (module outputs) ── */
+  .finding {
+    background: var(--cream-light);
+    border: 1px solid #ddd6c8;
+    border-left: 4px solid var(--rule);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .finding .finding-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .finding .finding-flag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .flag-red  { background: var(--accent); color: var(--paper); }
+  .flag-gold { background: var(--gold); color: var(--rule); }
+  .flag-navy { background: var(--rule); color: var(--paper); }
+
+  /* ── BADGE / TAG ── */
+  .tag {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-right: 6px;
+  }
+  .tag-gold { background: var(--gold-light); color: #8a7530; }
+  .tag-navy { background: var(--blue-light); color: var(--ink); }
+  .tag-red  { background: var(--red-light); color: var(--accent); }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14.5px;
+  }
+  th {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--rule);
+    color: var(--paper);
+  }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #ddd6c8;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 22px 26px;
+    margin: 28px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .callout strong { font-style: normal; }
+
+  /* ── GRID CARDS ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card {
+    border: 1px solid #ddd6c8;
+    padding: 22px;
+    background: var(--cream-light);
+  }
+  .card h4 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .card p { font-size: 14.5px; margin-bottom: 0; }
+
+  /* ── CONFIDENCE BAR ── */
+  .cbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .cbar-track {
+    flex: 1;
+    height: 8px;
+    background: #e8e2d4;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .cbar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+  .cbar-fill-high { background: var(--accent); width: 90%; }
+  .cbar-fill-mod  { background: var(--gold); width: 65%; }
+  .cbar-fill-low  { background: var(--muted); width: 35%; }
+  .cbar-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 50px;
+  }
+
+  /* ── SECTION HIGHLIGHTS ── */
+  .section-highlight {
+    background: var(--blue-light);
+    border: 1px solid #ddd6c8;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .section-highlight h4 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rule);
+    margin-bottom: 8px;
+  }
+
+  /* ── SIMULATION BLOCK ── */
+  .sim-box {
+    background: #0f1a2e;
+    color: #e6edf3;
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .sim-box .sim-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .sim-box .sim-item {
+    margin-bottom: 14px;
+    padding-left: 16px;
+    border-left: 2px solid rgba(201,168,76,0.3);
+  }
+  .sim-box .sim-item strong { color: var(--gold); }
+  .sim-box .sim-conclusion {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gold);
+  }
+
+  /* ── FLOW ARROW ── */
+  .flow-arrow {
+    text-align: center;
+    font-size: 24px;
+    color: var(--gold);
+    margin: 4px 0 8px;
+    font-family: var(--sans);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    margin-top: 60px;
+    padding: 28px;
+    background: var(--rule);
+    color: var(--paper);
+    font-size: 13px;
+    font-family: var(--sans);
+  }
+  footer p { color: rgba(247,244,236,0.8); max-width: 100%; }
+  footer .footer-tagline {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--gold);
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid #ddd6c8;
+    margin: 44px 0;
+  }
+  ul { margin: 0 0 16px 24px; }
+  ol { margin: 0 0 16px 24px; }
+  li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="eyebrow">MISSION ALBION · T2SAIM-WALKTHROUGH · v2.1 · JUNE 2026</div>
+  <h1>How We Think</h1>
+  <p class="subtitle">A single question enters a system built over a year and more than a thousand pages of structured methodology. This is what happens along the way.</p>
+  <div style="margin-top:16px;">
+    <a href="index.html" style="font-family:Helvetica,Arial,sans-serif;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--gold);padding:6px 16px;display:inline-block;">← Back to Index</a>
+  </div>
+  <span class="badge badge-navy" style="margin-top:14px;">Explanatory Walkthrough</span>
+  <span class="badge badge-gold" style="margin-left:8px;">Scenario-Driven</span>
+</header>
+
+<!-- ═══ INTRO ═══ -->
+<p>We are going to follow a single question as it enters our system. The question is deliberately chosen — not because it is exceptional, but because it is ordinary. Every question travels the same path. What changes is what the system finds along the way.</p>
+
+<!-- ═══ SCENE SETUP ═══ -->
+<div class="scene">
+<div class="scene-meta">Incoming Question · Intelligence Division · Q2 2026</div>
+<strong>&#8220;A counterparty in Eastern Europe has approached a London-based trading desk with a proposal to acquire a critical infrastructure asset in Southeast Asia. The financing structure involves a holding company registered in a jurisdiction with limited corporate disclosure. The timeline is compressed. The returns offered are above market. Is this a genuine commercial opportunity, or is something else happening?&#8221;</strong>
+</div>
+
+<p>This is not a simple question. It touches economics, geopolitics, law, psychology, and media. It involves money moving across borders, a strategic asset changing hands, and a counterparty whose identity may not be what it appears. A human analyst could form an opinion — but on what basis? How would they defend it?</p>
+
+<p>Our system does not form opinions. It takes the question apart.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 1 ═══ -->
+<h2><span class="section-num">01</span> The Question Enters the Pipeline</h2>
+
+<p>The first thing we do is nothing. We do not answer. We decompose.</p>
+
+<p>The question is broken into its constituent dimensions. Each dimension is dispatched to an independent analytical module — each with its own methods, its own tests, its own thresholds. The modules do not communicate during the analysis. They cannot influence each other. Only at the end, when every module has returned its finding, do we bring the results together.</p>
+
+<div class="section-highlight">
+<h4>Why isolate the modules?</h4>
+<p>This deliberate isolation is the most important design decision in the system. It prevents a strong finding in one dimension from colouring the analysis of another. Each conclusion must stand on its own evidence.</p>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Dispatched to</h4>
+    <p><span class="tag tag-navy">Economic</span> <span class="tag tag-navy">Geopolitical</span> <span class="tag tag-navy">Sociocultural</span> <span class="tag tag-navy">Legal-Forensic</span> <span class="tag tag-navy">Media-Forensic</span></p>
+  </div>
+  <div class="card">
+    <h4>Each module asks</h4>
+    <p>What does this look like from my perspective? What supports it? What contradicts it? How confident am I?</p>
+  </div>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 2 ═══ -->
+<h2><span class="section-num">02</span> The Economic Module Examines the Deal</h2>
+
+<p>The economic module looks at the transaction as a financial structure. It cares about numbers: the valuation, the financing structure, the returns, the counterparty&#8217;s disclosed position. It tests these against known benchmarks — not to see if the deal is &#8220;fair,&#8221; but to see if the pattern resembles transactions that turned out to be something other than they appeared.</p>
+
+<div class="finding">
+<div class="finding-meta">Economic Module — Preliminary Finding</div>
+<p><strong>Market analysis:</strong> The return on the proposed acquisition is 1.8 standard deviations above the mean for comparable assets in the same region. The premium is concentrated in projected cash flows, not in the underlying asset valuation.</p>
+<p><strong>Structural analysis:</strong> The holding company&#8217;s disclosed capital structure is inconsistent with the transaction size. The debt-to-equity ratio is unusually low, suggesting either undisclosed financing or a different economic purpose.</p>
+<p><strong>Counterparty track record:</strong> The disclosed financial history begins 24 months before the transaction. No operating history. No prior transactions of comparable size.</p>
+<span class="finding-flag flag-red">▸ FLAG: Financial structure inconsistent with stated purpose</span>
+</div>
+
+<p>The economic module does not conclude that the transaction is fraudulent. It concludes that the economic pattern is anomalous. The anomaly is not a verdict — it is a measurement. It tells the next stage where to look.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 3 ═══ -->
+<h2><span class="section-num">03</span> The Geopolitical Module Maps the Territory</h2>
+
+<p>While the economic module examines numbers, the geopolitical module examines context. The asset sits in a region where control of infrastructure has strategic implications — for energy transit, for military logistics, for influence between competing powers. The counterparty&#8217;s jurisdiction is not neutral either.</p>
+
+<div class="finding">
+<div class="finding-meta">Geopolitical Module — Structural Assessment</div>
+<p><strong>Power transition analysis:</strong> The host country is in the final phase of a leadership transition. The probability of policy reversal within 18 months is elevated. The asset would change hands during a window of regulatory uncertainty.</p>
+<p><strong>Regional stability index:</strong> Two neighbouring states have competing claims to the same strategic corridor. The asset sits at the centre of a simmering dispute that has, in the past, involved economic coercion.</p>
+<p><strong>Counterparty jurisdiction:</strong> The holding company&#8217;s jurisdiction has a demonstrated pattern of hosting opaque structures used to circumvent international sanctions. Beneficial ownership disclosure is not required.</p>
+<span class="finding-flag flag-red">▸ FLAG: Transaction occurs during a window of geopolitical vulnerability</span>
+</div>
+
+<p>The geopolitical module&#8217;s conclusion stands independently: the timing and structure of this transaction carry elevated geopolitical risk. That is a measurement, not an accusation.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 4 ═══ -->
+<h2><span class="section-num">04</span> The Sociocultural Module Reads the Human Terrain</h2>
+
+<p>Economic and geopolitical analysis can tell you what is happening and where. They do not tell you who is involved — not as balance sheet entries, but as human beings shaped by culture, history, and psychology. This module exists for exactly that gap.</p>
+
+<div class="finding">
+<div class="finding-meta">Sociocultural Module — Human Terrain Analysis</div>
+<p><strong>Cultural distance:</strong> The counterparty&#8217;s known principals operate within a cultural framework that differs significantly from the London desk. The gap increases the probability of misaligned expectations and reduces the reliability of signals that would normally indicate good faith.</p>
+<p><strong>Group behaviour:</strong> The counterparty&#8217;s network shows characteristics of closed decision-making: high internal cohesion, low external disclosure, centralised control of information. Not unusual in family-controlled enterprises, but relevant when combined with the economic indicators.</p>
+<p><strong>Manipulation vulnerability:</strong> The compressed timeline exploits a recognised psychological bias toward urgency, reducing the opportunity for independent verification. This does not mean the proposal is deceptive. It means the structure is designed to discourage scrutiny.</p>
+<span class="finding-flag flag-gold">▸ NOTE: Cultural and behavioural indicators align with the economic anomaly</span>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 5 ═══ -->
+<h2><span class="section-num">05</span> The Forensic Modules Test the Evidence Itself</h2>
+
+<p>While the domain modules analyse the transaction from their respective angles, the forensic modules test the evidence itself. They do not ask what the transaction means. They ask whether the information provided is even reliable.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Document forensics</h4>
+    <p>The corporate registration documents provided by the counterparty have no verified chain of custody. The digital signatures are self-issued. The metadata indicates the documents were generated <strong>48 hours before presentation</strong> — not 24 months before, as the filing dates suggest.</p>
+    <span class="tag tag-red">Metadata manipulation</span>
+  </div>
+  <div class="card">
+    <h4>Media forensics</h4>
+    <p>A promotional video about the counterparty&#8217;s earlier projects contains AI-generated footage. The noise profile is inconsistent with claimed camera equipment. The audio spectral signature is consistent with voice synthesis. Formant correlations fall outside the range of human vocal production.</p>
+    <span class="tag tag-red">AI-generated content</span>
+  </div>
+</div>
+
+<p>The forensic modules examine evidence the way a metallurgist examines a metal sample: they test its composition, consistency, and origin. If the evidence fails these tests, every other module&#8217;s conclusion must be reweighted.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 5B ═══ -->
+<h2><span class="section-num">05b</span> The Full Test Catalogue — What We Measure</h2>
+
+<p>Over the course of developing this system, we have built an extensive catalogue of standardised tests. Each test is designed to measure a specific dimension of reality, a specific type of inconsistency, or a specific behavioural signal. Below is the full list — not to overwhelm, but to show the depth of the discipline.</p>
+
+<h3>Reality and Consistency Tests</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">What it measures</th><th style="width:25%;">Applied to</th></tr>
+  <tr><td><span class="tag tag-navy">ACHB-NMT</span></td><td>Analysis of Competing Hypotheses — Bayesian-Neuronal Modelling. Tests whether the evidence supports one hypothesis over another, and quantifies the gap.</td><td>All intelligence assessments</td></tr>
+  <tr><td><span class="tag tag-navy">KE Formula</span></td><td>Knowledge Entropy — the overall confidence score derived from three independent reality layers: time, network, and language.</td><td>Every analytical output</td></tr>
+  <tr><td><span class="tag tag-navy">ZTJ Layer</span></td><td>Temporal Reality Test — checks physical possibility, chronological coherence, causality.</td><td>Alibis, timelines, event sequences</td></tr>
+  <tr><td><span class="tag tag-navy">IUY Layer</span></td><td>Actor Network Test — maps relationships, hierarchies, hidden structures, flow of value.</td><td>Criminal networks, corporate structures</td></tr>
+  <tr><td><span class="tag tag-navy">SST Layer</span></td><td>Linguistic Symmetry Test — detects loaded language, artificial messaging, coordinated narratives.</td><td>Media analysis, PSYOP detection</td></tr>
+  <tr><td><span class="tag tag-navy">Benford&#8217;s Law</span></td><td>Digit-distribution test — natural data follows a logarithmic distribution. Human-manufactured data does not.</td><td>Financial statements, transaction records</td></tr>
+  <tr><td><span class="tag tag-navy">Runs Test</span></td><td>Sequential randomness test — natural sequences have a specific randomness profile. Forged sequences are either too random or not random enough.</td><td>Time series, audit trails</td></tr>
+  <tr><td><span class="tag tag-navy">KL Divergence</span></td><td>Distribution distance test — measures how far a sample&#8217;s statistical profile deviates from a known natural baseline.</td><td>Deepfake detection, fraud detection</td></tr>
+</table>
+
+<h3>Domain-Specific Gate Tests (Pipeline)</h3>
+<table>
+  <tr><th style="width:30%;">Test Suite</th><th style="width:45%;">What it measures</th><th style="width:25%;">Domain</th></tr>
+  <tr><td><span class="tag tag-gold">EG-00 to EG-09</span></td><td>Ten sequential gates for economic analysis: market structure, competition, fiscal stability, external vulnerability, regulatory exposure.</td><td>Economics</td></tr>
+  <tr><td><span class="tag tag-gold">GG-00 to GG-09</span></td><td>Ten sequential gates for geopolitical analysis: power transitions, alliance dynamics, security dilemmas, regional stability, ethics.</td><td>Geopolitics</td></tr>
+  <tr><td><span class="tag tag-gold">AG-00 to AG-04</span></td><td>Five sequential gates for sociocultural analysis: cultural frame, bias calibration, vulnerability assessment, red team, ethics.</td><td>Sociocultural</td></tr>
+  <tr><td><span class="tag tag-gold">ENR-G1 to ENR-G8</span></td><td>Eight gates for energy security: corridor fragility, shock pass-through, narrative laundering, supply vulnerability.</td><td>Energy</td></tr>
+</table>
+
+<h3>Behavioural and Cognitive Tests</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">What it measures</th><th style="width:25%;">Source discipline</th></tr>
+  <tr><td><span class="tag tag-navy">BITE Model</span></td><td>Behavioural control assessment — measures group control across four dimensions: Behaviour, Information, Thought, Emotional control.</td><td>Social psychology</td></tr>
+  <tr><td><span class="tag tag-navy">Hofstede Dimensions</span></td><td>Cultural value orientation — measures power distance, individualism, uncertainty avoidance, long-term orientation.</td><td>Cross-cultural psychology</td></tr>
+  <tr><td><span class="tag tag-navy">Inglehart-Welzel Map</span></td><td>Cultural value positioning — maps societies on survival vs self-expression and traditional vs secular dimensions.</td><td>Political sociology</td></tr>
+  <tr><td><span class="tag tag-navy">WEIRD Bias Index</span></td><td>Measures how Western, Educated, Industrialised, Rich, and Democratic the analytical perspective is — and corrects for it.</td><td>Anthropological method</td></tr>
+  <tr><td><span class="tag tag-navy">EMIC / ETIC Analysis</span></td><td>Distinguishes insider perspective (emic) from external analytical perspective (etic) — prevents category errors.</td><td>Anthropology</td></tr>
+  <tr><td><span class="tag tag-navy">Cultural Distance Score</span></td><td>Quantifies the gap between the analyst&#8217;s cultural framework and the target culture. High distance = high risk of misinterpretation.</td><td>Cross-cultural intelligence</td></tr>
+</table>
+
+<h3>Forensic and Media Tests</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">What it measures</th><th style="width:25%;">Detection target</th></tr>
+  <tr><td><span class="tag tag-navy">DCT Spectral Analysis</span></td><td>Discrete Cosine Transform — detects GAN-specific frequency artifacts in images and video frames.</td><td>AI-generated imagery</td></tr>
+  <tr><td><span class="tag tag-navy">rPPG Biometric Test</span></td><td>Remote Photoplethysmography — measures localised blood flow patterns in facial video. Global pulse can now be faked; local patterns cannot.</td><td>Deepfake video</td></tr>
+  <tr><td><span class="tag tag-navy">Formant Correlation Test</span></td><td>Measures the physiological correlation between vocal formant frequencies. Natural speech has a specific correlation; cloned speech breaks it.</td><td>Voice deepfakes</td></tr>
+  <tr><td><span class="tag tag-navy">MFCC Voice ID</span></td><td>Mel-Frequency Cepstral Coefficient analysis — compares the spectral fingerprint of a voice sample against a known baseline.</td><td>Audio authentication</td></tr>
+  <tr><td><span class="tag tag-navy">DTW Sync Test</span></td><td>Dynamic Time Warping — measures the synchronisation accuracy between lip movement and audio track.</td><td>Lip-sync forgery</td></tr>
+  <tr><td><span class="tag tag-navy">Optical Flow Analysis</span></td><td>Measures frame-to-frame motion coherence. Deepfake videos show unnatural motion patterns that human eyes do not catch but mathematics does.</td><td>Video manipulation</td></tr>
+</table>
+
+<h3>Strategic and Game-Theoretic Tests</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">What it measures</th><th style="width:25%;">Application</th></tr>
+  <tr><td><span class="tag tag-navy">Nash Equilibrium Scan</span></td><td>Identifies stable strategic outcomes in multi-party negotiations — reveals when a proposed deal is not strategically stable.</td><td>Negotiation analysis</td></tr>
+  <tr><td><span class="tag tag-navy">Replicator Dynamics</span></td><td>Models which strategies survive and which die out in a competitive population over time.</td><td>Fraud evolution</td></tr>
+  <tr><td><span class="tag tag-navy">Evolutionary Stable Strategy</span></td><td>Identifies strategies that cannot be invaded by any alternative — the long-term survivors.</td><td>Market behaviour</td></tr>
+  <tr><td><span class="tag tag-navy">Power Transition Estimator</span></td><td>Measures the probability of a power transition between competing states or organisations.</td><td>Geopolitical risk</td></tr>
+  <tr><td><span class="tag tag-navy">Balancing Intensity Index</span></td><td>Measures how aggressively actors are building countervailing power against a dominant actor.</td><td>Alliance analysis</td></tr>
+  <tr><td><span class="tag tag-navy">Security Dilemma Index</span></td><td>Measures the degree to which defensive actions by one actor are perceived as offensive by another.</td><td>Conflict prediction</td></tr>
+  <tr><td><span class="tag tag-navy">Thucydides Trap Risk Engine</span></td><td>Quantifies the risk of violent conflict when a rising power challenges an established one.</td><td>Great power competition</td></tr>
+</table>
+
+<h3>Cognitive Pathology Tests (M5 Engine)</h3>
+<table>
+  <tr><th style="width:30%;">Pathology</th><th style="width:45%;">Signal measured</th><th style="width:25%;">Category</th></tr>
+  <tr><td><span class="tag tag-red">SSRI Numbing</span></td><td>Price falling but volatility suppressed — the herd is chemically numbed and cannot panic.</td><td>Biochemical</td></tr>
+  <tr><td><span class="tag tag-red">Cortisol Crash</span></td><td>8+ consecutive days of extreme credit stress — risk appetite collapses, the herd cannot buy the bottom.</td><td>Biochemical</td></tr>
+  <tr><td><span class="tag tag-red">Circadian Degradation</span></td><td>Low-liquidity late-night trading — sleep-deprived participants make impulsive, irrational orders.</td><td>Biochemical</td></tr>
+  <tr><td><span class="tag tag-red">Shadow Liquidity</span></td><td>Volume spike without price movement — money is being washed through the asset without regard for price.</td><td>Structural</td></tr>
+  <tr><td><span class="tag tag-red">0DTE Gamma Loop</span></td><td>Price approaching dealer gamma walls — forced hedging creates predictable, violent price moves.</td><td>Structural</td></tr>
+  <tr><td><span class="tag tag-red">Echo Chamber</span></td><td>Social sentiment extreme but institutional flow negative — the crowd is wrong.</td><td>Social contagion</td></tr>
+  <tr><td><span class="tag tag-red">FOMO Cascade</span></td><td>Viral fear-of-missing-out narrative drives prices beyond fundamental value within 48–72 hours.</td><td>Social contagion</td></tr>
+  <tr><td><span class="tag tag-red">Testosterone Bubble</span></td><td>30+ day rally with rising leverage — winner effect drives irrational risk-taking.</td><td>Intero-biological</td></tr>
+  <tr><td><span class="tag tag-red">Algo Synchrony</span></td><td>Algorithmic trading strategies become correlated above 0.85 — the system is fragile.</td><td>Systemic risk</td></tr>
+  <tr><td><span class="tag tag-red">Microstructure Cascade</span></td><td>Event propagation speed below one second — the market is in a pre-crash state.</td><td>Systemic risk</td></tr>
+</table>
+
+<p>Each test in this catalogue has its own threshold, its own calibration data, and its own failure modes. No single test is conclusive. But when multiple independent tests converge on the same finding, the confidence level rises accordingly. This is what we mean by structured, measurable analysis.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 6 ═══ -->
+<h2><span class="section-num">06</span> The Testing Protocol Examines Every Finding</h2>
+
+<p>Every finding produced by every module now undergoes a standardised five-test protocol. This is not optional. It is not selective. Every finding goes through every test.</p>
+
+<table>
+  <tr>
+    <th style="width:20%;">Test</th>
+    <th style="width:40%;">What it checks</th>
+    <th style="width:40%;">Applied to the economic finding</th>
+  </tr>
+  <tr>
+    <td><span class="tag tag-navy">1. Source</span></td>
+    <td>Can the source of each data point be independently confirmed?</td>
+    <td>Benchmark data: confirmed. Counterparty statements: not confirmed. Confidence downgraded.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-navy">2. Mathematics</span></td>
+    <td>Do the numbers hold up under independent review?</td>
+    <td>Anomaly recalculated across three different benchmarks. It persists. Finding confirmed.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-navy">3. Robustness</span></td>
+    <td>Would the same conclusion hold if conditions changed?</td>
+    <td>Tested against four comparable regions. Anomaly present in two, absent in one, ambiguous in one. Qualified.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-navy">4. Consistency</span></td>
+    <td>Does this contradict another finding from the same analysis?</td>
+    <td>Economic and geopolitical findings align. Sociocultural findings do not contradict. No conflict.</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-navy">5. Completeness</span></td>
+    <td>Have important dimensions been left unexamined?</td>
+    <td>Energy security implications not assessed. Gap flagged for final report.</td>
+  </tr>
+</table>
+
+<div class="section-highlight">
+<h4>Why five tests?</h4>
+<p>The testing protocol does not exist to catch errors. It exists to make the system&#8217;s limitations visible. Every finding comes with a confidence score, and that score reflects every test the finding passed — and every test it did not.</p>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 7 ═══ -->
+<h2><span class="section-num">07</span> The Strategic Simulation Tests the Scenarios</h2>
+
+<p>With the analytical findings in hand, the system runs a series of strategic simulations. These are not predictions. They are structured explorations of what could happen if different assumptions hold.</p>
+
+<div class="sim-box">
+<div class="sim-meta">Simulation Module — Scenario Outcomes</div>
+<div class="sim-item">
+<strong>Baseline scenario</strong> (current conditions continue): The transaction proceeds, but the counterparty cannot provide audited financials. Regulatory approval stalls. The deal collapses under its own timeline pressure.
+</div>
+<div class="sim-item">
+<strong>Adversarial scenario</strong> (counterparty is not who they claim): The transaction is a vehicle for value transfer through an opaque structure. The asset becomes collateral for a larger, undisclosed operation. The London desk faces regulatory liability under the Bribery Act and money laundering regulations.
+</div>
+<div class="sim-item">
+<strong>Geopolitical shock scenario</strong> (regional conflict escalates): The infrastructure asset becomes a strategic target. Ownership during a conflict triggers international legal complications. The holding company&#8217;s jurisdiction aligns with a hostile power; the asset is effectively lost.
+</div>
+<div class="sim-conclusion">▸ CONCLUSION: Elevated risk under multiple scenarios. Risk is not primarily financial — it is regulatory and geopolitical.</div>
+</div>
+
+<p>The simulations do not tell you which scenario will happen. They tell you which scenarios are possible, and what each would mean. The decision remains with the human being who commissioned the analysis.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 7B ═══ -->
+<h2><span class="section-num">07b</span> Living Digital Worlds — Agent-Based Simulation</h2>
+
+<p>There is another kind of simulation that goes deeper than scenario analysis. It is not widely used outside advanced research environments, because it is difficult to build and computationally expensive to run. We use it routinely.</p>
+
+<div class="section-highlight">
+<h4>The concept</h4>
+<p>We create a digital population of autonomous agents — each with its own decision rules, its own objectives, its own information. These agents interact with each other in a modelled environment. They observe what others do. They learn from their mistakes. They adapt their strategies. They persuade, compete, cooperate, and evolve — without human intervention.</p>
+</div>
+
+<p>This is not an algorithm processing data. It is a <strong>living digital world</strong> populated by entities that behave, react, and change over time.</p>
+
+<div class="finding">
+<div class="finding-meta">Live Simulation — Fraud Ecosystem Model</div>
+<p><strong>The world:</strong> A digital financial network with three types of agents — fraudsters, banks, and a regulator. Each fraudster has a strategy: some are sneaky (small amounts, high frequency), some are predatory (large amounts, rare), some mimic legitimate behaviour, some use compromised credentials.</p>
+<p><strong>The rules:</strong> Fraudsters attempt transactions. Banks detect or miss them. The regulator sets policy. When a fraudster is caught, it adapts — it changes strategy, becomes more sophisticated. When a bank has too many false positives, it relaxes its thresholds. When the regulator sees systemic risk rising, it tightens policy.</p>
+<p><strong>The emergence:</strong> Over hundreds of simulated cycles, patterns emerge that no single agent intended. Fraud strategies converge on the most effective approach for the current regulatory environment. Banks develop detection profiles tailored to the dominant fraud type. The system oscillates between periods of stability and sudden regime shifts — just like real markets.</p>
+<p><strong>The result:</strong> We do not predict what will happen. We observe what <em>can</em> happen — which strategies survive, which regulatory changes create new vulnerabilities, which combinations of conditions produce systemic failure.</p>
+<span class="finding-flag flag-navy">▸ OUTPUT: Behavioural trajectories, regime transition warnings, vulnerability maps</span>
+</div>
+
+<p>This technology exists. It runs on standard Python infrastructure using the Mesa framework. The simulation we just described has been built, tested, and executed. It is not a theoretical model. It is a working system.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Fraudster agents</h4>
+    <p>Each with an evolving strategy. They learn from detection. When caught, they mutate — switching to a different approach that the bank is not expecting.</p>
+  </div>
+  <div class="card">
+    <h4>Bank agents</h4>
+    <p>Each with a detection model. They learn from false positives and misses. Their sensitivity adjusts dynamically based on experience.</p>
+  </div>
+  <div class="card">
+    <h4>Regulator agents</h4>
+    <p>They monitor systemic risk across the entire network. When risk exceeds a threshold, policy tightens. When it subsides, policy relaxes. The game repeats.</p>
+  </div>
+  <div class="card">
+    <h4>Emergent outcomes</h4>
+    <p>No single agent controls the system. The macro-behaviour emerges from micro-interactions — the same way traffic jams emerge from individual drivers, or market crashes emerge from individual trades.</p>
+  </div>
+</div>
+
+<p>This is not a model of a market. It is a market of models — each agent a self-contained decision-making entity, none following a script, all responding to a changing environment that they themselves create. The mathematics that describes this is the same mathematics that describes ecosystems, immune systems, and neural networks. It is not magic. It is complexity science applied to intelligence analysis.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 8 ═══ -->
+<h2><span class="section-num">08</span> The System Produces Its Output</h2>
+
+<p>Every module has reported. Every test has been applied. Every scenario has been run. The system now produces a single structured output — not a verdict, but a map.</p>
+
+<div class="callout">
+<strong>The output is not a yes or no.</strong> It is a structured assessment showing: what we know, how we know it, how confident we are, what contradicts it, and what we do not know. The decision-maker reads the map and makes their own call. The system never confuses analysis with action.
+</div>
+
+<table>
+  <tr>
+    <th>Dimension</th>
+    <th>Finding</th>
+    <th style="width:22%;">Confidence</th>
+  </tr>
+  <tr>
+    <td><strong>Financial structure</strong></td>
+    <td>Anomalous — returns above market, capital structure inconsistent</td>
+    <td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">High</span></div></td>
+  </tr>
+  <tr>
+    <td><strong>Geopolitical context</strong></td>
+    <td>Elevated risk — timing, jurisdiction, strategic location</td>
+    <td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">High</span></div></td>
+  </tr>
+  <tr>
+    <td><strong>Sociocultural indicators</strong></td>
+    <td>Pattern consistent with closed decision-making, urgency tactics</td>
+    <td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-mod"></div></div><span class="cbar-label">Moderate</span></div></td>
+  </tr>
+  <tr>
+    <td><strong>Document forensics</strong></td>
+    <td>Anomalous — metadata manipulation, self-issued signatures</td>
+    <td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">High</span></div></td>
+  </tr>
+  <tr>
+    <td><strong>Media forensics</strong></td>
+    <td>AI-generated content detected in promotional materials</td>
+    <td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">High</span></div></td>
+  </tr>
+  <tr>
+    <td><strong>Scenario simulation</strong></td>
+    <td>Elevated regulatory and geopolitical risk under multiple scenarios</td>
+    <td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">Moderate–High</span></div></td>
+  </tr>
+</table>
+
+<p>Six independent dimensions. Five applied tests. Three scenario simulations. One map. The decision remains where it belongs.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ CHAPTER 9 ═══ -->
+<h2><span class="section-num">09</span> What Makes This Possible</h2>
+
+<p>The pathway you have just followed — decompose, assign, analyse, test, simulate, integrate — is the same pathway every question travels. It is possible because of what lies beneath it.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Over a year of structured methodology</h4>
+    <p>The system integrates more than 50 structured modules, each developed independently and calibrated to work together. Economics, network theory, cognitive psychology, anthropology, forensic accounting, game theory — all held together by a common discipline: every claim must be measurable, every measurement must be testable, every test must be transparent.</p>
+  </div>
+  <div class="card">
+    <h4>Three independent reality lenses</h4>
+    <p>Every piece of evidence is examined through three lenses: one that checks physical and temporal possibility, one that maps the network of actors and relationships, and one that analyses the structure of language. No conclusion is accepted until it has passed through all three.</p>
+  </div>
+  <div class="card">
+    <h4>Built-in adversarial testing</h4>
+    <p>The system is designed to doubt itself. A structured red-team protocol actively tries to disprove every conclusion. If it survives, it is strengthened. If it does not, it is discarded. This is not an afterthought — it is a structural feature of every stage.</p>
+  </div>
+  <div class="card">
+    <h4>Mathematics from complex systems</h4>
+    <p>The deepest mathematical influence comes from the study of complex systems — the same mathematics that describes avalanches, network criticality, and disproportionate effects from small causes. Our system does not predict these events. It measures the conditions under which they become possible.</p>
+  </div>
+</div>
+
+<!-- ═══ CHAPTER 10 ═══ -->
+<h2><span class="section-num">10</span> A Note on What We Do Not Do</h2>
+
+<p>A system of this kind can easily be misunderstood. It is important to be precise about its limits.</p>
+
+<ul>
+  <li><strong>We do not predict.</strong> We identify structural conditions that make certain outcomes more or less likely. The distinction is critical.</li>
+  <li><strong>We do not replace judgment.</strong> We produce evidence, confidence levels, and scenario maps. The decision is always human.</li>
+  <li><strong>We do not claim infallibility.</strong> Every output includes an explicit statement of its own limitations, data gaps, and unresolved questions.</li>
+  <li><strong>We do not surveil.</strong> Our source material is limited to publicly available or lawfully provided information.</li>
+  <li><strong>We do not trade.</strong> Our outputs are analytical, not transactional. No signals, no recommendations.</li>
+  <li><strong>We do not practise law.</strong> Our forensic findings may inform legal strategy, but the application of law belongs to qualified professionals.</li>
+</ul>
+
+<div class="callout">
+<strong>What we do is narrower than it sounds, and deeper.</strong> We take a question, break it into measurable parts, examine each part through multiple independent lenses, test each finding against five standards, simulate the interactions between the parts, and reassemble everything into a single structured output. The output is not an answer. It is a map. The person who commissioned the analysis uses the map to make their own decision. That is the division of labour we are built for.
+</div>
+
+<hr>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+<p><strong>T2SAIM — A Walk Through the System</strong> · Mission Albion · June 2026</p>
+<p>This document provides a scenario-driven explanation of a structured analytical discipline. It does not disclose proprietary methodology, formulas, or operational protocols. For technical inquiries, refer to the canonical documentation.</p>
+<div class="footer-tagline">Conservative in estimate. Rigorous in foundation. Measurable by design.</div>
+</footer>
+
+</div>
+</body>
+</html>

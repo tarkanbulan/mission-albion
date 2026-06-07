@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>T2SAIM — Sistemin İçinde Bir Yolculuk</title>
+<style>
+  :root {
+    --ink:   #0f1a2e;
+    --paper: #f7f4ec;
+    --rule:  #1a2a4a;
+    --gold:  #c9a84c;
+    --accent:#8b1a1a;
+    --muted: #6b7280;
+    --navy-light: #1e3a5f;
+    --cream-light: #faf8f2;
+    --gold-light: rgba(201,168,76,0.12);
+    --red-light: rgba(139,26,26,0.08);
+    --blue-light: rgba(15,26,46,0.06);
+    --serif: Georgia, "Times New Roman", serif;
+    --sans:  Helvetica, Arial, sans-serif;
+    --mono:  "Courier New", monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    padding: 0;
+  }
+  .page {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 56px 24px 100px;
+  }
+  header {
+    border-bottom: 2px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 38px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    line-height: 1.12;
+    margin-bottom: 14px;
+  }
+  .subtitle {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 660px;
+  }
+  .badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 5px 14px;
+    margin-top: 14px;
+    text-transform: uppercase;
+  }
+  .badge-navy { background: var(--rule); color: var(--paper); }
+  .badge-gold { background: var(--gold); color: var(--rule); }
+  .badge-red  { background: var(--accent); color: var(--paper); }
+  h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 25px;
+    color: var(--rule);
+    margin: 48px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+  }
+  h2 .section-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--gold);
+    margin-right: 10px;
+  }
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 19px;
+    color: var(--ink);
+    margin: 28px 0 10px;
+  }
+  p { margin-bottom: 16px; max-width: 700px; }
+  .scene {
+    background: var(--rule);
+    color: var(--paper);
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    border-left: 4px solid var(--gold);
+  }
+  .scene .scene-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+  .scene strong { color: var(--paper); }
+  .finding {
+    background: var(--cream-light);
+    border: 1px solid #ddd6c8;
+    border-left: 4px solid var(--rule);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .finding .finding-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .finding .finding-flag {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .flag-red  { background: var(--accent); color: var(--paper); }
+  .flag-gold { background: var(--gold); color: var(--rule); }
+  .flag-navy { background: var(--rule); color: var(--paper); }
+  .tag {
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin-right: 6px;
+  }
+  .tag-gold { background: var(--gold-light); color: #8a7530; }
+  .tag-navy { background: var(--blue-light); color: var(--ink); }
+  .tag-red  { background: var(--red-light); color: var(--accent); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0 32px;
+    font-size: 14.5px;
+  }
+  th {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+    padding: 10px 14px;
+    background: var(--rule);
+    color: var(--paper);
+  }
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #ddd6c8;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  .callout {
+    background: var(--gold-light);
+    border-left: 3px solid var(--gold);
+    padding: 22px 26px;
+    margin: 28px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .callout strong { font-style: normal; }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 24px 0;
+  }
+  @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+  .card {
+    border: 1px solid #ddd6c8;
+    padding: 22px;
+    background: var(--cream-light);
+  }
+  .card h4 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .card p { font-size: 14.5px; margin-bottom: 0; }
+  .cbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 4px 0;
+  }
+  .cbar-track {
+    flex: 1;
+    height: 8px;
+    background: #e8e2d4;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .cbar-fill { height: 100%; border-radius: 4px; }
+  .cbar-fill-high { background: var(--accent); width: 90%; }
+  .cbar-fill-mod  { background: var(--gold); width: 65%; }
+  .cbar-fill-low  { background: var(--muted); width: 35%; }
+  .cbar-label { font-family: var(--mono); font-size: 11px; color: var(--muted); min-width: 50px; }
+  .section-highlight {
+    background: var(--blue-light);
+    border: 1px solid #ddd6c8;
+    padding: 20px 24px;
+    margin: 24px 0;
+  }
+  .section-highlight h4 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--rule);
+    margin-bottom: 8px;
+  }
+  .sim-box {
+    background: #0f1a2e;
+    color: #e6edf3;
+    padding: 24px 28px;
+    margin: 24px 0;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .sim-box .sim-meta {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 12px;
+  }
+  .sim-box .sim-item {
+    margin-bottom: 14px;
+    padding-left: 16px;
+    border-left: 2px solid rgba(201,168,76,0.3);
+  }
+  .sim-box .sim-item strong { color: var(--gold); }
+  .sim-box .sim-conclusion {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(201,168,76,0.2);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--gold);
+  }
+  .flow-arrow {
+    text-align: center;
+    font-size: 24px;
+    color: var(--gold);
+    margin: 4px 0 8px;
+    font-family: var(--sans);
+  }
+  footer {
+    margin-top: 60px;
+    padding: 28px;
+    background: var(--rule);
+    color: var(--paper);
+    font-size: 13px;
+    font-family: var(--sans);
+  }
+  footer p { color: rgba(247,244,236,0.8); max-width: 100%; }
+  .footer-tagline {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--gold);
+    font-family: var(--mono);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  hr { border: none; border-top: 1px solid #ddd6c8; margin: 44px 0; }
+  ul { margin: 0 0 16px 24px; }
+  ol { margin: 0 0 16px 24px; }
+  li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="eyebrow">MISSION ALBION · T2SAIM-TURKCE · v1.0 · HAZIRAN 2026</div>
+  <h1>Nasıl Düşünüyoruz</h1>
+  <p class="subtitle">Bir soru sisteme girdiğinde ona ne olduğunu hiç merak ettiniz mi? Bir yılı aşkın sürede, bin sayfanın üzerinde yapılandırılmış metodolojiyle inşa edilmiş bir sistem. İşte yolculuk.</p>
+  <div style="margin-top:16px;">
+    <a href="index.html" style="font-family:Helvetica,Arial,sans-serif;font-size:11px;color:var(--gold);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--gold);padding:6px 16px;display:inline-block;">← Ana Sayfaya Dön</a>
+  </div>
+  <span class="badge badge-navy" style="margin-top:14px;">Anlatım</span>
+  <span class="badge badge-gold" style="margin-left:8px;">Senaryo Tabanlı</span>
+</header>
+
+<p>Tek bir soruyu takip edeceğiz. Soru özel olduğu için seçilmedi — sıradan olduğu için seçildi. Her soru aynı yolu izler. Değişen şey, sistemin yol boyunca ne bulduğudur.</p>
+
+<div class="scene">
+<div class="scene-meta">Gelen Soru · İstihbarat Birimi · 2026</div>
+<strong>&#8220;Doğu Avrupa merkezli bir karşı taraf, Londra&#8217;daki bir trading desk&#8217;ine Güneydoğu Asya&#8217;da kritik bir altyapı varlığını satın almayı teklif ediyor. Finansman yapısı, sınırlı kurumsal açıklama yükümlülüğü olan bir bölgede kayıtlı bir holding şirketi üzerinden ilerliyor. Zaman baskısı var. Sunulan getiriler piyasanın üzerinde. Bu gerçek bir ticari fırsat mı, yoksa başka bir şey mi?&#8221;</strong>
+</div>
+
+<p>Bu basit bir soru değil. Ekonomiye, jeopolitiğe, hukuka, psikolojiye ve medyaya dokunuyor. Para sınırlar ötesi hareket ediyor, stratejik bir varlık el değiştiriyor ve kimliği göründüğü gibi olmayan bir karşı taraf var. Bir insan analist bir kanaat oluşturabilir — ama hangi temelde? Bunu nasıl savunabilir?</p>
+
+<p>Bizim sistemimiz kanaat oluşturmaz. Sorunu parçalarına ayırır.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 1 ═══ -->
+<h2><span class="section-num">01</span> Soru Boru Hattına Giriyor</h2>
+
+<p>İlk yaptığımız şey hiçbir şey yapmamaktır. Cevap vermeyiz. Parçalara ayırırız.</p>
+
+<p>Soru, bileşen boyutlarına ayrılır. Her boyut, bağımsız bir analitik modüle gönderilir — her birinin kendi yöntemleri, kendi testleri, kendi eşikleri vardır. Modüller analiz sırasında birbirleriyle iletişim kurmaz. Birbirlerini etkileyemezler. Ancak her modül bulgusunu teslim ettiğinde, sonuçları bir araya getiririz.</p>
+
+<div class="section-highlight">
+<h4>Modüller neden yalıtılmış?</h4>
+<p>Bu, sistemin en önemli tasarım kararıdır. Bir boyuttaki güçlü bir bulgunun, diğerinin analizini renklendirmesini engeller. Her sonuç kendi kanıtı üzerinde durmalıdır.</p>
+</div>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Gönderilen modüller</h4>
+    <p><span class="tag tag-navy">Ekonomi</span> <span class="tag tag-navy">Jeopolitik</span> <span class="tag tag-navy">Sosyokültürel</span> <span class="tag tag-navy">Hukuki-Adli</span> <span class="tag tag-navy">Medya-Adli</span></p>
+  </div>
+  <div class="card">
+    <h4>Her modül şunu sorar</h4>
+    <p>Bu, benim perspektifimden neye benziyor? Hangi kanıt destekliyor? Hangi kanıt çelişiyor? Ne kadar eminim?</p>
+  </div>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 2 ═══ -->
+<h2><span class="section-num">02</span> Ekonomi Modülü Anlaşmayı İnceliyor</h2>
+
+<p>Ekonomi modülü, işleme finansal bir yapı olarak bakar. Rakamlarla ilgilenir: değerleme, finansman yapısı, getiriler, karşı tarafın açıklanan mali durumu. Bunları bilinen referans noktalarına karşı test eder — anlaşmanın &#8220;adil&#8221; olup olmadığını görmek için değil, desenin başka bir şey olduğu ortaya çıkan işlemlere benzeyip benzemediğini görmek için.</p>
+
+<div class="finding">
+<div class="finding-meta">Ekonomi Modülü — Ön Bulgu</div>
+<p><strong>Piyasa analizi:</strong> Teklif edilen getiri, aynı bölgedeki karşılaştırılabilir varlıklar için ortalamanın 1.8 standart sapma üzerinde. Prim, varlık değerlemesinde değil, gelecekteki nakit akışlarında yoğunlaşmış.</p>
+<p><strong>Yapısal analiz:</strong> Holding şirketinin açıklanan sermaye yapısı, işlem büyüklüğüyle tutarsız. Borç/özsermaye oranı alışılmadık derecede düşük — bu ya açıklanmamış bir finansmanı ya da farklı bir ekonomik amacı işaret ediyor.</p>
+<p><strong>Karşı taraf geçmişi:</strong> Açıklanan mali geçmiş, işlemden sadece 24 ay önce başlıyor. İşletme geçmişi yok. Karşılaştırılabilir büyüklükte önceki işlem yok.</p>
+<span class="finding-flag flag-red">▸ İŞARET: Finansal yapı, belirtilen amaçla tutarsız</span>
+</div>
+
+<p>Ekonomi modülü, işlemin sahte olduğu sonucuna varmaz. Ekonomik desenin anormal olduğu sonucuna varır. Anomali bir karar değildir — bir ölçümdür. Bir sonraki aşamaya nereye bakılacağını söyler.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 3 ═══ -->
+<h2><span class="section-num">03</span> Jeopolitik Modül Bölgeyi Haritalıyor</h2>
+
+<p>Ekonomi modülü rakamlara bakarken, jeopolitik modül bağlama bakar. Varlık, altyapı kontrolünün stratejik anlam taşıdığı bir bölgede — enerji geçişi, askeri lojistik, rakip güçler arasında nüfuz için. Karşı tarafın bulunduğu bölge de tarafsız değil.</p>
+
+<div class="finding">
+<div class="finding-meta">Jeopolitik Modül — Yapısal Değerlendirme</div>
+<p><strong>Güç geçişi analizi:</strong> Ev sahibi ülke, bir liderlik geçişinin son aşamasında. 18 ay içinde politika tersine dönme olasılığı yüksek. Varlık, düzenleyici belirsizlik penceresinde el değiştirecek.</p>
+<p><strong>Bölgesel istikrar endeksi:</strong> İki komşu devlet aynı stratejik koridor üzerinde hak iddia ediyor. Varlık, geçmişte ekonomik baskı içeren bir anlaşmazlığın merkezinde yer alıyor.</p>
+<p><strong>Karşı taraf bölgesi:</strong> Holding şirketinin kayıtlı olduğu bölge, uluslararası yaptırımları aşmak için kullanılan opak yapılara ev sahipliği yapmasıyla biliniyor. Gerçek faydalanıcı sahipliği açıklaması gerekmiyor.</p>
+<span class="finding-flag flag-red">▸ İŞARET: İşlem, jeopolitik kırılganlık penceresinde gerçekleşiyor</span>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 4 ═══ -->
+<h2><span class="section-num">04</span> Sosyokültürel Modül İnsan Yapısını Okuyor</h2>
+
+<p>Ekonomik ve jeopolitik analiz size ne olduğunu ve nerede olduğunu söyleyebilir. Ama kimin dahil olduğunu söylemez — bilanço kalemleri olarak değil, kültür, tarih ve psikoloji tarafından şekillendirilmiş insanlar olarak. Bu modül tam da bu boşluk için var.</p>
+
+<div class="finding">
+<div class="finding-meta">Sosyokültürel Modül — İnsan Yapısı Analizi</div>
+<p><strong>Kültürel mesafe:</strong> Karşı tarafın bilinen tarafları, Londra desk'inden önemli ölçüde farklı bir kültürel çerçevede hareket ediyor. Bu mesafe tek başına sorun değil, ancak yanlış hizalanmış beklentiler olasılığını artırıyor — ve daha önemlisi, normalde iyi niyet göstergesi olan sinyallerin güvenilirliğini azaltıyor.</p>
+<p><strong>Grup davranışı:</strong> Karşı tarafın ağ yapısı, kapalı karar gruplarının özelliklerini gösteriyor: yüksek iç uyum, düşük dış açıklama, merkezi bilgi kontrolü. Aile kontrolündeki şirketlerde alışılmadık değil, ancak ekonomik göstergelerle birleştiğinde anlam kazanıyor.</p>
+<p><strong>Manipülasyon kırılganlığı:</strong> Sıkıştırılmış zaman çizelgesi, tanınmış bir psikolojik taktik — aciliyet yanılgısını kullanarak karşı tarafın bağımsız doğrulama fırsatını azaltıyor. Bu, teklifin aldatıcı olduğu anlamına gelmez. Yapının incelemeyi caydıracak şekilde tasarlandığı anlamına gelir.</p>
+<span class="finding-flag flag-gold">▸ NOT: Kültürel ve davranışsal göstergeler ekonomik anomaliyle uyumlu</span>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 5 ═══ -->
+<h2><span class="section-num">05</span> Adli Modüller Kanıtın Kendisini Test Ediyor</h2>
+
+<p>Alan modülleri işlemi kendi açılarından analiz ederken, adli modüller kanıtın kendisini test eder. İşlemin ne anlama geldiğini sormazlar. Sağlanan bilginin güvenilir olup olmadığını sorarlar.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Belge adli analizi</h4>
+    <p>Karşı tarafın sunduğu şirket kayıt belgelerinin doğrulanabilir bir el değiştirme zinciri yok. Dijital imzalar kendi kendine verilmiş. Metadata, belgelerin sunumdan <strong>48 saat önce</strong> oluşturulduğunu gösteriyor — kayıt tarihlerinin öne sürdüğü gibi 24 ay önce değil.</p>
+    <span class="tag tag-red">Metadata manipülasyonu</span>
+  </div>
+  <div class="card">
+    <h4>Medya adli analizi</h4>
+    <p>Karşı tarafın önceki projelerini tanıtan bir video, yapay zeka üretimi görüntüler içeriyor. Gürültü profili, iddia edilen kamera ekipmanıyla tutarsız. Ses spektral imzası, ses senteziyle uyumlu. Formant korelasyonları insan ses üretim aralığının dışında.</p>
+    <span class="tag tag-red">YZ üretimi içerik</span>
+  </div>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 5B ═══ -->
+<h2><span class="section-num">05b</span> Test Kataloğu — Neyi Ölçüyoruz</h2>
+
+<p>Sistemi geliştirirken, kapsamlı bir standart test kataloğu oluşturduk. Her test, gerçekliğin belirli bir boyutunu, belirli bir tutarsızlık türünü veya belirli bir davranışsal sinyali ölçmek için tasarlandı. İşte tam liste — göz korkutmak için değil, disiplinin derinliğini göstermek için.</p>
+
+<h3>Gerçeklik ve Tutarlılık Testleri</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">Ne ölçer?</th><th style="width:25%;">Nerede kullanılır?</th></tr>
+  <tr><td><span class="tag tag-navy">ACHB-NMT</span></td><td>Rekabet Eden Hipotez Analizi — Bayes-Nöronal Model. Kanıtın hangi hipotezi desteklediğini ve aradaki farkı ölçer.</td><td>Tüm istihbarat değerlendirmeleri</td></tr>
+  <tr><td><span class="tag tag-navy">KE Formülü</span></td><td>Bilgi Entropisi — üç bağımsız gerçeklik katmanından türetilen genel güven skoru: zaman, ağ ve dil.</td><td>Her analitik çıktı</td></tr>
+  <tr><td><span class="tag tag-navy">ZTJ Katmanı</span></td><td>Zamansal Gerçeklik Testi — fiziksel olasılık, kronolojik tutarlılık, nedensellik.</td><td>Zaman çizelgeleri, olay dizileri</td></tr>
+  <tr><td><span class="tag tag-navy">IUY Katmanı</span></td><td>Aktör Ağ Testi — ilişkileri, hiyerarşileri, gizli yapıları ve değer akışını haritalar.</td><td>Suç ağları, kurumsal yapılar</td></tr>
+  <tr><td><span class="tag tag-navy">SST Katmanı</span></td><td>Dil Simetrisi Testi — yüklü dil, yapay mesajlaşma, koordineli anlatılar.</td><td>Medya analizi, PSYOP tespiti</td></tr>
+  <tr><td><span class="tag tag-navy">Benford Yasası</span></td><td>Rakam dağılım testi — doğal veri logaritmik dağılır. İnsan üretimi veri dağılmaz.</td><td>Mali tablolar, işlem kayıtları</td></tr>
+  <tr><td><span class="tag tag-navy">Runs Testi</span></td><td>Sırasal rastgelelik testi — doğal dizilerin belirli bir rastgelelik profili vardır. Sahte diziler ya çok rastgeledir ya da yeterince rastgele değildir.</td><td>Zaman serileri, denetim izleri</td></tr>
+  <tr><td><span class="tag tag-navy">KL Iraksaması</span></td><td>Dağılım mesafesi testi — bir örneğin istatistiksel profilinin bilinen bir doğal tabandan ne kadar saptığını ölçer.</td><td>Deepfake tespiti, sahtecilik tespiti</td></tr>
+</table>
+
+<h3>Alana Özgü Kapı Testleri (Boru Hattı)</h3>
+<table>
+  <tr><th style="width:30%;">Test Takımı</th><th style="width:45%;">Ne ölçer?</th><th style="width:25%;">Alan</th></tr>
+  <tr><td><span class="tag tag-gold">EG-00 — EG-09</span></td><td>Ekonomik analiz için on sıralı kapı: piyasa yapısı, rekabet, mali istikrar, dış kırılganlık, düzenleyici maruziyet.</td><td>Ekonomi</td></tr>
+  <tr><td><span class="tag tag-gold">GG-00 — GG-09</span></td><td>Jeopolitik analiz için on sıralı kapı: güç geçişleri, ittifak dinamikleri, güvenlik ikilemleri, bölgesel istikrar, etik.</td><td>Jeopolitik</td></tr>
+  <tr><td><span class="tag tag-gold">AG-00 — AG-04</span></td><td>Sosyokültürel analiz için beş sıralı kapı: kültürel çerçeve, yanlılık kalibrasyonu, kırılganlık değerlendirmesi, kırmızı takım.</td><td>Sosyokültürel</td></tr>
+  <tr><td><span class="tag tag-gold">ENR-G1 — ENR-G8</span></td><td>Enerji güvenliği için sekiz kapı: koridor kırılganlığı, şok geçişi, anlatı aklaması, arz kırılganlığı.</td><td>Enerji</td></tr>
+</table>
+
+<h3>Davranışsal ve Bilişsel Testler</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">Ne ölçer?</th><th style="width:25%;">Kaynak disiplin</th></tr>
+  <tr><td><span class="tag tag-navy">BITE Modeli</span></td><td>Davranışsal kontrol değerlendirmesi — grubun dört boyuttaki kontrolünü ölçer: Davranış, Bilgi, Düşünce, Duygu.</td><td>Sosyal psikoloji</td></tr>
+  <tr><td><span class="tag tag-navy">Hofstede Boyutları</span></td><td>Kültürel değer yönelimi — güç mesafesi, bireycilik, belirsizlikten kaçınma, uzun vadeli yönelim.</td><td>Kültürlerarası psikoloji</td></tr>
+  <tr><td><span class="tag tag-navy">Inglehart-Welzel Haritası</span></td><td>Kültürel değer konumlandırması — toplumları hayatta kalma/kendini ifade etme ve geleneksel/seksüler eksenlerinde haritalar.</td><td>Politik sosyoloji</td></tr>
+  <tr><td><span class="tag tag-navy">WEIRD Yanlılık Endeksi</span></td><td>Analitik perspektifin ne kadar Batılı, Eğitimli, Sanayileşmiş, Zengin ve Demokratik olduğunu ölçer — ve düzeltir.</td><td>Antropolojik yöntem</td></tr>
+  <tr><td><span class="tag tag-navy">EMIC / ETIC Analizi</span></td><td>İçeriden bakışı (emic) dışarıdan analitik bakıştan (etic) ayırır — kategori hatalarını önler.</td><td>Antropoloji</td></tr>
+  <tr><td><span class="tag tag-navy">Kültürel Mesafe Skoru</span></td><td>Analistin kültürel çerçevesiyle hedef kültür arasındaki farkı ölçer. Yüksek mesafe = yüksek yanlış yorumlama riski.</td><td>Kültürlerarası istihbarat</td></tr>
+</table>
+
+<h3>Adli ve Medya Testleri</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">Ne ölçer?</th><th style="width:25%;">Tespit hedefi</th></tr>
+  <tr><td><span class="tag tag-navy">DCT Spektral Analizi</span></td><td>Ayrık Kosinüs Dönüşümü — görüntü ve videolarda GAN'a özgü frekans yapaylıklarını tespit eder.</td><td>YZ üretimi görüntü</td></tr>
+  <tr><td><span class="tag tag-navy">rPPG Biyometrik Testi</span></td><td>Uzaktan Fotopletismografi — yüz videosunda yerelleştirilmiş kan akışı desenlerini ölçer. Küresel nabız artık taklit edilebiliyor; yerel desenler henüz taklit edilemiyor.</td><td>Deepfake video</td></tr>
+  <tr><td><span class="tag tag-navy">Formant Korelasyon Testi</span></td><td>Ses formant frekansları arasındaki fizyolojik korelasyonu ölçer. Doğal konuşmanın belirli bir korelasyonu vardır; klonlanmış ses bunu kırar.</td><td>Ses deepfake</td></tr>
+  <tr><td><span class="tag tag-navy">MFCC Ses Kimliği</span></td><td>Mel-Frekans Kepstral Katsayı analizi — bir ses örneğinin spektral parmak izini bilinen bir tabanla karşılaştırır.</td><td>Ses doğrulama</td></tr>
+  <tr><td><span class="tag tag-navy">DTW Senkron Testi</span></td><td>Dinamik Zaman Bükme — dudak hareketiyle ses parçası arasındaki senkronizasyon doğruluğunu ölçer.</td><td>Dudak senkronizasyonu sahteciliği</td></tr>
+  <tr><td><span class="tag tag-navy">Optik Akış Analizi</span></td><td>Kareler arası hareket tutarlılığını ölçer. Deepfake videoları, insan gözünün yakalayamadığı ancak matematiğin yakaladığı doğal olmayan hareket desenleri gösterir.</td><td>Video manipülasyonu</td></tr>
+</table>
+
+<h3>Stratejik ve Oyun Teorisi Testleri</h3>
+<table>
+  <tr><th style="width:30%;">Test</th><th style="width:45%;">Ne ölçer?</th><th style="width:25%;">Uygulama</th></tr>
+  <tr><td><span class="tag tag-navy">Nash Denge Taraması</span></td><td>Çok taraflı müzakerelerde istikrarlı stratejik sonuçları belirler — önerilen bir anlaşmanın stratejik olarak istikrarlı olup olmadığını ortaya çıkarır.</td><td>Müzakere analizi</td></tr>
+  <tr><td><span class="tag tag-navy">Replikatör Dinamikleri</span></td><td>Zaman içinde hangi stratejilerin hayatta kaldığını ve hangilerinin yok olduğunu modeller.</td><td>Sahtecilik evrimi</td></tr>
+  <tr><td><span class="tag tag-navy">Evrimsel İstikrarlı Strateji</span></td><td>Hiçbir alternatif tarafından istila edilemeyecek stratejileri belirler — uzun vadeli hayatta kalanlar.</td><td>Piyasa davranışı</td></tr>
+  <tr><td><span class="tag tag-navy">Güç Geçişi Tahmincisi</span></td><td>Rakip devletler veya kuruluşlar arasında güç geçişi olasılığını ölçer.</td><td>Jeopolitik risk</td></tr>
+  <tr><td><span class="tag tag-navy">Dengeleme Yoğunluğu Endeksi</span></td><td>Aktörlerin baskın bir aktöre karşı ne kadar agresif bir şekilde dengeleyici güç inşa ettiğini ölçer.</td><td>İttifak analizi</td></tr>
+  <tr><td><span class="tag tag-navy">Güvenlik İkilemi Endeksi</span></td><td>Bir aktörün savunma amaçlı eylemlerinin bir başkası tarafından ne ölçüde saldırgan olarak algılandığını ölçer.</td><td>Çatışma tahmini</td></tr>
+  <tr><td><span class="tag tag-navy">Thucydides Tuzağı Motoru</span></td><td>Yükselen bir gücün yerleşik bir güce meydan okuduğunda şiddetli çatışma riskini ölçer.</td><td>Büyük güç rekabeti</td></tr>
+</table>
+
+<h3>Bilişsel Patoloji Testleri (M5 Motoru)</h3>
+<table>
+  <tr><th style="width:30%;">Patoloji</th><th style="width:45%;">Ölçülen sinyal</th><th style="width:25%;">Kategori</th></tr>
+  <tr><td><span class="tag tag-red">SSRI Uyuşması</span></td><td>Fiyat düşüyor ama volatilite baskılanmış — sürü kimyasal olarak uyuşmuş, panik yapamıyor.</td><td>Biyokimyasal</td></tr>
+  <tr><td><span class="tag tag-red">Kortisol Çöküşü</span></td><td>8+ gün üst üste aşırı kredi stresi — risk iştahı çöküyor, sürü dibi alamıyor.</td><td>Biyokimyasal</td></tr>
+  <tr><td><span class="tag tag-red">Sirkadiyen Bozulma</span></td><td>Düşük likiditeli gece işlemleri — uykusuz katılımcılar dürtüsel, irrasyonel emirler veriyor.</td><td>Biyokimyasal</td></tr>
+  <tr><td><span class="tag tag-red">Gölge Likidite</span></td><td>Hacim artışı var ama fiyat hareket etmiyor — para, fiyat umursamadan varlığa akıtılıyor.</td><td>Yapısal</td></tr>
+  <tr><td><span class="tag tag-red">0DTE Gama Döngüsü</span></td><td>Fiyat satıcı gama duvarlarına yaklaşıyor — zorunlu hedging öngörülebilir, şiddetli fiyat hareketleri yaratıyor.</td><td>Yapısal</td></tr>
+  <tr><td><span class="tag tag-red">Yankı Odası</span></td><td>Sosyal duygu aşırı uçta ama kurumsal akış negatif — kalabalık yanılıyor.</td><td>Sosyal bulaşma</td></tr>
+  <tr><td><span class="tag tag-red">FOMO Kaskadı</span></td><td>Viral kaçırma korkusu anlatısı, fiyatları 48-72 saat içinde temel değerin ötesine taşıyor.</td><td>Sosyal bulaşma</td></tr>
+  <tr><td><span class="tag tag-red">Testosteron Balonu</span></td><td>30+ günlük yükseliş ve artan kaldıraç — kazanan etkisi irrasyonel risk alımını tetikliyor.</td><td>İntero-biyolojik</td></tr>
+  <tr><td><span class="tag tag-red">Algo Senkronisi</span></td><td>Algoritmik stratejiler 0.85'in üzerinde korele — sistem kırılgan.</td><td>Sistemik risk</td></tr>
+  <tr><td><span class="tag tag-red">Mikroyapı Kaskadı</span></td><td>Olay yayılım hızı bir saniyenin altında — piyasa çöküş öncesi durumda.</td><td>Sistemik risk</td></tr>
+</table>
+
+<p>Bu katalogdaki her testin kendi eşiği, kendi kalibrasyon verisi ve kendi başarısızlık modu vardır. Hiçbir test tek başına kesin sonuç vermez. Ancak birden fazla bağımsız test aynı bulguda birleştiğinde, güven seviyesi buna göre yükselir. Yapılandırılmış, ölçülebilir analizden kastettiğimiz budur.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 6 ═══ -->
+<h2><span class="section-num">06</span> Test Protokolü Her Bulguyu İnceliyor</h2>
+
+<p>Her modülün ürettiği her bulgu, standart beş aşamalı bir test protokolünden geçer. Bu isteğe bağlı değildir. Seçici değildir. Her bulgu her testten geçer.</p>
+
+<table>
+  <tr><th style="width:18%;">Test</th><th style="width:40%;">Ne kontrol eder?</th><th style="width:42%;">Ekonomi bulgusuna uygulandı</th></tr>
+  <tr><td><span class="tag tag-navy">1. Kaynak</span></td><td>Her veri noktasının kaynağı bağımsız olarak doğrulanabiliyor mu?</td><td>Referans verisi: doğrulandı. Karşı taraf beyanları: doğrulanamadı. Güven düşürüldü.</td></tr>
+  <tr><td><span class="tag tag-navy">2. Matematik</span></td><td>Rakamlar bağımsız incelemede tutarlı mı?</td><td>Anomali üç farklı referans yöntemiyle yeniden hesaplandı. Hepsi tutarlı. Bulgu doğrulandı.</td></tr>
+  <tr><td><span class="tag tag-navy">3. Sağlamlık</span></td><td>Koşullar değişse aynı sonuç geçerli olur muydu?</td><td>Dört karşılaştırılabilir bölgede test edildi. İkisinde var, birinde yok, birinde belirsiz. Sonuç nitelendi.</td></tr>
+  <tr><td><span class="tag tag-navy">4. Tutarlılık</span></td><td>Bu sonuç, aynı analizin başka bir bulgusuyla çelişiyor mu?</td><td>Ekonomi ve jeopolitik bulguları uyumlu. Sosyokültürel bulgu çelişmiyor. Çatışma yok.</td></tr>
+  <tr><td><span class="tag tag-navy">5. Bütünlük</span></td><td>Önemli boyutlar incelenmemiş olabilir mi?</td><td>Enerji güvenliği etkileri değerlendirilmedi. Eksiklik nihai raporda işaretlendi.</td></tr>
+</table>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 7 ═══ -->
+<h2><span class="section-num">07</span> Stratejik Simülasyon Senaryoları Test Ediyor</h2>
+
+<p>Analitik bulgular eldeyken, sistem bir dizi stratejik simülasyon çalıştırır. Bunlar tahmin değildir. Farklı varsayımlar altında neler olabileceğinin yapılandırılmış keşifleridir.</p>
+
+<div class="sim-box">
+<div class="sim-meta">Simülasyon Modülü — Senaryo Sonuçları</div>
+<div class="sim-item">
+<strong>Temel senaryo</strong> (mevcut koşullar devam ediyor): İşlem ilerliyor, ancak karşı taraf denetlenmiş mali tablo sağlayamıyor. Düzenleyici onay duruyor. Anlaşma kendi zaman baskısı altında çöküyor.
+</div>
+<div class="sim-item">
+<strong>Olumsuz senaryo</strong> (karşı taraf göründüğü gibi değil): İşlem, opak bir yapı üzerinden değer aktarmak için bir araç. Varlık, daha büyük, açıklanmamış bir operasyon için teminat olarak kullanılıyor. Londra desk'i, Rüşvet Yasası ve kara para aklama düzenlemeleri kapsamında düzenleyici sorumlulukla karşı karşıya.
+</div>
+<div class="sim-item">
+<strong>Jeopolitik şok senaryosu</strong> (bölgesel çatışma tırmanıyor): Altyapı varlığı stratejik bir hedef haline geliyor. Çatışma sırasında varlığın sahipliği uluslararası hukuki komplikasyonları tetikliyor. Holding şirketinin bulunduğu bölge düşman bir güçle aynı hizaya geliyor; varlık fiilen kayboluyor.
+</div>
+<div class="sim-conclusion">▸ SONUÇ: Birden fazla senaryoda yüksek risk. Risk öncelikle finansal değil — düzenleyici ve jeopolitik.</div>
+</div>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 7B ═══ -->
+<h2><span class="section-num">07b</span> Yaşayan Dijital Dünyalar — Ajan Tabanlı Simülasyon</h2>
+
+<p>Senaryo analizinden daha derine giden başka bir simülasyon türü daha var. İleri araştırma ortamları dışında yaygın olarak kullanılmaz, çünkü inşa etmesi zor ve çalıştırması hesaplama açısından pahalıdır. Biz rutin olarak kullanıyoruz.</p>
+
+<div class="section-highlight">
+<h4>Konsept</h4>
+<p>Kendi karar kuralları, kendi hedefleri ve kendi bilgileri olan otonom ajanlardan oluşan bir dijital nüfus yaratıyoruz. Bu ajanlar, modellenmiş bir ortamda birbirleriyle etkileşime giriyor. Başkalarının ne yaptığını gözlemliyorlar. Hatalarından öğreniyorlar. Stratejilerini uyarlıyorlar. İkna ediyor, rekabet ediyor, işbirliği yapıyor ve evriliyorlar — insan müdahalesi olmadan.</p>
+</div>
+
+<p>Bu bir algoritmanın veri işlemesi değil. İçinde davranan, tepki veren ve zamanla değişen varlıkların olduğu <strong>yaşayan bir dijital dünya</strong>.</p>
+
+<div class="finding">
+<div class="finding-meta">Canlı Simülasyon — Sahtecilik Ekosistemi Modeli</div>
+<p><strong>Dünya:</strong> Üç tür ajanı olan bir dijital finansal ağ — sahtekarlar, bankalar ve bir düzenleyici. Her sahtekarın bir stratejisi var: bazıları sinsi (küçük miktarlar, yüksek frekans), bazıları yırtıcı (büyük miktarlar, seyrek), bazıları meşru davranışı taklit ediyor, bazıları çalınmış kimlik bilgileri kullanıyor.</p>
+<p><strong>Kurallar:</strong> Sahtekarlar işlem deniyor. Bankalar yakalıyor veya kaçırıyor. Düzenleyici politika belirliyor. Bir sahtekar yakalandığında, uyum sağlıyor — strateji değiştiriyor, daha karmaşık hale geliyor. Bir bankanın çok fazla yanlış pozitifi olduğunda, eşiklerini gevşetiyor. Düzenleyici sistemik riskin yükseldiğini gördüğünde, politikayı sıkılaştırıyor.</p>
+<p><strong>Ortaya çıkan desenler:</strong> Yüzlerce simülasyon döngüsü boyunca, hiçbir ajanın amaçlamadığı desenler ortaya çıkıyor. Sahtekarlık stratejileri, mevcut düzenleyici ortam için en etkili yaklaşımda birleşiyor. Bankalar, baskın sahtekarlık türüne göre uyarlanmış tespit profilleri geliştiriyor. Sistem, tıpkı gerçek piyasalar gibi, istikrar dönemleriyle ani rejim değişimleri arasında gidip geliyor.</p>
+<p><strong>Sonuç:</strong> Ne olacağını tahmin etmiyoruz. Nelerin <em>olabileceğini</em> gözlemliyoruz — hangi stratejiler hayatta kalıyor, hangi düzenleyici değişiklikler yeni kırılganlıklar yaratıyor, hangi koşul kombinasyonları sistemik çöküş üretiyor.</p>
+<span class="finding-flag flag-navy">▸ ÇIKTI: Davranışsal yörüngeler, rejim geçiş uyarıları, kırılganlık haritaları</span>
+</div>
+
+<p>Bu teknoloji mevcut. Standart Python altyapısında Mesa framework'ü kullanılarak çalışıyor. Az önce anlattığımız simülasyon inşa edildi, test edildi ve çalıştırıldı. Teorik bir model değil. Çalışan bir sistem.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Sahtekar ajanlar</h4>
+    <p>Her biri evrilen bir stratejiye sahip. Yakalanmaktan öğreniyorlar. Her yakalanışta mutasyona uğruyorlar — bankanın beklemediği farklı bir yaklaşıma geçiyorlar.</p>
+  </div>
+  <div class="card">
+    <h4>Banka ajanları</h4>
+    <p>Her biri bir tespit modeline sahip. Yanlış pozitiflerden ve kaçırılanlardan öğreniyorlar. Duyarlılıkları deneyime göre dinamik olarak ayarlanıyor.</p>
+  </div>
+  <div class="card">
+    <h4>Düzenleyici ajanlar</h4>
+    <p>Tüm ağ genelinde sistemik riski izliyorlar. Risk bir eşiği aştığında, politika sıkılaşıyor. Düştüğünde, politika gevşiyor. Oyun tekrarlanıyor.</p>
+  </div>
+  <div class="card">
+    <h4>Ortaya çıkan sonuçlar</h4>
+    <p>Hiçbir ajan sistemi kontrol etmez. Makro-davranış, mikro-etkileşimlerden ortaya çıkar — tıpkı trafik sıkışıklığının sürücülerden veya piyasa çöküşlerinin bireysel işlemlerden ortaya çıkması gibi.</p>
+  </div>
+</div>
+
+<p>Bu bir piyasanın modeli değil. Bir model piyasası — her ajan kendi kendine yeten bir karar verme varlığı, hiçbiri bir senaryoyu takip etmiyor, hepsi kendi yarattıkları değişen bir ortama yanıt veriyor. Bunu tanımlayan matematik, ekosistemleri, bağışıklık sistemlerini ve sinir ağlarını tanımlayanla aynı. Sihir değil. İstihbarat analizine uygulanmış karmaşıklık bilimi.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 8 ═══ -->
+<h2><span class="section-num">08</span> Sistem Çıktısını Üretiyor</h2>
+
+<p>Her modül raporladı. Her test uygulandı. Her senaryo çalıştırıldı. Sistem şimdi tek bir yapılandırılmış çıktı üretiyor — bir karar değil, bir harita.</p>
+
+<div class="callout">
+<strong>Çıktı evet veya hayır değil.</strong> Neyi bildiğimizi, nasıl bildiğimizi, ne kadar emin olduğumuzu, neyin çeliştiğini ve neyi bilmediğimizi gösteren yapılandırılmış bir değerlendirme. Karar verici haritayı okur ve kendi kararını verir. Sistem analizi aksiyonla asla karıştırmaz.
+</div>
+
+<table>
+  <tr><th>Boyut</th><th>Bulgu</th><th style="width:22%;">Güven</th></tr>
+  <tr><td><strong>Finansal yapı</strong></td><td>Anormal — getiriler piyasanın üstünde, sermaye yapısı tutarsız</td><td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">Yüksek</span></div></td></tr>
+  <tr><td><strong>Jeopolitik bağlam</strong></td><td>Yüksek risk — zamanlama, bölge, stratejik konum</td><td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">Yüksek</span></div></td></tr>
+  <tr><td><strong>Sosyokültürel</strong></td><td>Kapalı karar yapısı, aciliyet taktikleriyle uyumlu</td><td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-mod"></div></div><span class="cbar-label">Orta</span></div></td></tr>
+  <tr><td><strong>Belge adli</strong></td><td>Anormal — metadata manipülasyonu, kendi imzaları</td><td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">Yüksek</span></div></td></tr>
+  <tr><td><strong>Medya adli</strong></td><td>Tanıtım malzemesinde YZ üretimi içerik tespit edildi</td><td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">Yüksek</span></div></td></tr>
+  <tr><td><strong>Senaryo simülasyonu</strong></td><td>Birden çok senaryoda yüksek düzenleyici ve jeopolitik risk</td><td><div class="cbar"><div class="cbar-track"><div class="cbar-fill cbar-fill-high"></div></div><span class="cbar-label">Orta-Yüksek</span></div></td></tr>
+</table>
+
+<p>Altı bağımsız boyut. Beş uygulanmış test. Üç senaryo simülasyonu. Bir harita. Karar ait olduğu yerde kalıyor.</p>
+
+<div class="flow-arrow">▼</div>
+
+<!-- ═══ BÖLÜM 9 ═══ -->
+<h2><span class="section-num">09</span> Bunu Mümkün Kılan Ne?</h2>
+
+<p>Az önce takip ettiğiniz yol — parçalara ayır, ata, analiz et, test et, simüle et, bütünleştir — her sorunun izlediği yol. Bunu mümkün kılan, altında yatan şeydir.</p>
+
+<div class="grid-2">
+  <div class="card">
+    <h4>Bir yılı aşkın yapılandırılmış metodoloji</h4>
+    <p>Sistem, her biri bağımsız geliştirilmiş ve sonra birlikte çalışmak üzere kalibre edilmiş 50'den fazla yapılandırılmış modülü entegre eder. Ekonomi, ağ teorisi, bilişsel psikoloji, antropoloji, adli muhasebe, oyun teorisi — hepsi ortak bir disiplinle bir arada tutulur: her iddia ölçülebilir olmalı, her ölçüm test edilebilir olmalı, her test şeffaf olmalı.</p>
+  </div>
+  <div class="card">
+    <h4>Üç bağımsız gerçeklik merceği</h4>
+    <p>Her kanıt parçası üç mercekten incelenir: fiziksel ve zamansal olasılığı kontrol eden, aktör ve ilişki ağını haritalayan, ve dil ile iletişimin yapısını analiz eden. Hiçbir sonuç, üçünden de geçene kadar kabul edilmez.</p>
+  </div>
+  <div class="card">
+    <h4>Yerleşik olumsuzlama testi</h4>
+    <p>Sistem kendinden şüphe etmek üzere tasarlanmıştır. Yapılandırılmış bir kırmızı takım protokolü, her sonucu aktif olarak çürütmeye çalışır. Eğer hayatta kalırsa, güçlenir. Eğer kalamazsa, atılır veya düşürülür. Bu bir son düşünce değil, her aşamanın yapısal bir özelliğidir.</p>
+  </div>
+  <div class="card">
+    <h4>Karmaşık sistemlerden matematik</h4>
+    <p>En derin matematiksel etki, karmaşık sistemlerin incelenmesinden gelir — çığları, ağ kritikliğini ve küçük nedenlerden orantısız etkileri tanımlayan matematik. Sistemimiz bu olayları tahmin etmez. Mümkün hale geldikleri koşulları ölçer.</p>
+  </div>
+</div>
+
+<!-- ═══ BÖLÜM 10 ═══ -->
+<h2><span class="section-num">10</span> Yapmadıklarımız</h2>
+
+<p>Bu tür bir sistem kolayca yanlış anlaşılabilir. Sınırlarını netleştirmek önemlidir.</p>
+
+<ul>
+  <li><strong>Tahmin etmeyiz.</strong> Belirli sonuçları daha olası veya daha az olası kılan yapısal koşulları belirleriz. Ayrım kritiktir.</li>
+  <li><strong>Yargının yerini almayız.</strong> Kanıt, güven seviyeleri ve senaryo haritaları üretiriz. Karar her zaman insanındır.</li>
+  <li><strong>Yanılmaz olduğumuzu iddia etmeyiz.</strong> Her çıktı, kendi sınırlamalarının, veri boşluklarının ve çözülmemiş soruların açık bir ifadesini içerir.</li>
+  <li><strong>Gözetleme yapmayız.</strong> Kaynak malzememiz, kamuya açık veya müşteriler tarafından yasal olarak sağlanan bilgilerle sınırlıdır.</li>
+  <li><strong>İşlem yapmayız.</strong> Çıktılarımız analitiktir, ticari değildir. Sinyal veya yatırım tavsiyesi üretmeyiz.</li>
+  <li><strong>Hukuk hizmeti vermeyiz.</strong> Adli bulgularımız hukuki stratejiyi bilgilendirebilir, ancak hukukun yorumlanması ve uygulanması nitelikli hukuk profesyonellerine aittir.</li>
+</ul>
+
+<div class="callout">
+<strong>Yaptığımız şey, göründüğünden daha dardır ve daha derindir.</strong> Bir soruyu alır, ölçülebilir parçalara ayırır, her parçayı birden çok bağımsız mercekten inceler, her bulguyu beş standarda karşı test eder, parçalar arasındaki etkileşimi simüle eder ve her şeyi tek bir yapılandırılmış çıktıda yeniden birleştiririz. Çıktı bir cevap değildir. Bir haritadır. Analizi sipariş eden kişi, kendi kararını vermek için haritayı kullanır. İnşa edildiğimiz iş bölümü budur.
+</div>
+
+<hr>
+
+<footer>
+<p><strong>T2SAIM — Sistemin İçinde Bir Yolculuk</strong> · Mission Albion · Haziran 2026</p>
+<p>Bu belge, yapılandırılmış bir analitik disiplinin senaryo tabanlı açıklamasını sunar. Özel metodoloji, formül veya operasyonel protokolleri ifşa etmez. Teknik sorular için kanonik dokümantasyona başvurun.</p>
+<div class="footer-tagline">Tahminde muhafazakar. Temelde titiz. Tasarım gereği ölçülebilir.</div>
+</footer>
+
+</div>
+</body>
+</html>
