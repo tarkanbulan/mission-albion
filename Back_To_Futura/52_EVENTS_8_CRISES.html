@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="tr">
+<head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🔒 52 Events · 8 Crises</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0f1a2e;font-family:Georgia,"Times New Roman",serif;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px}
+.lock{max-width:420px;width:100%;padding:40px;border:1px solid rgba(201,168,76,0.2);text-align:center}
+.lock h1{color:#c9a84c;font-size:18px;font-weight:500;letter-spacing:2px;line-height:1.4;margin-bottom:16px}
+.lock .sub{color:rgba(247,244,236,0.4);font-family:Helvetica,Arial,sans-serif;font-size:10px;letter-spacing:4px;text-transform:uppercase;margin-bottom:24px}
+.lock input{width:100%;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(201,168,76,0.15);color:#f7f4ec;font-size:14px;font-family:monospace;text-align:center;letter-spacing:4px;outline:none}
+.lock input:focus{border-color:#c9a84c}
+.lock .btn{display:inline-block;margin-top:16px;padding:10px 32px;background:transparent;border:1px solid #c9a84c;color:#c9a84c;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
+.lock .btn:hover{background:rgba(201,168,76,0.1)}
+.lock .error{color:#8b1a1a;font-size:12px;margin-top:12px;display:none;font-family:Helvetica,Arial,sans-serif}
+.lock .seal{color:rgba(247,244,236,0.12);font-size:10px;margin-top:32px;font-family:monospace;letter-spacing:2px}
+</style></head>
+<body>
+<div class="lock">
+<h1>🔒 52 EVENTS · 8 CRISES</h1>
+<div class="sub">Turkey Macroeconomic Shock Detection</div>
+<input type="password" id="pwd" placeholder="••••••" onkeydown="if(event.key==='Enter')check()" autofocus>
+<div class="btn" onclick="check()">Giriş</div>
+<div class="error" id="err">Yanlış şifre.</div>
+<div class="seal">VERITAS PER SE</div>
+</div>
+<script>
+function check(){
+if(document.getElementById('pwd').value==='BTF2026'){
+window.location.href='52_OLAY_8_KR%C4%B0Z_RAPORU.html';
+}else{
+document.getElementById('err').style.display='block';
+}}
+</script>
+</body></html>
